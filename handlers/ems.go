@@ -1,0 +1,583 @@
+package handlers
+
+import (
+	"fmt"
+	"net/http"
+	"strings"
+	"webserver-arm/emsdb"
+	"webserver-arm/log"
+	"webserver-arm/models"
+
+	"github.com/gin-gonic/gin"
+)
+
+const (
+	EmsGateway = "ems"
+	EmsDevice  = "ems"
+
+	LOCALWEB2AGVC = "localweb2agvc"
+	AGVC2LOCALWEB = "agvc2localweb"
+)
+
+//nolint:govet
+type QueryEmsResp struct {
+	Topic   string              `json:"topic"`
+	Content map[string]*EmsInfo `json:"content"`
+}
+
+type EmsInfo struct {
+	Sn     string `json:"sn"`
+	Name   string `json:"name"`
+	Status int    `json:"status"`
+}
+
+// overViewData
+
+type DevInfo struct {
+	YcData []string `json:"yc"`
+	YxData []string `json:"yx"`
+	PpData []string `json:"prop"`
+}
+
+type modelInfo map[string]DevInfo             // "dev_code": xxx
+var AllModelInfo = make(map[string]modelInfo) // "model" : xxx
+
+func cutPrefixDevCode(devCode string) (string, error) {
+	isfound := false
+	secondDot := strings.IndexFunc(devCode, func(r rune) bool {
+		if r == '.' {
+			if isfound {
+				return true
+			}
+			isfound = true
+		}
+		return false
+	})
+	if secondDot == -1 {
+		return "", fmt.Errorf("invalid devCode format:%s", devCode)
+	}
+	return devCode[:secondDot], nil
+}
+
+// type teleData map[string]map[string]float32      // yc: key: value
+type teleData map[string]map[string]interface{}  // yc: key: value
+type overViewData map[string]map[string]teleData // devcode: devsn: teleData
+
+// @Summary		查询概览信息
+// @Description	查询概览信息
+// @ID				query-overview
+// @Tags			ems
+// @Produce		json
+// @Param			Authorization	header		string				true	"JWT Token"	default(<token>)
+// @Param			model			path		string				true    "概览的产品型号"
+// @Success		200				{object}	overViewData		"查询成功 {\"ess.bms\":{\"esscab1bms1\":{\"yc\":{\"Idc\":32.400024,\"Udc\":750.10004}}},\"ess.pcs\":{\"esscab1pcs1\":{\"yc\":{\"PChgMax\":100,\"RunState\":1}}}}"
+// @Success		401				{object}	models.CommonResp	"认证失败 {\"code\": 401, \"msg\": \"\"}"
+// @Failure		403				{object}	models.CommonResp	"拒绝访问 {\"code\": 403, \"msg\": \"\"}"
+// @Failure		404				{object}	models.CommonResp	"没有找到model {\"code\": 404, \"msg\": \"\"}"
+// @Failure		503				{object}	models.CommonResp	"服务不可访问 {\"code\": 503, \"msg\": \"\"}"
+// @Router			/api/v1/log/overview/{model} [get]
+func OverView(c *gin.Context) {
+	result := make(overViewData)
+	model := c.Param("model")
+
+	log.Info("OverView in ... model:", model)
+
+	// get model from config
+	info, ok := AllModelInfo[model]
+	if !ok {
+		info, ok = AllModelInfo["DEFAULT"]
+		if !ok {
+			c.JSON(http.StatusInternalServerError, models.CommonResp{Code: http.StatusInternalServerError,
+				Message: "no model found"})
+			return
+		}
+	}
+
+	allDeviceInfo, _, err := getAllDevice()
+	if err != nil {
+		log.Error("OverView getAllDevice failed:", err.Error())
+		c.JSON(http.StatusInternalServerError, models.CommonResp{Code: http.StatusInternalServerError,
+			Message: "Internal Server Error"})
+		return
+	}
+
+	allDevByDevCode := make(map[string][]models.DeviceInfo)
+
+	for _, devinfo := range allDeviceInfo {
+		prefixDevCode, err := cutPrefixDevCode(devinfo.DevCode)
+		if err != nil {
+			log.Warn("OverView cutPrefixDevCode failed:", err.Error())
+			continue
+		}
+		allDevByDevCode[prefixDevCode] = append(allDevByDevCode[prefixDevCode], devinfo)
+	}
+
+	log.Debug("OverView allDevByDevCode:", allDevByDevCode)
+
+	for devCode, devConfig := range info { // 遍历每一种设备类型
+		// dev_code like "ess.ac"
+
+		// devConfig like "yc["",""]  yx["",""]"
+		result[devCode] = make(map[string]teleData)
+
+		ycMqttSet := make(map[string]any)
+		for _, mqttID := range devConfig.YcData {
+			ycMqttSet[mqttID] = struct{}{}
+		}
+
+		yxMqttSet := make(map[string]any)
+		for _, mqttID := range devConfig.YxData {
+			yxMqttSet[mqttID] = struct{}{}
+		}
+
+		ppMqttSet := make(map[string]any)
+		for _, mqttID := range devConfig.PpData {
+			ppMqttSet[mqttID] = struct{}{}
+		}
+
+		devList, ok := allDevByDevCode[devCode] // 取出devCode类型下的全部设备
+		if !ok {
+			log.Warn("OverView devCode not exist in allDevByDevCode:", devCode)
+			continue
+		}
+
+		log.Info("devCode:", devCode, ",devList:", devList, ",devConfig:", devConfig)
+		for _, dev := range devList { // 针对每一个设备，取出yc/yx
+
+			result[devCode][dev.Sn] = make(teleData)
+
+			// yc
+			if len(ycMqttSet) > 0 {
+
+				teleData, err := emsdb.GetDevicesYc([]string{dev.Sn}, false)
+				if err != nil {
+					log.Error("OverView GetDevicesYc err:", err)
+					c.JSON(http.StatusInternalServerError, models.CommonResp{Code: http.StatusInternalServerError,
+						Message: "Internal Service Error"})
+					return
+				}
+
+				for dev_sn, ycList := range teleData.Content {
+					// dataSet := make(map[string]float32)
+					dataSet := make(map[string]interface{})
+					for _, yc := range ycList {
+						if _, ok := ycMqttSet[yc.K]; ok {
+							dataSet[yc.K] = yc.V
+						}
+					}
+					result[devCode][dev_sn]["yc"] = dataSet
+				}
+			}
+
+			// yx
+			if len(yxMqttSet) > 0 {
+				teleData, err := emsdb.GetDevicesYx([]string{dev.Sn}, false)
+				if err != nil {
+					log.Error("OverView GetDevicesYx err:", err)
+					c.JSON(http.StatusInternalServerError, models.CommonResp{Code: http.StatusInternalServerError,
+						Message: "Internal Service Error"})
+					return
+				}
+
+				for dev_sn, yxList := range teleData.Content {
+					dataSet := make(map[string]interface{})
+					for _, yx := range yxList {
+						if _, ok := yxMqttSet[yx.K]; ok {
+							dataSet[yx.K] = yx.V
+						}
+					}
+					result[devCode][dev_sn]["yx"] = dataSet
+				}
+			}
+
+			// // prop
+			// if len(ppMqttSet) > 0 {
+			// 	propData, err := emsdatahub.GetDevicesProp([]string{dev.Sn})
+			// 	if err != nil {
+			// 		log.Error("OverView GetDevicesProp err:", err)
+			// 		c.JSON(http.StatusInternalServerError, models.CommonResp{Code: http.StatusInternalServerError,
+			// 			Message: "Internal Service Error"})
+			// 		return
+			// 	}
+
+			// 	for dev_sn, ppList := range propData.Content {
+			// 		dataSet := make(map[string]interface{})
+			// 		for _, pp := range ppList {
+			// 			if _, ok := ppMqttSet[pp.K]; ok {
+			// 				dataSet[pp.K] = pp.V
+			// 			}
+			// 		}
+			// 		result[devCode][dev_sn]["prop"] = dataSet
+			// 	}
+
+			// 	// ppReq := &emsclient.QueryPropReq{dev.Sn}
+			// 	// ppResp, err := client.QueryProp(ppReq)
+			// 	// if err != nil {
+			// 	// 	log.Errorf("OverView QueryProp for dev %s Failed", dev.Sn)
+			// 	// 	c.JSON(http.StatusInternalServerError, models.CommonResp{Code: http.StatusInternalServerError,
+			// 	// 		Message: "Internal Server Error"})
+			// 	// 	return
+			// 	// }
+			// 	// log.Info("ppReq:", ppReq, ",ppResp:", ppResp)
+			// 	// for dev_sn, ppList := range ppResp.Data.Content {
+			// 	// 	// dataSet := make(map[string]float32)
+			// 	// 	dataSet := make(map[string]interface{})
+			// 	// 	for _, pp := range ppList {
+			// 	// 		if _, ok := ppMqttSet[pp.K]; ok {
+			// 	// 			dataSet[pp.K] = pp.V
+			// 	// 		}
+			// 	// 	}
+			// 	// 	result[devCode][dev_sn]["prop"] = dataSet
+			// 	// }
+			// }
+
+		}
+	}
+	// return ok
+	log.Info("OverView result:", result)
+	c.JSON(http.StatusOK, &result)
+}
+
+// @Summary		查询ems设备
+// @Description	查询ems设备信息
+// @ID				query-ems
+// @Tags			ems
+// @Produce		json
+// @Param			Authorization	header		string				true	"JWT Token"	default(<token>)
+// @Success		200				{object}	QueryEmsResp		"查询成功 {\"topic\":\"ems\",\"content\":{\"ems\":{\"sn\":\"ems\",\"name\":\"ems\", \"status\":2}}}"
+// @Success		401				{object}	models.CommonResp	"认证失败 {\"code\": 401, \"msg\": \"\"}"
+// @Failure		403				{object}	models.CommonResp	"拒绝访问 {\"code\": 403, \"msg\": \"\"}"
+// @Failure		404				{object}	models.CommonResp	"没有找到ems {\"code\": 404, \"msg\": \"\"}"
+// @Failure		503				{object}	models.CommonResp	"服务不可访问 {\"code\": 503, \"msg\": \"\"}"
+// @Router			/api/v1/log/ems [get]
+func QueryEms(c *gin.Context) {
+	log.Info("QueryEms in ...")
+	// gwInfos := ClientMgr.GetGatewayInfo(EmsGateway)
+	result := QueryEmsResp{Topic: "ems", Content: make(map[string]*EmsInfo)}
+	// if gwInfo, ok := gwInfos[EmsGateway]; ok {
+	// 	result.Content[EmsGateway] = &EmsInfo{
+	// 		Sn:     gwInfo.Sn,
+	// 		Name:   gwInfo.Name,
+	// 		Status: gwInfo.Status,
+	// 	}
+	// } else {
+	// 	c.JSON(http.StatusNotFound, models.CommonResp{Code: http.StatusNotFound, Message: "Not Found"})
+	// 	return
+	// }
+
+	c.JSON(http.StatusOK, result)
+}
+
+// @Summary		查询ems遥测
+// @Description	查询ems的遥测数据
+// @ID				query-ems-yc
+// @Tags			ems
+// @Produce		json
+// @Param			Authorization	header		string				true	"JWT Token"	default(<token>)
+// @Success		200				{object}	models.TeleData		"查询成功 {\"topic\":\"telemetry\",\"content\":{\"11223355ems\":[{\"at\":1699263620341,\"k\":\"Uab\",\"mt\":1699263620341,\"v\":400}]}}"
+// @Success		401				{object}	models.CommonResp	"认证失败 {\"code\": 401, \"msg\": \"\"}"
+// @Failure		403				{object}	models.CommonResp	"拒绝访问 {\"code\": 403, \"msg\": \"\"}"
+// @Failure		503				{object}	models.CommonResp	"服务不可访问 {\"code\": 503, \"msg\": \"\"}"
+// @Router			/api/v1/log/ems/telemetry [get]
+func QueryEmsTelemetry(c *gin.Context) {
+	log.Info("QueryEmsTelemetry in ...")
+	/*
+		var reqInfo emsclient.QueryYCReq
+		reqInfo = append(reqInfo, EmsDevice)
+		client := ClientMgr.GetClient(EmsGateway)
+		if client == nil {
+			log.Error("GetClient for ems Failed")
+			c.JSON(http.StatusServiceUnavailable, models.CommonResp{Code: http.StatusServiceUnavailable,
+				Message: "Service Unavailable"})
+			return
+		}
+
+		resp, err := client.QueryYC(&reqInfo)
+		if err != nil {
+			log.Debug("QueryEmsTelemetry QueryYC err", err.Error())
+			c.JSON(http.StatusInternalServerError, models.CommonResp{Code: http.StatusInternalServerError,
+				Message: "Internal Server Error"})
+			return
+		}
+
+		c.JSON(http.StatusOK, resp.Data)*/
+	c.JSON(http.StatusOK, models.CommonResp{Code: 200, Message: ""})
+}
+
+// @Summary		查询ems遥信
+// @Description	查询ems的遥信数据
+// @ID				query-ems-yx
+// @Tags			ems
+// @Produce		json
+// @Param			Authorization	header		string				true	"JWT Token"	default(<token>)
+// @Success		200				{object}	models.TeleData		"查询成功 {\"topic\":\"telesignal\",\"content\":{\"ems\":[{\"at\":1699263620341,\"k\":\"Uab\",\"mt\":1699263620341,\"v\":400}]}}"
+// @Success		401				{object}	models.CommonResp	"认证失败 {\"code\": 401, \"msg\": \"\"}"
+// @Failure		403				{object}	models.CommonResp	"拒绝访问 {\"code\": 403, \"msg\": \"\"}"
+// @Failure		503				{object}	models.CommonResp	"服务不可访问 {\"code\": 503, \"msg\": \"\"}"
+// @Router			/api/v1/log/ems/telesignal [get]
+func QueryEmsTelesignal(c *gin.Context) {
+	log.Info("QueryEmsTelesignal in ...")
+	/*
+		var reqInfo emsclient.QueryYXReq
+		reqInfo = append(reqInfo, EmsDevice)
+		client := ClientMgr.GetClient(EmsGateway)
+		if client == nil {
+			log.Error("GetClient for ems Failed")
+			c.JSON(http.StatusServiceUnavailable, models.CommonResp{Code: http.StatusServiceUnavailable,
+				Message: "Service Unavailable"})
+			return
+		}
+
+		resp, err := client.QueryYX(&reqInfo)
+		if err != nil {
+			log.Debug("QueryEmsTelemetry QueryYX err", err.Error())
+			c.JSON(http.StatusInternalServerError, models.CommonResp{Code: http.StatusInternalServerError,
+				Message: "Internal Server Error"})
+			return
+		}
+
+		c.JSON(http.StatusOK, resp.Data)*/
+	c.JSON(http.StatusOK, models.CommonResp{Code: 200, Message: ""})
+}
+
+// @Summary		查询子设备属性
+// @Description	查询指定网关下某子设备属性
+// @ID				query-ems-prop
+// @Tags			ems
+// @Produce		json
+// @Param			Authorization	header		string				true	"JWT Token"	default(<token>)
+// @Success		200				{object}	models.TeleData		"查询成功 {\"topic\":\"property\",\"content\":{\"11223355ems\":[{\"at\":1699263620341,\"k\":\"Runstate\",\"mt\":1699263620341,\"v\":1}]}}"
+// @Success		401				{object}	models.CommonResp	"认证失败 {\"code\": 401, \"msg\": \"\"}"
+// @Failure		403				{object}	models.CommonResp	"拒绝访问 {\"code\": 403, \"msg\": \"\"}"
+// @Failure		503				{object}	models.CommonResp	"服务不可访问 {\"code\": 503, \"msg\": \"\"}"
+// @Router			/api/v1/log/ems/prop [get]
+func QueryEmsProp(c *gin.Context) {
+	log.Info("QueryEmsProp in ...")
+	/*
+		var reqInfo emsclient.QueryPropReq
+		reqInfo = append(reqInfo, EmsDevice)
+		client := ClientMgr.GetClient(EmsGateway)
+		if client == nil {
+			log.Error("GetClient for ems Failed")
+			c.JSON(http.StatusServiceUnavailable, models.CommonResp{Code: http.StatusServiceUnavailable,
+				Message: "Service Unavailable"})
+			return
+		}
+
+		resp, err := client.QueryProp(&reqInfo)
+		if err != nil {
+			log.Debug("QueryEmsProp QueryProp err", err.Error())
+			c.JSON(http.StatusInternalServerError, models.CommonResp{Code: http.StatusInternalServerError,
+				Message: "Internal Server Error"})
+			return
+		}
+
+		c.JSON(http.StatusOK, resp.Data)*/
+	c.JSON(http.StatusOK, models.CommonResp{Code: 200, Message: ""})
+}
+
+//nolint:govet
+type EmsRemoteResp struct {
+	Topic   string      `json:"topic"`
+	Content interface{} `json:"content"`
+}
+
+// @Summary		ems遥控/调
+// @Description	ems遥控或遥调下发
+// @ID				query-ems-remote
+// @Tags			ems
+// @Produce		json
+// @Param			Authorization	header		string				true																																											"JWT Token"																																																											default(<token>)
+// @Param			method			path		string				true																																											"方法名"																																																												example( 1>ems策略下发：PolicyConfig,																																																																																	2>手动/智能策略下发:	PlanSet,	3>AGC对象投入/退出:	AGCExitCtrl,	4>AGC对象远方/就地:AGCRemoteCtrl,	5>储能一体机投入/退出:CabExitCtrl,	6>AGC策略修改:AGCStrategyMod,	7>并网点增删改:ParallelBranch)
+// @Param			RemoteReq-情况1	body		string				true																																											"ems策略下发"																																																											default({"content": "body", "sn": "项目sn号"})	Example({"content":[{\"type\":1,\"bus\":\"bus1\",\"date\":\"2006-01-02\",\"config_data\":{\"plans\":[{\"p\":100.45,\"bt\":\"00:00\",\"et\":\"01:21\"},{\"p\":0,\"bt\":\"23:21\",\"et\":\"24:00\"},{\"p\":-100.45,\"bt\":\"01:21\",\"et\":\"23:21\"}],\"soc_up\":100,\"soc_dn\":48.5,\"interval\":15}},{\"type\":1,\"bus\":\"bus2\",\"date\":\"2006-01-02\",\"config_data\":{\"plans\":[{\"p\":110.45,\"bt\":\"00:00\",\"et\":\"01:21\"},{\"p\":10,\"bt\":\"23:21\",\"et\":\"24:00\"},{\"p\":-100.45,\"bt\":\"01:21\",\"et\":\"23:21\"}],\"soc_up\":100,\"soc_dn\":28,\"interval\":15}}], "sn": "项目sn号"})
+// @Param			RemoteReq-情况2	body		string				true																																											"手动/智能策略下发 (mode：类型0-手动策略，2-智能策略)"																																																					default({"content": "", "sn": "项目sn号"})		Example({"content"：[{\"mode\":0,\"bus\":\"bus1\",\"date\":\"2006-01-02\",\"p\":100.0，\"max_p\":322.1\"soc_up\":85,\"soc_dn\":15，\"chg_max\":100,\"dchg_max\":200，\"chg_eff\":80,\"dchg_eff\":90}], "sn": "项目sn号"})
+// @Param			RemoteReq-情况3	body		string				true																																											"AGC对象投入/退出  (0-退出；1-投入)"																																																							default({"content": "", "sn": "项目sn号"})		Example({"content": {\"state\": 0}, "sn": "项目sn号"})
+// @Param			RemoteReq-情况4	body		string				true																																											"AGC对象远方/就地  (0-就地；1-远方)"																																																							default({"content": "", "sn": "项目sn号"})		Example({"content": {\"state\": 0}, "sn": "项目sn号"})
+// @Param			RemoteReq-情况5	body		string				true																																											"储能一体机投入/退出  (0-退出；1-投入)"																																																							default({"content": "", "sn": "项目sn号"})		Example({"content": {\"state\": 0}, "sn": "项目sn号"})
+// @Param			RemoteReq-情况6	body		string				true																																											"AGC策略修改  (0-功率设定；1-计划曲线；2-智能模式)"																																																					default({"content": "", "sn": "项目sn号"})		Example({"content": {\"state\": 0}, "sn": "项目sn号"})
+// @Param			RemoteReq-情况7	body		string				true																																											"并网点增删改"																																																											default({"content": "", "sn": "项目sn号"})		Example({"content"：[{\"bus\":\"bus1\",\"demand\":1000.2,\"trans_cap\":800.3,\"config_data\":[{\"sn\":\"esscab1\"},{\"sn\":\"esscab2\"}]},{\"bus\":\"bus2\",\"demand\":1000.2,\"trans_cap\":800.3,\"config_data\":[{\"sn\":\"esscab3\"},{\"sn\":\"esscab4\"}]}]", "sn": "项目sn号"})
+// @Success		1				{object}	models.CommonResp	"CODE 200.  ems策略下发 下发成功 {\"topic\": \"LocalPolicyUpAuto\", \"content\": [{\"type\":1,\"bus\":\"bus1\",\"status\":0,\"exec_t\":\"2023-09-15										14:17:00\",\"from\":2,\"plans\":[{\"p\":100.45,\"bt\":\"00:00\",\"et\":\"01:21\"},{\"p\":0,\"bt\":\"23:21\",\"et\":\"24:00\"},{\"p\":-100.45,\"bt\":\"01:21\",\"et\":\"23:21\"}]},{\"type\":1,\"bus\":\"bus2\",\"status\":0,\"exec_t\":\"2023-09-15	14:17:00\",\"from\":2,\"plans\":[{\"p\":100.45,\"bt\":\"00:00\",\"et\":\"01:21\"},{\"p\":0,\"bt\":\"23:21\",\"et\":\"24:00\"},{\"p\":-100.45,\"bt\":\"01:21\",\"et\":\"23:21\"}]}]}"
+// @Success		2				{object}	models.CommonResp	"CODE 200.  手动/智能策略下发  手动策略 下发成功 {\"topic\": \"LocalPolicyUpHand\", \"content\": [{\"type\":1,\"bus\":\"bus1\",\"status\":0,\"exec_t\":\"2023-09-15								14:17:00\",\"soc_up\":90,\"soc_dn\":15,\"p\":100.1,\"from\":0}]}"
+// @Success		3				{object}	models.CommonResp	"CODE 200.  手动/智能策略下发  智能策略 下发成功 {\"topic\": \"LocalPolicyUpSmart\", \"content\": [{\"max_p\":233.2,\"bus\":\"bus1\",\"type\":1,\"status\":0,\"from\":2,\"exec_t\":\"2023-09-15	14:17:00\",\"chg_max\":40.2,\"dchg_max\":40.2,\"chg_eff\":89.9,\"dchg_eff\":89.9,\"ele_state\":0,\"chg_cpt\":100,\"dchg_cpt\":20,\"soc\":25,\"soc_up\":85,\"soc_dn\":15}]"
+// @Success		4				{object}	models.CommonResp	"CODE 200.  AGC对象投入/退出 下发成功 {\"topic\": \"AGCExitCtrlReport\", \"content\": {\"ack:\": true}}"
+// @Success		5				{object}	models.CommonResp	"CODE 200.  AGC对象远方/就地 下发成功 {\"topic\": \"AGCRemoteCtrlReport\", \"content\": {\"ack:\": true}}"
+// @Success		6				{object}	models.CommonResp	"CODE 200.  储能一体机投入/退出 下发成功  {\"topic\": \"CabExitCtrlReport\", \"content\": {\"ack:\": true}}"
+// @Success		7				{object}	models.CommonResp	"CODE 200.  AGC策略修改 下发成功 {\"topic\": \"AGCStrategyModReport\", \"content\": {\"ack:\": true}}"
+// @Success		8				{object}	models.CommonResp	"CODE 200.  并网点增删改 下发成功 {\"topic\": \"ParallelBranchReport\", \"content\": [{\"k	\":\"20231128e	ms	\",\"v\":[{\"from	\":1,\"bus\":\"bus1\",\"demand\":1000.2,\"trans_cap\":800.3,\"config_data\":[{\"sn\":\"esscab1\"},{\"sn\":\"esscab2\"}]},{\"from	\":1,\"bus\":\"bus2\",\"demand\":1000.2,\"trans_cap\":800.3,\"config_data\":[{\"sn\":\"esscab3\"},{\"sn\":\"esscab4\"}]}]}]}"
+// @Failure		9				{object}	models.CommonResp	"CODE 401.  认证失败 {\"code\": 401, \"msg\": \"\"}"
+// @Failure		10				{object}	models.CommonResp	"CODE 403.  拒绝访问 {\"code\": 403, \"msg\": \"\"}"
+// @Failure		11				{object}	models.CommonResp	"CODE 503.  服务不可访问 {\"code\": 503, \"msg\": \"\"}"
+// @Router			/api/v1/log/ems/remote/{method} [post]
+func EmsRemote(c *gin.Context) {
+	log.Info("EmsRemote in ...")
+	/*
+		method := c.Param("method")
+		remoteReq := &RemoteReq{}
+		err := c.ShouldBindJSON(remoteReq)
+		if err != nil {
+			log.Error("ShouldBindJSON err:", err.Error())
+			c.JSON(http.StatusInternalServerError, models.CommonResp{Code: http.StatusInternalServerError,
+				Message: "Internal Service Error"})
+			return
+		}
+
+		// check sn
+		projInfo, err := emsdb.GetProjectSn()
+		if err != nil {
+			log.Error("EmsRemote getProjInfo err: ", err.Error())
+			c.JSON(http.StatusServiceUnavailable, models.CommonResp{Code: http.StatusServiceUnavailable,
+				Message: "Service Unavailable"})
+			return
+		}
+
+		if remoteReq.ProjSn != projInfo.Sn {
+			log.Error("EmsRemote Forbidden: remoteReq sn:", remoteReq.ProjSn, " do not match server sn:", projInfo.Sn)
+			c.JSON(http.StatusForbidden, models.CommonResp{Code: http.StatusForbidden, Message: "Forbidden"})
+			return
+		}
+
+		log.Debug("EmsRemote sn check OK. method:", method, ",rdReq:", remoteReq)
+
+		// do send
+		seq := GetSeq()
+		content, err := json.Marshal(remoteReq.Content)
+		if err != nil {
+			log.Error("EmsRemote Marshal remoteReq content failed:", err.Error())
+			c.JSON(http.StatusBadRequest, models.CommonResp{Code: http.StatusBadRequest, Message: "content invalid"})
+			return
+		}
+
+		redis, redisRrr := gormsg.NewScdRedis()
+		log.Info("tranChangeData.....")
+		if redisRrr != nil {
+			log.Info("NewScdRedis failed:", redisRrr.Error())
+			return
+		}
+
+		// make subscribe
+		agvcRetCh := make(chan *gormsg.Rmsg, 0)
+		subID, err := redis.Subscribe(func(topic string, data []byte) {
+			log.Info("get topic:", topic, ", data:", string(data))
+			if topic == AGVC2LOCALWEB {
+				agvcRet := &gormsg.Rmsg{}
+				if agvcRet.Seq != seq {
+					log.Info("seq not equal. requset seq:", seq, ", recv seq:", agvcRet.Seq)
+					return
+				}
+				json.Unmarshal(data, &agvcRet)
+				agvcRetCh <- agvcRet
+			}
+		}, AGVC2LOCALWEB)
+
+		// make publish
+		pubRmsg := &gormsg.Rmsg{
+			Method:  method,
+			Payload: string(content),
+			Seq:     seq,
+		}
+		pubdata, err := json.Marshal(pubRmsg)
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, models.CommonResp{Code: http.StatusInternalServerError,
+				Message: "Internal Service Error"})
+			log.Info("EmsRemote json.Marshal failed:", err.Error())
+			return
+		}
+		err = redis.Publish(LOCALWEB2AGVC, pubdata)
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, models.CommonResp{Code: http.StatusInternalServerError,
+				Message: "Internal Service Error"})
+			log.Info("EmsRemote redis.Publish failed:", err.Error())
+			return
+		}
+
+		log.Info("EmsRemote Publish over. pubRmsg seq:", seq, ", method:", method, ", content:", string(content))
+
+		select {
+		case resp := <-agvcRetCh:
+			err = redis.Unsubscribe(subID)
+			if err != nil {
+				log.Error("EmsRemote redis.Unsubscribe failed:", err.Error())
+			}
+			result := &EmsRemoteResp{Topic: resp.Method}
+			err := json.Unmarshal([]byte(resp.Payload), &result.Content)
+			if err != nil {
+				log.Error("EmsRemote Unmarshal resp content failed:", err, ",seq:", seq, ",resp:", resp)
+				break
+			}
+			log.Info("EmsRemote result:", result, ",seq:", seq)
+			c.JSON(http.StatusOK, result)
+			return
+		case <-time.After(time.Second * 15):
+			log.Error("EmsRemote 15 second timeout")
+			break
+		}
+		c.JSON(http.StatusInternalServerError, models.CommonResp{Code: http.StatusInternalServerError,
+			Message: "Internal Service Error"})*/
+	c.JSON(http.StatusOK, models.CommonResp{Code: 200, Message: ""})
+}
+
+func ExportInfluxDBData(c *gin.Context) {
+	log.Info("ExportInfluxDBData in")
+
+	req := emsdb.ExportHistoryReq{}
+	err := c.ShouldBindJSON(&req)
+	if err != nil {
+		log.Errorf("UpdateDevicePointsByID: ShouldBindJSON failed: %w", err)
+		c.JSON(http.StatusInternalServerError, models.CommonResp{Code: http.StatusInternalServerError, Message: err.Error()})
+		return
+	}
+	if err = emsdb.ExportHistoryDataToCSV(req.IDs, req.StartTime, req.EndTime, "analog_data.csv"); err != nil {
+		log.Errorf("UpdateDevicePointsByID: ExportHistoryDataToCSV failed: %w", err)
+		c.JSON(http.StatusInternalServerError, models.CommonResp{Code: http.StatusInternalServerError, Message: err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, models.CommonResp{Code: 200, Message: ""})
+}
+
+// QueryHistoryResult 查询历史数据结果（包装结构）
+type QueryHistoryResult struct {
+	Code int                    `json:"code"`
+	Data emsdb.QueryHistoryResp `json:"data"`
+	Msg  string                 `json:"msg"`
+}
+
+// @Summary     查询历史数据
+// @Description 根据测点类型和测点ID查询InfluxDB历史数据，支持时间插值
+// @ID          influxdb-query-history
+// @Tags        influxdb
+// @Param       Authorization header string true "JWT Token"
+// @Param       body body emsdb.QueryHistoryReq true "查询参数"
+// @Success     200 {object} handlers.QueryHistoryResult "查询成功，返回时间点数组"
+// @Failure     400 {object} models.CommonResp "参数错误"
+// @Failure     500 {object} models.CommonResp "服务内部错误"
+// @Router      /api/v1/log/influxdb/his/query [post]
+func QueryInfluxDBData(c *gin.Context) {
+	log.Info("QueryHistoryData in...")
+
+	req := emsdb.QueryHistoryReq{}
+	if err := c.ShouldBindJSON(&req); err != nil {
+		log.Error("QueryHistoryData ShouldBindJSON err:", err.Error())
+		c.JSON(http.StatusBadRequest, models.CommonResp{
+			Code:    http.StatusBadRequest,
+			Message: "参数错误: " + err.Error(),
+		})
+		return
+	}
+
+	historyData, err := emsdb.QueryHistoryData(&req)
+	if err != nil {
+		log.Error("QueryHistoryData failed:", err)
+		c.JSON(http.StatusBadRequest, models.CommonResp{
+			Code:    http.StatusBadRequest,
+			Message: err.Error(),
+		})
+		return
+	}
+
+	c.JSON(http.StatusOK, QueryHistoryResult{
+		Code: 200,
+		Data: historyData,
+		Msg:  "查询成功",
+	})
+}

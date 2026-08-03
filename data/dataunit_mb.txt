@@ -1,0 +1,2367 @@
+{
+  "ECO-E215WS": {
+    "PCcn01pcs#016Yc": {
+      "unit": "A"
+    },
+    "PCcn01pcs#017Yc": {
+      "unit": "A"
+    },
+    "PCcn01pcs#018Yc": {
+      "unit": "A"
+    },
+    "PCcn01pcs#010Yc": {
+      "unit": "V"
+    },
+    "PCcn01pcs#011Yc": {
+      "unit": "V"
+    },
+    "PCcn01pcs#012Yc": {
+      "unit": "V"
+    },
+    "PCcn01pcs#0127Yc": {
+      "unit": "V"
+    },
+    "PCcn01pcs#0131Yc": {
+      "unit": "A"
+    },
+    "PCcn01pcs#0123Yc": {
+      "unit": "kW"
+    },
+    "PCcn01pcs#0124Yc": {
+      "unit": "kVar"
+    },
+    "PCcn01pcs#0132Yc": {
+      "unit": "kW"
+    },
+    "PCcn01pcs#0112Yc": {
+      "unit": "Hz"
+    },
+    "PCcn01pcs#0156Yc": {
+      "unit": "kW"
+    },
+    "PCcn01pcs#0157Yc": {
+      "unit": "kVar"
+    },
+    "DCcn01bms#011Yc": {
+      "unit": "A"
+    },
+    "DCcn01bms#012Yc": {
+      "unit": "%"
+    },
+    "DCcn01bms#013Yc": {
+      "unit": "%"
+    },
+    "DCcn01bms#010Yc": {
+      "unit": "V"
+    },
+    "DCcn01bms#0111Yc": {
+      "unit": "℃"
+    },
+    "DCcn01bms#0114Yc": {
+      "unit": "℃"
+    },
+    "DCcn01bms#0117Yc": {
+      "unit": "℃"
+    },
+    "DCcn01bms#0119Yc": {
+      "unit": "V"
+    },
+    "DCcn01bms#0120Yc": {
+      "unit": "V"
+    },
+    "DCcn01bms#0123Yc": {
+      "unit": "V"
+    },
+    "DCcn01bms#0126Yc": {
+      "unit": "%"
+    },
+    "DCcn01bms#0158Yc": {
+      "unit": "kWh"
+    },
+    "DCcn01bms#0159Yc": {
+      "unit": "kWh"
+    },
+    "DCcn01bms#0196Yc": {
+      "unit": "kW"
+    },
+    "DCcn01bms#0197Yc": {
+      "unit": "kW"
+    },
+    "DCcn01bms#01108Yc": {
+      "unit": "kWh"
+    },
+    "DCcn01bms#01109Yc": {
+      "unit": "kWh"
+    },
+    "Ocn01dcdt#01169Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01170Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01171Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01172Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01173Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01174Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01175Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01176Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01177Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01178Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01179Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01180Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01181Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01182Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01183Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01184Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01185Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01186Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01187Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01188Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01189Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01190Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01191Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01192Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01193Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01194Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01195Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01196Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01197Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01198Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01199Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01200Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01201Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01202Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01203Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01204Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01205Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01206Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01207Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01208Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01209Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01210Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01211Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01212Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01213Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01214Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01215Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01216Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01217Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01218Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01219Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01220Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01221Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01222Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01223Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01224Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01225Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01226Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01227Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01228Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01229Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01230Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01231Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01232Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01233Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01234Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01235Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01236Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01237Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01238Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01239Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01240Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01241Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01242Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01243Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01244Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01245Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01246Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01247Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01248Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01249Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01250Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01251Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01252Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01253Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01254Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01255Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01256Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01257Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01258Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01259Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01260Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01261Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01262Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01263Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01264Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01265Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01266Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01267Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01268Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01269Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01270Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01271Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01272Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01273Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01274Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01275Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01276Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01277Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01278Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01279Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01280Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01281Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01282Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01283Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01284Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01285Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01286Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01287Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01288Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01289Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01290Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01291Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01292Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01293Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01294Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01295Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01296Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01297Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01298Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01299Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01300Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01301Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01302Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01303Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01304Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01305Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01306Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01307Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01308Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01309Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01310Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01311Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01312Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01313Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01314Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01315Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01316Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01317Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01318Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01319Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01320Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01321Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01322Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01323Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01324Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01325Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01326Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01327Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01328Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01329Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01330Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01331Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01332Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01333Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01334Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01335Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01336Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01337Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01338Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01339Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01340Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01341Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01342Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01343Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01344Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01345Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01346Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01347Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01348Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01349Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01350Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01351Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01352Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01353Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01354Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01355Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01356Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01357Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01358Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01359Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01360Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01361Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01362Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01363Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01364Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01365Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01366Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01367Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01368Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01369Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01370Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01371Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01372Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01373Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01374Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01375Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01376Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01377Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01378Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01379Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01380Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01381Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01382Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01383Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01384Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01385Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01386Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01387Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01388Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01389Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01390Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01391Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01392Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01393Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01394Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01395Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01396Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01397Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01398Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01399Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01400Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01401Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01402Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01403Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01404Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01405Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01406Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01407Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01408Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01409Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01410Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01411Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01412Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01413Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01414Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01415Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01416Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01417Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01418Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01419Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01420Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01421Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01422Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01423Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01424Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01425Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01426Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01427Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01428Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01429Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01430Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01431Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01432Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01433Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01434Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01435Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01436Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01437Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01438Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01439Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01440Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01441Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01442Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01443Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01444Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01445Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01446Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01447Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01448Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01449Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01450Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01451Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01452Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01453Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01454Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01455Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01456Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01457Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01458Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01459Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01460Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01461Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01462Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01463Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01464Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01465Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01466Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01467Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01468Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01469Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01470Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01471Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01472Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01473Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01474Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01475Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01476Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01477Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01478Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01479Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01480Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01481Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01482Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01483Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01484Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01485Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01486Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01487Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01488Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01489Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01490Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01491Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01492Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01493Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01494Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01495Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01496Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01497Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01498Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01499Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01500Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01501Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01502Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01503Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01504Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01505Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01506Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01507Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01508Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01509Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01510Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01511Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01512Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01513Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01514Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01515Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01516Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01517Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01518Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01519Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01520Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01521Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01522Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01523Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01524Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01525Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01526Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01527Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01528Yc": {
+      "unit": "℃"
+    }
+  },
+  "ECO-E233LS-G01-EN": {
+    "PCcn01pcs#016Yc": {
+      "unit": "A"
+    },
+    "PCcn01pcs#017Yc": {
+      "unit": "A"
+    },
+    "PCcn01pcs#018Yc": {
+      "unit": "A"
+    },
+    "PCcn01pcs#010Yc": {
+      "unit": "V"
+    },
+    "PCcn01pcs#011Yc": {
+      "unit": "V"
+    },
+    "PCcn01pcs#012Yc": {
+      "unit": "V"
+    },
+    "PCcn01pcs#0127Yc": {
+      "unit": "V"
+    },
+    "PCcn01pcs#0131Yc": {
+      "unit": "A"
+    },
+    "PCcn01pcs#0123Yc": {
+      "unit": "kW"
+    },
+    "PCcn01pcs#0124Yc": {
+      "unit": "kVar"
+    },
+    "PCcn01pcs#0132Yc": {
+      "unit": "kW"
+    },
+    "PCcn01pcs#0112Yc": {
+      "unit": "Hz"
+    },
+    "PCcn01pcs#0156Yc": {
+      "unit": "kW"
+    },
+    "PCcn01pcs#0157Yc": {
+      "unit": "kVar"
+    },
+    "DCcn01bms#011Yc": {
+      "unit": "A"
+    },
+    "DCcn01bms#012Yc": {
+      "unit": "%"
+    },
+    "DCcn01bms#013Yc": {
+      "unit": "%"
+    },
+    "DCcn01bms#010Yc": {
+      "unit": "V"
+    },
+    "DCcn01bms#0111Yc": {
+      "unit": "℃"
+    },
+    "DCcn01bms#0114Yc": {
+      "unit": "℃"
+    },
+    "DCcn01bms#0117Yc": {
+      "unit": "℃"
+    },
+    "DCcn01bms#0119Yc": {
+      "unit": "V"
+    },
+    "DCcn01bms#0120Yc": {
+      "unit": "V"
+    },
+    "DCcn01bms#0123Yc": {
+      "unit": "V"
+    },
+    "DCcn01bms#0126Yc": {
+      "unit": "%"
+    },
+    "DCcn01bms#0158Yc": {
+      "unit": "kWh"
+    },
+    "DCcn01bms#0159Yc": {
+      "unit": "kWh"
+    },
+    "DCcn01bms#0196Yc": {
+      "unit": "kW"
+    },
+    "DCcn01bms#0197Yc": {
+      "unit": "kW"
+    },
+    "DCcn01bms#01108Yc": {
+      "unit": "kWh"
+    },
+    "DCcn01bms#01109Yc": {
+      "unit": "kWh"
+    },
+    "Ocn01slkt#01151Yc": {
+      "unit": "℃"
+    },
+    "Ocn01slkt#01152Yc": {
+      "unit": "℃"
+    },
+    "Ocn01slkt#01153Yc": {
+      "unit": "℃"
+    },
+    "Ocn01slkt#01154Yc": {
+      "unit": "℃"
+    },
+    "Ocn01slkt#01164Yc": {
+      "unit": "%"
+    },
+    "Ocn01dcdt#01169Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01170Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01171Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01172Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01173Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01174Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01175Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01176Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01177Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01178Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01179Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01180Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01181Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01182Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01183Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01184Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01185Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01186Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01187Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01188Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01189Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01190Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01191Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01192Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01193Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01194Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01195Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01196Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01197Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01198Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01199Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01200Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01201Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01202Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01203Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01204Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01205Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01206Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01207Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01208Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01209Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01210Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01211Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01212Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01213Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01214Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01215Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01216Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01217Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01218Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01219Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01220Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01221Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01222Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01223Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01224Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01225Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01226Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01227Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01228Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01229Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01230Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01231Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01232Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01233Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01234Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01235Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01236Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01237Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01238Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01239Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01240Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01241Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01242Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01243Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01244Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01245Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01246Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01247Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01248Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01249Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01250Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01251Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01252Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01253Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01254Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01255Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01256Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01257Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01258Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01259Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01260Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01261Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01262Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01263Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01264Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01265Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01266Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01267Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01268Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01269Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01270Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01271Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01272Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01273Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01274Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01275Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01276Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01277Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01278Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01279Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01280Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01281Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01282Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01283Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01284Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01285Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01286Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01287Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01288Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01289Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01290Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01291Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01292Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01293Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01294Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01295Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01296Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01297Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01298Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01299Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01300Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01301Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01302Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01303Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01304Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01305Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01306Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01307Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01308Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01309Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01310Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01311Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01312Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01313Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01314Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01315Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01316Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01317Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01318Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01319Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01320Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01321Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01322Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01323Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01324Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01325Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01326Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01327Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01328Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01329Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01330Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01331Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01332Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01333Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01334Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01335Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01336Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01337Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01338Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01339Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01340Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01341Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01342Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01343Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01344Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01345Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01346Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01347Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01348Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01349Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01350Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01351Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01352Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01353Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01354Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01355Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01356Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01357Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01358Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01359Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01360Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01361Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01362Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01363Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01364Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01365Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01366Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01367Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01368Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01369Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01370Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01371Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01372Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01373Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01374Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01375Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01376Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01377Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01378Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01379Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01380Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01381Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01382Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01383Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01384Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01385Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01386Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01387Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01388Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01389Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01390Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01391Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01392Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01393Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01394Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01395Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01396Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01397Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01398Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01399Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01400Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01401Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01402Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01403Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01404Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01405Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01406Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01407Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01408Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01409Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01410Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01411Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01412Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01413Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01414Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01415Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01416Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01417Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01418Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01419Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01420Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01421Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01422Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01423Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01424Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01425Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01426Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01427Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01428Yc": {
+      "unit": "V"
+    },
+    "Ocn01dcdt#01585Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01586Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01587Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01588Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01589Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01590Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01591Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01592Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01593Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01594Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01595Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01596Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01597Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01598Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01599Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01600Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01601Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01602Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01603Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01604Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01605Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01606Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01607Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01608Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01609Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01610Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01611Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01612Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01613Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01614Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01615Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01616Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01617Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01618Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01619Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01620Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01621Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01622Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01623Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01624Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01625Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01626Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01627Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01628Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01629Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01630Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01631Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01632Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01633Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01634Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01635Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01636Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01637Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01638Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01639Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01640Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01641Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01642Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01643Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01644Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01645Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01646Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01647Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01648Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01649Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01650Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01651Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01652Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01653Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01654Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01655Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01656Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01657Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01658Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01659Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01660Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01661Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01662Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01663Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01664Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01665Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01666Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01667Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01668Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01669Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01670Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01671Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01672Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01673Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01674Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01675Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01676Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01677Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01678Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01679Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01680Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01681Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01682Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01683Yc": {
+      "unit": "℃"
+    },
+    "Ocn01dcdt#01684Yc": {
+      "unit": "℃"
+    }
+  }
+}

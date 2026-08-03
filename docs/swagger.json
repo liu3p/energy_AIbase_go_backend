@@ -1,0 +1,3705 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "contact": {}
+    },
+    "paths": {
+        "/api/v1/log/ems": {
+            "get": {
+                "description": "查询ems设备信息",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "ems"
+                ],
+                "summary": "查询ems设备",
+                "operationId": "query-ems",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "\u003ctoken\u003e",
+                        "description": "JWT Token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "查询成功 {\\\"topic\\\":\\\"ems\\\",\\\"content\\\":{\\\"ems\\\":{\\\"sn\\\":\\\"ems\\\",\\\"name\\\":\\\"ems\\\", \\\"status\\\":2}}}",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.QueryEmsResp"
+                        }
+                    },
+                    "401": {
+                        "description": "认证失败 {\\\"code\\\": 401, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    },
+                    "403": {
+                        "description": "拒绝访问 {\\\"code\\\": 403, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    },
+                    "404": {
+                        "description": "没有找到ems {\\\"code\\\": 404, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    },
+                    "503": {
+                        "description": "服务不可访问 {\\\"code\\\": 503, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/log/ems/prop": {
+            "get": {
+                "description": "查询指定网关下某子设备属性",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "ems"
+                ],
+                "summary": "查询子设备属性",
+                "operationId": "query-ems-prop",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "\u003ctoken\u003e",
+                        "description": "JWT Token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "查询成功 {\\\"topic\\\":\\\"property\\\",\\\"content\\\":{\\\"11223355ems\\\":[{\\\"at\\\":1699263620341,\\\"k\\\":\\\"Runstate\\\",\\\"mt\\\":1699263620341,\\\"v\\\":1}]}}",
+                        "schema": {
+                            "$ref": "#/definitions/models.TeleData"
+                        }
+                    },
+                    "401": {
+                        "description": "认证失败 {\\\"code\\\": 401, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    },
+                    "403": {
+                        "description": "拒绝访问 {\\\"code\\\": 403, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    },
+                    "503": {
+                        "description": "服务不可访问 {\\\"code\\\": 503, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/log/ems/remote/{method}": {
+            "post": {
+                "description": "ems遥控或遥调下发",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "ems"
+                ],
+                "summary": "ems遥控/调",
+                "operationId": "query-ems-remote",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "\u003ctoken\u003e",
+                        "description": "JWT Token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "example": "1\u003eems策略下发：PolicyConfig,\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t2\u003e手动/智能策略下发:\tPlanSet,\t3\u003eAGC对象投入/退出:\tAGCExitCtrl,\t4\u003eAGC对象远方/就地:AGCRemoteCtrl,\t5\u003e储能一体机投入/退出:CabExitCtrl,\t6\u003eAGC策略修改:AGCStrategyMod,\t7\u003e并网点增删改:ParallelBranch",
+                        "description": "方法名",
+                        "name": "method",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "default": "{\"content\": \"body\", \"sn\": \"项目sn号\"}",
+                        "example": "{\"content\":[{\\\"type\\\":1,\\\"bus\\\":\\\"bus1\\\",\\\"date\\\":\\\"2006-01-02\\\",\\\"config_data\\\":{\\\"plans\\\":[{\\\"p\\\":100.45,\\\"bt\\\":\\\"00:00\\\",\\\"et\\\":\\\"01:21\\\"},{\\\"p\\\":0,\\\"bt\\\":\\\"23:21\\\",\\\"et\\\":\\\"24:00\\\"},{\\\"p\\\":-100.45,\\\"bt\\\":\\\"01:21\\\",\\\"et\\\":\\\"23:21\\\"}],\\\"soc_up\\\":100,\\\"soc_dn\\\":48.5,\\\"interval\\\":15}},{\\\"type\\\":1,\\\"bus\\\":\\\"bus2\\\",\\\"date\\\":\\\"2006-01-02\\\",\\\"config_data\\\":{\\\"plans\\\":[{\\\"p\\\":110.45,\\\"bt\\\":\\\"00:00\\\",\\\"et\\\":\\\"01:21\\\"},{\\\"p\\\":10,\\\"bt\\\":\\\"23:21\\\",\\\"et\\\":\\\"24:00\\\"},{\\\"p\\\":-100.45,\\\"bt\\\":\\\"01:21\\\",\\\"et\\\":\\\"23:21\\\"}],\\\"soc_up\\\":100,\\\"soc_dn\\\":28,\\\"interval\\\":15}}], \"sn\": \"项目sn号\"}",
+                        "description": "ems策略下发",
+                        "name": "RemoteReq-情况1",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "default": "{\"content\": \"\", \"sn\": \"项目sn号\"}",
+                        "example": "{\"content\"：[{\\\"mode\\\":0,\\\"bus\\\":\\\"bus1\\\",\\\"date\\\":\\\"2006-01-02\\\",\\\"p\\\":100.0，\\\"max_p\\\":322.1\\\"soc_up\\\":85,\\\"soc_dn\\\":15，\\\"chg_max\\\":100,\\\"dchg_max\\\":200，\\\"chg_eff\\\":80,\\\"dchg_eff\\\":90}], \"sn\": \"项目sn号\"}",
+                        "description": "手动/智能策略下发 (mode：类型0-手动策略，2-智能策略)",
+                        "name": "RemoteReq-情况2",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "default": "{\"content\": \"\", \"sn\": \"项目sn号\"}",
+                        "example": "{\"content\": {\\\"state\\\": 0}, \"sn\": \"项目sn号\"}",
+                        "description": "AGC对象投入/退出  (0-退出；1-投入)",
+                        "name": "RemoteReq-情况3",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "default": "{\"content\": \"\", \"sn\": \"项目sn号\"}",
+                        "example": "{\"content\": {\\\"state\\\": 0}, \"sn\": \"项目sn号\"}",
+                        "description": "AGC对象远方/就地  (0-就地；1-远方)",
+                        "name": "RemoteReq-情况4",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "default": "{\"content\": \"\", \"sn\": \"项目sn号\"}",
+                        "example": "{\"content\": {\\\"state\\\": 0}, \"sn\": \"项目sn号\"}",
+                        "description": "储能一体机投入/退出  (0-退出；1-投入)",
+                        "name": "RemoteReq-情况5",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "default": "{\"content\": \"\", \"sn\": \"项目sn号\"}",
+                        "example": "{\"content\": {\\\"state\\\": 0}, \"sn\": \"项目sn号\"}",
+                        "description": "AGC策略修改  (0-功率设定；1-计划曲线；2-智能模式)",
+                        "name": "RemoteReq-情况6",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "default": "{\"content\": \"\", \"sn\": \"项目sn号\"}",
+                        "example": "{\"content\"：[{\\\"bus\\\":\\\"bus1\\\",\\\"demand\\\":1000.2,\\\"trans_cap\\\":800.3,\\\"config_data\\\":[{\\\"sn\\\":\\\"esscab1\\\"},{\\\"sn\\\":\\\"esscab2\\\"}]},{\\\"bus\\\":\\\"bus2\\\",\\\"demand\\\":1000.2,\\\"trans_cap\\\":800.3,\\\"config_data\\\":[{\\\"sn\\\":\\\"esscab3\\\"},{\\\"sn\\\":\\\"esscab4\\\"}]}]\", \"sn\": \"项目sn号\"}",
+                        "description": "并网点增删改",
+                        "name": "RemoteReq-情况7",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "1": {
+                        "description": "CODE 200.  ems策略下发 下发成功 {\\\"topic\\\": \\\"LocalPolicyUpAuto\\\", \\\"content\\\": [{\\\"type\\\":1,\\\"bus\\\":\\\"bus1\\\",\\\"status\\\":0,\\\"exec_t\\\":\\\"2023-09-15\t\t\t\t\t\t\t\t\t\t14:17:00\\\",\\\"from\\\":2,\\\"plans\\\":[{\\\"p\\\":100.45,\\\"bt\\\":\\\"00:00\\\",\\\"et\\\":\\\"01:21\\\"},{\\\"p\\\":0,\\\"bt\\\":\\\"23:21\\\",\\\"et\\\":\\\"24:00\\\"},{\\\"p\\\":-100.45,\\\"bt\\\":\\\"01:21\\\",\\\"et\\\":\\\"23:21\\\"}]},{\\\"type\\\":1,\\\"bus\\\":\\\"bus2\\\",\\\"status\\\":0,\\\"exec_t\\\":\\\"2023-09-15\t14:17:00\\\",\\\"from\\\":2,\\\"plans\\\":[{\\\"p\\\":100.45,\\\"bt\\\":\\\"00:00\\\",\\\"et\\\":\\\"01:21\\\"},{\\\"p\\\":0,\\\"bt\\\":\\\"23:21\\\",\\\"et\\\":\\\"24:00\\\"},{\\\"p\\\":-100.45,\\\"bt\\\":\\\"01:21\\\",\\\"et\\\":\\\"23:21\\\"}]}]}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    },
+                    "10": {
+                        "description": "CODE 403.  拒绝访问 {\\\"code\\\": 403, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    },
+                    "11": {
+                        "description": "CODE 503.  服务不可访问 {\\\"code\\\": 503, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    },
+                    "2": {
+                        "description": "CODE 200.  手动/智能策略下发  手动策略 下发成功 {\\\"topic\\\": \\\"LocalPolicyUpHand\\\", \\\"content\\\": [{\\\"type\\\":1,\\\"bus\\\":\\\"bus1\\\",\\\"status\\\":0,\\\"exec_t\\\":\\\"2023-09-15\t\t\t\t\t\t\t\t14:17:00\\\",\\\"soc_up\\\":90,\\\"soc_dn\\\":15,\\\"p\\\":100.1,\\\"from\\\":0}]}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    },
+                    "3": {
+                        "description": "CODE 200.  手动/智能策略下发  智能策略 下发成功 {\\\"topic\\\": \\\"LocalPolicyUpSmart\\\", \\\"content\\\": [{\\\"max_p\\\":233.2,\\\"bus\\\":\\\"bus1\\\",\\\"type\\\":1,\\\"status\\\":0,\\\"from\\\":2,\\\"exec_t\\\":\\\"2023-09-15\t14:17:00\\\",\\\"chg_max\\\":40.2,\\\"dchg_max\\\":40.2,\\\"chg_eff\\\":89.9,\\\"dchg_eff\\\":89.9,\\\"ele_state\\\":0,\\\"chg_cpt\\\":100,\\\"dchg_cpt\\\":20,\\\"soc\\\":25,\\\"soc_up\\\":85,\\\"soc_dn\\\":15}]",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    },
+                    "4": {
+                        "description": "CODE 200.  AGC对象投入/退出 下发成功 {\\\"topic\\\": \\\"AGCExitCtrlReport\\\", \\\"content\\\": {\\\"ack:\\\": true}}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    },
+                    "5": {
+                        "description": "CODE 200.  AGC对象远方/就地 下发成功 {\\\"topic\\\": \\\"AGCRemoteCtrlReport\\\", \\\"content\\\": {\\\"ack:\\\": true}}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    },
+                    "6": {
+                        "description": "CODE 200.  储能一体机投入/退出 下发成功  {\\\"topic\\\": \\\"CabExitCtrlReport\\\", \\\"content\\\": {\\\"ack:\\\": true}}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    },
+                    "7": {
+                        "description": "CODE 200.  AGC策略修改 下发成功 {\\\"topic\\\": \\\"AGCStrategyModReport\\\", \\\"content\\\": {\\\"ack:\\\": true}}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    },
+                    "8": {
+                        "description": "CODE 200.  并网点增删改 下发成功 {\\\"topic\\\": \\\"ParallelBranchReport\\\", \\\"content\\\": [{\\\"k\t\\\":\\\"20231128e\tms\t\\\",\\\"v\\\":[{\\\"from\t\\\":1,\\\"bus\\\":\\\"bus1\\\",\\\"demand\\\":1000.2,\\\"trans_cap\\\":800.3,\\\"config_data\\\":[{\\\"sn\\\":\\\"esscab1\\\"},{\\\"sn\\\":\\\"esscab2\\\"}]},{\\\"from\t\\\":1,\\\"bus\\\":\\\"bus2\\\",\\\"demand\\\":1000.2,\\\"trans_cap\\\":800.3,\\\"config_data\\\":[{\\\"sn\\\":\\\"esscab3\\\"},{\\\"sn\\\":\\\"esscab4\\\"}]}]}]}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    },
+                    "9": {
+                        "description": "CODE 401.  认证失败 {\\\"code\\\": 401, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/log/ems/telemetry": {
+            "get": {
+                "description": "查询ems的遥测数据",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "ems"
+                ],
+                "summary": "查询ems遥测",
+                "operationId": "query-ems-yc",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "\u003ctoken\u003e",
+                        "description": "JWT Token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "查询成功 {\\\"topic\\\":\\\"telemetry\\\",\\\"content\\\":{\\\"11223355ems\\\":[{\\\"at\\\":1699263620341,\\\"k\\\":\\\"Uab\\\",\\\"mt\\\":1699263620341,\\\"v\\\":400}]}}",
+                        "schema": {
+                            "$ref": "#/definitions/models.TeleData"
+                        }
+                    },
+                    "401": {
+                        "description": "认证失败 {\\\"code\\\": 401, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    },
+                    "403": {
+                        "description": "拒绝访问 {\\\"code\\\": 403, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    },
+                    "503": {
+                        "description": "服务不可访问 {\\\"code\\\": 503, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/log/ems/telesignal": {
+            "get": {
+                "description": "查询ems的遥信数据",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "ems"
+                ],
+                "summary": "查询ems遥信",
+                "operationId": "query-ems-yx",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "\u003ctoken\u003e",
+                        "description": "JWT Token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "查询成功 {\\\"topic\\\":\\\"telesignal\\\",\\\"content\\\":{\\\"ems\\\":[{\\\"at\\\":1699263620341,\\\"k\\\":\\\"Uab\\\",\\\"mt\\\":1699263620341,\\\"v\\\":400}]}}",
+                        "schema": {
+                            "$ref": "#/definitions/models.TeleData"
+                        }
+                    },
+                    "401": {
+                        "description": "认证失败 {\\\"code\\\": 401, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    },
+                    "403": {
+                        "description": "拒绝访问 {\\\"code\\\": 403, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    },
+                    "503": {
+                        "description": "服务不可访问 {\\\"code\\\": 503, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/log/gateways": {
+            "get": {
+                "description": "查询全部网关信息",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "gateways"
+                ],
+                "summary": "查询网关",
+                "operationId": "query-gateways",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "\u003ctoken\u003e",
+                        "description": "JWT Token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "查询成功 {\\\"topic\\\": \\\"gateways\\\", \\\"content\\\": {\\\"gateway_sn1\\\":{\\\"name\\\":\\\"\\\",\\\"address\\\":\\\"\\\", \\\"status\\\":2}, \"gateway_sn2\\\":{\\\"name\\\":\\\"\\\",\\\"address\\\":\\\"\\\", \\\"status\\\":2}}}",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.QueryGatewaysResp"
+                        }
+                    },
+                    "401": {
+                        "description": "认证失败 {\\\"code\\\": 401, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    },
+                    "403": {
+                        "description": "拒绝访问 {\\\"code\\\": 403, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    },
+                    "503": {
+                        "description": "服务不可访问 {\\\"code\\\": 503, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/log/gateways/{gateway_sn}/dev_telemetry": {
+            "post": {
+                "description": "查询指定网关下多个子设备遥测",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "gateways"
+                ],
+                "summary": "查询多个子设备遥测",
+                "operationId": "query-multi-devices-yc",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "\u003ctoken\u003e",
+                        "description": "JWT Token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "网关sn",
+                        "name": "gateway_sn",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "设备sn数组",
+                        "name": "devices",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "查询成功 {\\\"topic\\\":\\\"tm\\\",\\\"content\\\":{\\\"11223355esscab1pcs1\\\":[{\\\"at\\\":1699263620341,\\\"k\\\":\\\"Uab\\\",\\\"mt\\\":1699263620341,\\\"v\\\":400}],\\\"11223355esscab1ac11\\\":[{\\\"at\\\":1699263620341,\\\"k\\\":\\\"Runstate\\\",\\\"mt\\\":1699263620341,\\\"v\\\":0}]}}",
+                        "schema": {
+                            "$ref": "#/definitions/models.TeleData"
+                        }
+                    },
+                    "401": {
+                        "description": "认证失败 {\\\"code\\\": 401, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    },
+                    "403": {
+                        "description": "拒绝访问 {\\\"code\\\": 403, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    },
+                    "404": {
+                        "description": "没找到gateway {\\\"code\\\": 404, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    },
+                    "503": {
+                        "description": "服务不可访问 {\\\"code\\\": 503, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/log/gateways/{gateway_sn}/dev_telesignal": {
+            "post": {
+                "description": "查询指定网关下多个子设备遥信",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "gateways"
+                ],
+                "summary": "查询多个子设备遥信",
+                "operationId": "query-multi-devices-yx",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "\u003ctoken\u003e",
+                        "description": "JWT Token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "网关sn",
+                        "name": "gateway_sn",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "设备sn数组",
+                        "name": "devices",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "查询成功 {\\\"topic\\\":\\\"ts\\\",\\\"content\\\":{\\\"11223355esscab1pcs1\\\":[{\\\"at\\\":1699263620341,\\\"k\\\":\\\"Uab\\\",\\\"mt\\\":1699263620341,\\\"v\\\":400}],\\\"11223355esscab1ac11\\\":[{\\\"at\\\":1699263620341,\\\"k\\\":\\\"Runstate\\\",\\\"mt\\\":1699263620341,\\\"v\\\":0}]}}",
+                        "schema": {
+                            "$ref": "#/definitions/models.TeleData"
+                        }
+                    },
+                    "401": {
+                        "description": "认证失败 {\\\"code\\\": 401, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    },
+                    "403": {
+                        "description": "拒绝访问 {\\\"code\\\": 403, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    },
+                    "404": {
+                        "description": "没找到gateway {\\\"code\\\": 404, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    },
+                    "503": {
+                        "description": "服务不可访问 {\\\"code\\\": 503, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/log/gateways/{gateway_sn}/devices": {
+            "get": {
+                "description": "查询指定网关下子设备信息",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "gateways"
+                ],
+                "summary": "查询子设备",
+                "operationId": "query-devices",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "\u003ctoken\u003e",
+                        "description": "JWT Token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "网关sn",
+                        "name": "gateway_sn",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "查询成功 {\\\"topic\\\": \\\"devices\\\", \\\"content\\\": {\\\"device_sn1\\\":{\\\"name\\\":\\\"\\\",\\\"dev_code\\\":\\\"\\\"}, \"device_sn2\\\":{\\\"name\\\":\\\"\\\",\\\"dev_code\\\":\\\"\\\"}}}",
+                        "schema": {
+                            "$ref": "#/definitions/models.QueryDevicesResp"
+                        }
+                    },
+                    "401": {
+                        "description": "认证失败 {\\\"code\\\": 401, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    },
+                    "403": {
+                        "description": "拒绝访问 {\\\"code\\\": 403, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    },
+                    "404": {
+                        "description": "没找到gateway {\\\"code\\\": 404, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    },
+                    "503": {
+                        "description": "服务不可访问 {\\\"code\\\": 503, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/log/gateways/{gateway_sn}/devices/{device_sn}/adjust": {
+            "get": {
+                "description": "查询指定网关下某子设备的遥设点",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "gateways"
+                ],
+                "summary": "查询子设备遥设点",
+                "operationId": "query-devices-adjust",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "\u003ctoken\u003e",
+                        "description": "JWT Token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "网关sn",
+                        "name": "gateway_sn",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "default": "esscab1pcs1",
+                        "description": "子设备sn",
+                        "name": "device_sn",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "查询成功 [{\\\"mqttid\\\":\\\"OnOff\\\",\\\"value\\\":0}]",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.DeviceRemoteData"
+                        }
+                    },
+                    "401": {
+                        "description": "认证失败 {\\\"code\\\": 401, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    },
+                    "403": {
+                        "description": "拒绝访问 {\\\"code\\\": 403, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    },
+                    "404": {
+                        "description": "没找到gateway {\\\"code\\\": 404, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    },
+                    "503": {
+                        "description": "服务不可访问 {\\\"code\\\": 503, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/log/gateways/{gateway_sn}/devices/{device_sn}/history/{mqttid}": {
+            "post": {
+                "description": "查询点位历史数据",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "gateways"
+                ],
+                "summary": "查询点位历史数据",
+                "operationId": "mqttid-his",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "\u003ctoken\u003e",
+                        "description": "JWT Token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "example": "\"esscab1\"",
+                        "description": "网关sn, ems设备写ems即可",
+                        "name": "gateway_sn",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "example": "\"esscab1ac1\"",
+                        "description": "子设备sn, ems设备写ems即可",
+                        "name": "device_sn",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "mqttid点名",
+                        "name": "mqttid",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "请求消息体 内容是{date: 2024-01-26}格式的json结构，指定历史记录的日期",
+                        "name": "content",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "object"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "成功 ，例：{\\\"date\\\":\\\"2024-01-26\\\",\\\"list_data\\\":[{\\\"data\\\":100,\\\"time\\\":\\\"00:00\\\"},{\\\"data\\\":100,\\\"time\\\":\\\"00:05\\\"},{\\\"data\\\":100,\\\"time\\\":\\\"00:10\\\"}...]",
+                        "schema": {
+                            "type": "object"
+                        }
+                    },
+                    "400": {
+                        "description": "参数错误 {\\\"code\\\": 400, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    },
+                    "401": {
+                        "description": "认证失败 {\\\"code\\\": 401, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    },
+                    "403": {
+                        "description": "拒绝访问 {\\\"code\\\": 403, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    },
+                    "503": {
+                        "description": "服务不可访问 {\\\"code\\\": 503, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/log/gateways/{gateway_sn}/devices/{device_sn}/prop": {
+            "get": {
+                "description": "查询指定网关下某子设备属性",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "gateways"
+                ],
+                "summary": "查询子设备属性",
+                "operationId": "query-devices-prop",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "\u003ctoken\u003e",
+                        "description": "JWT Token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "网关sn",
+                        "name": "gateway_sn",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "default": "11223355esscab1pcs1",
+                        "description": "子设备sn",
+                        "name": "device_sn",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "查询成功 {\\\"topic\\\":\\\"prop\\\",\\\"content\\\":{\\\"11223355esscab1pcs1\\\":[{\\\"at\\\":1699263620341,\\\"k\\\":\\\"Uab\\\",\\\"mt\\\":1699263620341,\\\"v\\\":400}]}}",
+                        "schema": {
+                            "$ref": "#/definitions/models.TeleData"
+                        }
+                    },
+                    "401": {
+                        "description": "认证失败 {\\\"code\\\": 401, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    },
+                    "403": {
+                        "description": "拒绝访问 {\\\"code\\\": 403, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    },
+                    "404": {
+                        "description": "没找到gateway {\\\"code\\\": 404, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    },
+                    "503": {
+                        "description": "服务不可访问 {\\\"code\\\": 503, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/log/gateways/{gateway_sn}/devices/{device_sn}/remote": {
+            "get": {
+                "description": "查询指定网关下某子设备的遥控点",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "gateways"
+                ],
+                "summary": "查询子设备遥控点",
+                "operationId": "query-devices-remote",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "\u003ctoken\u003e",
+                        "description": "JWT Token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "网关sn",
+                        "name": "gateway_sn",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "default": "esscab1pcs1",
+                        "description": "子设备sn",
+                        "name": "device_sn",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "查询成功 [{\\\"mqttid\\\":\\\"OnOff\\\",\\\"value\\\":0}]",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.DeviceRemoteData"
+                        }
+                    },
+                    "401": {
+                        "description": "认证失败 {\\\"code\\\": 401, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    },
+                    "403": {
+                        "description": "拒绝访问 {\\\"code\\\": 403, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    },
+                    "404": {
+                        "description": "没找到gateway {\\\"code\\\": 404, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    },
+                    "503": {
+                        "description": "服务不可访问 {\\\"code\\\": 503, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/log/gateways/{gateway_sn}/devices/{device_sn}/remote/{method}": {
+            "post": {
+                "description": "查询指定网关下某子设备属性",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "gateways"
+                ],
+                "summary": "子设备遥控/调",
+                "operationId": "devices-remote",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "\u003ctoken\u003e",
+                        "description": "JWT Token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "example": "\"esscab1\"",
+                        "description": "网关sn",
+                        "name": "gateway_sn",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "example": "\"esscab1ac1\"",
+                        "description": "子设备sn",
+                        "name": "device_sn",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "example": "\"OnOff\"",
+                        "description": "方法名",
+                        "name": "method",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "遥控/调。content的内容是{state: 0}格式的json结构，【不是字符串】，数值填写在state中。 checkpwd的内容是用户密码做校验用",
+                        "name": "RemoteReq",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/handlers.RemoteReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "下发成功 {\\\"topic\\\": \\\"\\\", \\\"content\\\": \\\"6\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/emsclient.PushRemoteResp"
+                        }
+                    },
+                    "400": {
+                        "description": "下发失败 5-应答失败,7-发令超时,8-撤消,9-应答超时,10-异常,11-遥控/调点不存在 {\\\"code\\\": 5, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    },
+                    "401": {
+                        "description": "认证失败 {\\\"code\\\": 401, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    },
+                    "404": {
+                        "description": "没找到gateway {\\\"code\\\": 404, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    },
+                    "408": {
+                        "description": "遥控下发响应超时 {\\\"code\\\": 408, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    },
+                    "503": {
+                        "description": "服务不可访问 {\\\"code\\\": 503, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/log/gateways/{gateway_sn}/devices/{device_sn}/telemetry": {
+            "get": {
+                "description": "查询指定网关下某子设备遥测",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "gateways"
+                ],
+                "summary": "查询子设备遥测",
+                "operationId": "query-devices-yc",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "\u003ctoken\u003e",
+                        "description": "JWT Token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "网关sn",
+                        "name": "gateway_sn",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "default": "11223355esscab1pcs1",
+                        "description": "子设备sn",
+                        "name": "device_sn",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "查询成功 {\\\"topic\\\":\\\"tm\\\",\\\"content\\\":{\\\"11223355esscab1pcs1\\\":[{\\\"at\\\":1699263620341,\\\"k\\\":\\\"Uab\\\",\\\"mt\\\":1699263620341,\\\"v\\\":400}]}}",
+                        "schema": {
+                            "$ref": "#/definitions/models.TeleData"
+                        }
+                    },
+                    "401": {
+                        "description": "认证失败 {\\\"code\\\": 401, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    },
+                    "403": {
+                        "description": "拒绝访问 {\\\"code\\\": 403, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    },
+                    "404": {
+                        "description": "没找到gateway {\\\"code\\\": 404, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    },
+                    "503": {
+                        "description": "服务不可访问 {\\\"code\\\": 503, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/log/gateways/{gateway_sn}/devices/{device_sn}/telesignal": {
+            "get": {
+                "description": "查询指定网关下某子设备遥信",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "gateways"
+                ],
+                "summary": "查询子设备遥信",
+                "operationId": "query-devices-yx",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "\u003ctoken\u003e",
+                        "description": "JWT Token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "网关sn",
+                        "name": "gateway_sn",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "default": "11223355esscab1pcs1",
+                        "description": "子设备sn",
+                        "name": "device_sn",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "查询成功 {\\\"topic\\\":\\\"ts\\\",\\\"content\\\":{\\\"11223355esscab1pcs1\\\":[{\\\"at\\\":1699263620341,\\\"k\\\":\\\"Uab\\\",\\\"mt\\\":1699263620341,\\\"v\\\":400}]}}",
+                        "schema": {
+                            "$ref": "#/definitions/models.TeleData"
+                        }
+                    },
+                    "401": {
+                        "description": "认证失败 {\\\"code\\\": 401, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    },
+                    "403": {
+                        "description": "拒绝访问 {\\\"code\\\": 403, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    },
+                    "404": {
+                        "description": "没找到gateway {\\\"code\\\": 404, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    },
+                    "503": {
+                        "description": "服务不可访问 {\\\"code\\\": 503, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/log/overview/{model}": {
+            "get": {
+                "description": "查询概览信息",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "ems"
+                ],
+                "summary": "查询概览信息",
+                "operationId": "query-overview",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "\u003ctoken\u003e",
+                        "description": "JWT Token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "概览的产品型号",
+                        "name": "model",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "查询成功 {\\\"ess.bms\\\":{\\\"esscab1bms1\\\":{\\\"yc\\\":{\\\"Idc\\\":32.400024,\\\"Udc\\\":750.10004}}},\\\"ess.pcs\\\":{\\\"esscab1pcs1\\\":{\\\"yc\\\":{\\\"PChgMax\\\":100,\\\"RunState\\\":1}}}}",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.overViewData"
+                        }
+                    },
+                    "401": {
+                        "description": "认证失败 {\\\"code\\\": 401, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    },
+                    "403": {
+                        "description": "拒绝访问 {\\\"code\\\": 403, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    },
+                    "404": {
+                        "description": "没有找到model {\\\"code\\\": 404, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    },
+                    "503": {
+                        "description": "服务不可访问 {\\\"code\\\": 503, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/log/rd/logdump": {
+            "post": {
+                "description": "控制收集日志的启停。返回内容taskid是收集日志任务执行的唯一标识。收集完成（或者出错）会有相应的推送消息，topic类型：logdump。收集成功后，可以通过GET /api/v1/log/rd/logdump/{taskid}来下载收集的日志文件。",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "system"
+                ],
+                "summary": "启动/停止收集日志(localapp)",
+                "operationId": "log-task-post",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "\u003ctoken\u003e",
+                        "description": "JWT Token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "请求消息体 operation：操作 1 开始收集， 2 停止收集；taskid：停止日志（operation为2）的时候，需要传递taskid；gatewaysn：网关sn，用于指定收集日志的机柜。",
+                        "name": "LogDumpReq",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/handlers.LogDumpReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "成功 {\\\"taskid\\\": 1708481804673}。 执行完成后会推送：{\\\"topic\\\":\\\"logdump\\\",\\\"content\\\":{\\\"taskid\\\":1708481804673,\\\"result\\\":0}}, 其中result： 0 成功， 1 生成（部分）失败， 2 因冲突停止 3 失败，0和1的情况可以通过taskid拉取到文件包。",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.LogDumpResp"
+                        }
+                    },
+                    "400": {
+                        "description": "参数错误 {\\\"code\\\": 400, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    },
+                    "401": {
+                        "description": "认证失败 {\\\"code\\\": 401, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    },
+                    "403": {
+                        "description": "拒绝访问 {\\\"code\\\": 403, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    },
+                    "503": {
+                        "description": "服务不可访问 {\\\"code\\\": 503, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/log/rd/logdump/{taskid}": {
+            "get": {
+                "description": "获取收集的日志",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "system"
+                ],
+                "summary": "获取收集的日志(localapp)",
+                "operationId": "log-task-get",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "\u003ctoken\u003e",
+                        "description": "JWT Token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "任务id",
+                        "name": "taskid",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "成功 {\\\"code\\\": 200, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    },
+                    "401": {
+                        "description": "认证失败 {\\\"code\\\": 401, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    },
+                    "403": {
+                        "description": "拒绝访问 {\\\"code\\\": 403, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    },
+                    "404": {
+                        "description": "文件不存在",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "503": {
+                        "description": "服务不可访问 {\\\"code\\\": 503, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/log/rd/proclist/{gatewaysn}": {
+            "get": {
+                "description": "查询进程信息",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "system"
+                ],
+                "summary": "查询进程信息(localapp)",
+                "operationId": "proc-get",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "\u003ctoken\u003e",
+                        "description": "JWT Token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "任务id",
+                        "name": "taskid",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "成功 {\\\"code\\\": 200, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    },
+                    "401": {
+                        "description": "认证失败 {\\\"code\\\": 401, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    },
+                    "403": {
+                        "description": "拒绝访问 {\\\"code\\\": 403, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    },
+                    "404": {
+                        "description": "文件不存在",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "503": {
+                        "description": "服务不可访问 {\\\"code\\\": 503, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "进程管理控制",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "system"
+                ],
+                "summary": "进程管理控制(localapp)",
+                "operationId": "proc-post",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "\u003ctoken\u003e",
+                        "description": "JWT Token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "任务id",
+                        "name": "taskid",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "成功 {\\\"code\\\": 200, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    },
+                    "401": {
+                        "description": "认证失败 {\\\"code\\\": 401, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    },
+                    "403": {
+                        "description": "拒绝访问 {\\\"code\\\": 403, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    },
+                    "404": {
+                        "description": "文件不存在",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "503": {
+                        "description": "服务不可访问 {\\\"code\\\": 503, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/log/rd/{method}": {
+            "post": {
+                "description": "定制转发接口",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "ems"
+                ],
+                "summary": "定制转发",
+                "operationId": "rd-post",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "\u003ctoken\u003e",
+                        "description": "JWT Token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "方法名",
+                        "name": "method",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "转发消息体",
+                        "name": "RdData",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/handlers.RdData"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "成功 {\\\"code\\\": 200, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    },
+                    "401": {
+                        "description": "认证失败 {\\\"code\\\": 401, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    },
+                    "403": {
+                        "description": "拒绝访问 {\\\"code\\\": 403, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    },
+                    "503": {
+                        "description": "服务不可访问 {\\\"code\\\": 503, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/log/system/modbus/config": {
+            "get": {
+                "description": "转发参数，通讯方式、查询",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "system"
+                ],
+                "summary": "转发参数，通讯方式查询",
+                "responses": {
+                    "200": {
+                        "description": "查询成功,DevType值为1表示Modbus_TCP方式,5表示Modbus-RTU式;LocalPort表示端口号; Baud表示波特率；CheckBit表示校验方式；StopBit表示停止位；DataBit表示数据位；TerminalAddr表示通讯地址 {\\\"DevType\\\":1,\\\"LocalPort\\\":0,\\\"Baud\\\":9600,\\\"CheckBit\\\":0,\\\"StopBit\\\":1,\\\"DataBit\\\":8,\\\"TerminalAddr\\\":1}",
+                        "schema": {
+                            "$ref": "#/definitions/db.ModbusInteractive"
+                        }
+                    },
+                    "500": {
+                        "description": "服务内部错误 {\\\"code\\\": 500, \\\"msg\\\": \\\"select db error\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "转发参数，通讯方式参数写入",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "system"
+                ],
+                "summary": "转发参数，通讯方式参数写入",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "\u003ctoken\u003e",
+                        "description": "JWT Token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "DevType值为1表示Modbus_TCP方式,5表示Modbus-RTU式;LocalPort表示端口号; Baud表示波特率；CheckBit表示校验方式；StopBit表示停止位；DataBit表示数据位；TerminalAddr表示通讯地址 {\\",
+                        "name": "ModbusInteractive",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/db.ModbusInteractive"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "操作成功 {\\\"code\\\": 0, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    },
+                    "500": {
+                        "description": "服务内部错误 {\\\"code\\\": 500, \\\"msg\\\": \\\"update db error\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/log/system/modbus/transdata": {
+            "get": {
+                "description": "转发参数表参数库与实时库数据查询",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "system"
+                ],
+                "summary": "转发参数表参数库与实时库数据查询",
+                "responses": {
+                    "200": {
+                        "description": "查询成功，字段说明与原型中字段同含义 {\\\"GroupId\\\":0,\\\"Code\\\":\\\"PCcn01pcs#010Bh\\\",\\\"CodeId\\\":0,\\\"Factor\\\":1,\\\"Negate\\\":0,\\\"Type\\\":0,\\\"IP\\\":0,\\\"RegisterNum\\\":1,\\\"DataType\\\":1,\\\"Unit\\\":\\\"\\\",\\\"CurrentValue\\\":1,\\\"FunctionCode\\\":\\\"01\\\",\\\"Permission\\\":\\\"R\\\"},{\\\"GroupId\\\":0,\\\"Code\\\":\\\"PCcn01pcs#011Bh\\\",\\\"CodeId\\\":1,\\\"Factor\\\":1,\\\"Negate\\\":0,\\\"Type\\\":0,\\\"IP\\\":1,\\\"RegisterNum\\\":1,\\\"DataType\\\":1,\\\"Unit\\\":\\\"\\\",\\\"CurrentValue\\\":0,\\\"FunctionCode\\\":\\\"01\\\",\\\"Permission\\\":\\\"R\\\"}]",
+                        "schema": {
+                            "$ref": "#/definitions/db.ModbusTransCodeTable01"
+                        }
+                    },
+                    "500": {
+                        "description": "服务内部错误 {\\\"code\\\": 500, \\\"msg\\\": \\\"select db error\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/log/system/network/config": {
+            "get": {
+                "description": "查询本地网络配置",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "system"
+                ],
+                "summary": "locaweb查询本地网络配置",
+                "operationId": "query-networkconfig",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "\u003ctoken\u003e",
+                        "description": "JWT Token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "成功 {\\\"ip\\\":\\\"192.168.2.27\\\", \\\"mask\\\":\\\"255.255.254.0\\\", \\\"gateway\\\":\\\"192.168.2.1\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.NetworkConfig"
+                        }
+                    },
+                    "401": {
+                        "description": "认证失败 {\\\"code\\\": 401, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    },
+                    "403": {
+                        "description": "拒绝访问 {\\\"code\\\": 403, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    },
+                    "503": {
+                        "description": "服务不可访问 {\\\"code\\\": 503, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "修改本地网络配置",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "system"
+                ],
+                "summary": "locaweb修改本地网络配置",
+                "operationId": "config-networkconfig",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "\u003ctoken\u003e",
+                        "description": "JWT Token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "网络参数配置",
+                        "name": "networkConfig",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/handlers.NetworkConfig"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "成功 {\\\"ip\\\":\\\"192.168.2.27\\\", \\\"mask\\\":\\\"255.255.254.0\\\", \\\"gateway\\\":\\\"192.168.2.1\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.NetworkConfig"
+                        }
+                    },
+                    "401": {
+                        "description": "认证失败 {\\\"code\\\": 401, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    },
+                    "403": {
+                        "description": "拒绝访问 {\\\"code\\\": 403, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    },
+                    "503": {
+                        "description": "服务不可访问 {\\\"code\\\": 503, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/log/system/process": {
+            "get": {
+                "description": "查询本地线程信息",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "system"
+                ],
+                "summary": "locaweb查询本地线程信息",
+                "operationId": "query-process",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "\u003ctoken\u003e",
+                        "description": "JWT Token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "成功, status：0 未运行，非0 运行中 [{\\\"name\\\":\\\"transsrv\\\", \\\"pid\\\":\\\"9876\\\", \\\"status\\\":1, \\\"describe\\\":\\\"something\\\"}]",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/handlers.ProcessInfo"
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "认证失败 {\\\"code\\\": 401, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    },
+                    "403": {
+                        "description": "拒绝访问 {\\\"code\\\": 403, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    },
+                    "503": {
+                        "description": "服务不可访问 {\\\"code\\\": 503, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/log/system/process/{procid}": {
+            "post": {
+                "description": "操作指定的本地线程",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "system"
+                ],
+                "summary": "locaweb操作指定的本地线程",
+                "operationId": "oper-process",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "\u003ctoken\u003e",
+                        "description": "JWT Token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "请求的进程id",
+                        "name": "procid",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "线程操作参数 op：1 重启",
+                        "name": "ProcessOper",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/handlers.ProcessOper"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "操作成功 {\\\"code\\\": 0, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    },
+                    "401": {
+                        "description": "认证失败 {\\\"code\\\": 401, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    },
+                    "403": {
+                        "description": "拒绝访问 {\\\"code\\\": 403, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    },
+                    "404": {
+                        "description": "进程id不存在 {\\\"code\\\": 404, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    },
+                    "503": {
+                        "description": "服务不可访问 {\\\"code\\\": 503, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/log/system/process/{procid}/logdump/{logtypeid}": {
+            "get": {
+                "description": "控制台日志推送websocket接口",
+                "tags": [
+                    "websocket"
+                ],
+                "summary": "控制台日志推送websocket接口",
+                "operationId": "ws-conn-logpush",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "\u003ctoken\u003e",
+                        "description": "JWT Token或者放到url",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "default": "\u003ctoken\u003e",
+                        "description": "JWT Token 或者放到Header",
+                        "name": "authorization",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "日志请求的进程id",
+                        "name": "procid",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "日志请求的日志类型id",
+                        "name": "logtypeid",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "直接推送日志文本",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/log/system/process/{procid}/logfile": {
+            "get": {
+                "description": "下载指定进程的日志文件，进程启动或未启动都可以获取",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "system"
+                ],
+                "summary": "localweb下载指定进程的日志文件",
+                "operationId": "log-file",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "\u003ctoken\u003e",
+                        "description": "JWT Token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "日志请求的进程id",
+                        "name": "procid",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "操作成功 返回文件",
+                        "schema": {
+                            "type": "file"
+                        }
+                    },
+                    "401": {
+                        "description": "认证失败 {\\\"code\\\": 401, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    },
+                    "403": {
+                        "description": "拒绝访问 {\\\"code\\\": 403, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    },
+                    "404": {
+                        "description": "文件不存在",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    },
+                    "503": {
+                        "description": "服务不可访问 {\\\"code\\\": 503, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/log/system/process/{procid}/logtype": {
+            "post": {
+                "description": "下载指定网关柜的日志",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "system"
+                ],
+                "summary": "localweb查询进程的日志类型",
+                "operationId": "log-type",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "\u003ctoken\u003e",
+                        "description": "JWT Token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "日志请求的进程id",
+                        "name": "procid",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "操作成功 [{\\\"typeidx\\\":9876,\\\"typedesc\\\":\"abcd\"}, {\\\"typeidx\\\":9877,\\\"typedesc\\\":\"abcde\"}]",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/scdnet.ProcLogType"
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "认证失败 {\\\"code\\\": 401, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    },
+                    "403": {
+                        "description": "拒绝访问 {\\\"code\\\": 403, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    },
+                    "404": {
+                        "description": "进程不存在 {\\\"code\\\": 404, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    },
+                    "503": {
+                        "description": "服务不可访问 {\\\"code\\\": 503, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/log/system/project/sn": {
+            "get": {
+                "description": "查询项目sn",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "system"
+                ],
+                "summary": "查询项目sn",
+                "operationId": "get-sn",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "\u003ctoken\u003e",
+                        "description": "JWT Token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "查询成功 {\\\"addr\\\":\\\"某地\\\",\\\"cabnum\\\":1,\\\"name\\\":\\\"测试项目\\\",\\\"sn\\\":\\\"98798798\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/emsclient.SnData"
+                        }
+                    },
+                    "401": {
+                        "description": "认证失败 {\\\"code\\\": 401, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    },
+                    "403": {
+                        "description": "拒绝访问 {\\\"code\\\": 403, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    },
+                    "503": {
+                        "description": "服务不可访问 {\\\"code\\\": 503, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "配置项目sn",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "system"
+                ],
+                "summary": "配置项目sn",
+                "operationId": "set-sn",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "\u003ctoken\u003e",
+                        "description": "JWT Token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "配置项目sn请求结构 {\\",
+                        "name": "SnData",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/emsclient.SnData"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "配置项目sn成功 {\\\"code\\\": 0, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    },
+                    "401": {
+                        "description": "认证失败 {\\\"code\\\": 401, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    },
+                    "403": {
+                        "description": "拒绝访问 {\\\"code\\\": 403, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    },
+                    "503": {
+                        "description": "服务不可访问 {\\\"code\\\": 503, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/log/system/reboot": {
+            "post": {
+                "description": "重启工控机",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "system"
+                ],
+                "summary": "locaweb重启工控机",
+                "operationId": "reboot-system",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "\u003ctoken\u003e",
+                        "description": "JWT Token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "重启参数配置",
+                        "name": "rebootReq",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/handlers.RebootReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "成功 {\\\"code\\\":200, \\\"message\\\":\\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    },
+                    "401": {
+                        "description": "认证失败 {\\\"code\\\": 401, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    },
+                    "403": {
+                        "description": "拒绝访问 {\\\"code\\\": 403, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    },
+                    "503": {
+                        "description": "服务不可访问 {\\\"code\\\": 503, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/log/system/time": {
+            "post": {
+                "description": "设置系统时间",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "system"
+                ],
+                "summary": "设置系统时间",
+                "operationId": "set-time",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "\u003ctoken\u003e",
+                        "description": "JWT Token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "系统时间,填入datetime部分即可",
+                        "name": "req",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/handlers.SystemTime"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "成功 {\\\"code\\\":200, \\\"message\\\":\\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    },
+                    "400": {
+                        "description": "参数错误 {\\\"code\\\": 400, \\\"msg\\\": \\\"Bad Request\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    },
+                    "401": {
+                        "description": "认证失败 {\\\"code\\\": 401, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    },
+                    "500": {
+                        "description": "服务内部错误 {\\\"code\\\": 500, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/log/system/timezone": {
+            "post": {
+                "description": "设置系统时区",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "system"
+                ],
+                "summary": "设置系统时区",
+                "operationId": "set-timezone",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "\u003ctoken\u003e",
+                        "description": "JWT Token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "系统时区,填入zone部分即可",
+                        "name": "req",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/handlers.SystemTime"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "成功 {\\\"code\\\":200, \\\"message\\\":\\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    },
+                    "400": {
+                        "description": "参数错误 {\\\"code\\\": 400, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    },
+                    "401": {
+                        "description": "认证失败 {\\\"code\\\": 401, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    },
+                    "500": {
+                        "description": "服务内部错误 {\\\"code\\\": 500, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/log/user/all": {
+            "get": {
+                "description": "获取全部用户信息",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "user"
+                ],
+                "summary": "获取全部用户信息",
+                "operationId": "all-user-info",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "\u003ctoken\u003e",
+                        "description": "JWT Token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "获取成功 [{\\\"username\\\": \\\"config\\\", \\\"usertype\\\": \\\"configurer\\\"}, {\\\"username\\\": \\\"oper\\\", \\\"usertype\\\": \\\"operator\\\"}]",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.UserInfo"
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "认证失败 {\\\"code\\\": 401, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    },
+                    "403": {
+                        "description": "拒绝访问，仅允许超级管理员调用 {\\\"code\\\": 403, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/log/user/info": {
+            "get": {
+                "description": "获取用户信息",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "user"
+                ],
+                "summary": "用户信息",
+                "operationId": "user-info",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "\u003ctoken\u003e",
+                        "description": "JWT Token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "获取成功 {\\\"username\\\": \\\"config\\\", \\\"usertype\\\": \\\"configurer\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.UserInfo"
+                        }
+                    },
+                    "401": {
+                        "description": "认证失败 {\\\"code\\\": 401, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/log/user/kickout": {
+            "post": {
+                "description": "超管踢在线用户下线",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "user"
+                ],
+                "summary": "踢在线用户下线",
+                "operationId": "kickout-user",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "\u003ctoken\u003e",
+                        "description": "JWT Token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "踢下线用户名",
+                        "name": "KickOutReq",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/handlers.KickOutReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "重置密码成功 {\\\"code\\\": 0, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    },
+                    "401": {
+                        "description": "认证失败 {\\\"code\\\": 401, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    },
+                    "403": {
+                        "description": "拒绝访问，仅允许超级管理员调用 {\\\"code\\\": 403, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    },
+                    "503": {
+                        "description": "服务不可访问 {\\\"code\\\": 503, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/log/user/logout": {
+            "post": {
+                "description": "用户退出登录",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "user"
+                ],
+                "summary": "用户登出",
+                "operationId": "user-logout",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "\u003ctoken\u003e",
+                        "description": "JWT Token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "登出成功 {\\\"code\\\": 0, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    },
+                    "401": {
+                        "description": "认证失败 {\\\"code\\\": 401, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/log/user/onlines": {
+            "get": {
+                "description": "超管查询在线用户信息",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "user"
+                ],
+                "summary": "查询在线用户信息",
+                "operationId": "onlines-user",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "\u003ctoken\u003e",
+                        "description": "JWT Token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "查询成功 [{\\\"username\\\":\\\"oper-2\\\", \\\"usertype\\\":\\\"操作\\\"}]",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.UserInfo"
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "认证失败 {\\\"code\\\": 401, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    },
+                    "403": {
+                        "description": "拒绝访问，仅允许超级管理员调用 {\\\"code\\\": 403, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    },
+                    "503": {
+                        "description": "服务不可访问 {\\\"code\\\": 503, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/log/user/resetpwd": {
+            "post": {
+                "description": "超管重置用户密码",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "user"
+                ],
+                "summary": "重置密码",
+                "operationId": "reset-pwd",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "\u003ctoken\u003e",
+                        "description": "JWT Token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "踢下线用户名",
+                        "name": "ResetPwdReq",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/handlers.ResetPwdReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "重置密码成功 {\\\"code\\\": 0, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    },
+                    "401": {
+                        "description": "认证失败 {\\\"code\\\": 401, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    },
+                    "403": {
+                        "description": "拒绝访问 {\\\"code\\\": 403, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    },
+                    "503": {
+                        "description": "服务不可访问 {\\\"code\\\": 503, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/log/user/updatepwd": {
+            "post": {
+                "description": "修改用户自己的密码",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "user"
+                ],
+                "summary": "修改密码",
+                "operationId": "update-pwd",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "\u003ctoken\u003e",
+                        "description": "JWT Token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "登录请求参数",
+                        "name": "UpdatePwdReq",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/handlers.UpdatePwdReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "修改密码成功 {\\\"code\\\": 0, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    },
+                    "400": {
+                        "description": "参数错误 {\\\"code\\\": 400, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    },
+                    "401": {
+                        "description": "认证失败 {\\\"code\\\": 401, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    },
+                    "412": {
+                        "description": "旧密码不正确 {\\\"code\\\": 412, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    },
+                    "503": {
+                        "description": "服务不可访问 {\\\"code\\\": 503, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/log/ws/push": {
+            "get": {
+                "description": "处理WebSocket连接",
+                "tags": [
+                    "websocket"
+                ],
+                "summary": "处理WebSocket连接",
+                "operationId": "ws-conn",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "\u003ctoken\u003e",
+                        "description": "JWT Token或者放到url",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "default": "\u003ctoken\u003e",
+                        "description": "JWT Token 或者放到Header",
+                        "name": "authorization",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "推送遥测，遥信，属性，设备状态。 遥测，遥信，属性 参照其查询接口返回。 设备状态示例(1-离线 2-在线)：{\\\"topic\\\":\\\"status\\\",\\\"content\\\":{\\\"11223355esscab1pcs1\\\": 2, \\\"11223355esscab1ac1\\\": 1}}",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/system/dataunit": {
+            "get": {
+                "description": "查询单位数据",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "system"
+                ],
+                "summary": "查询单位数据",
+                "operationId": "get-dataunit",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "\u003ctoken\u003e",
+                        "description": "JWT Token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "客户端当前的版本号",
+                        "name": "current_version",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "查询成功 {\"version\":\"1\",\"content\":{\"PRated\":\"kW\",\"QRated\":\"kVar\"}}",
+                        "schema": {
+                            "$ref": "#/definitions/models.QueryDataUnitResp"
+                        }
+                    },
+                    "208": {
+                        "description": "版本无更新 {\\\"code\\\": 204, \\\"msg\\\": \\\"NoContent\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    },
+                    "401": {
+                        "description": "认证失败 {\\\"code\\\": 401, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    },
+                    "403": {
+                        "description": "拒绝访问 {\\\"code\\\": 403, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    },
+                    "503": {
+                        "description": "服务内部错误 {\\\"code\\\": 500, \\\"msg\\\": \\\"InternalServerError\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/system/dataunitmb": {
+            "get": {
+                "description": "查询modbus单位数据",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "system"
+                ],
+                "summary": "查询modbus单位数据",
+                "operationId": "get-dataunit-for-modbus",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "查询产品型号",
+                        "name": "model",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "查询成功 {\\\"DCcn01bms#010Yc\\\":{\\\"unit\\\": \\\"V\\\"}, \\\"DCcn01bms#01108Yc\\\":{\\\"unit\\\": \\\"kWh\\\"}}",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.DataUnitEntry"
+                        }
+                    },
+                    "400": {
+                        "description": "认证失败 {\\\"code\\\": 400, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    },
+                    "404": {
+                        "description": "认证失败 {\\\"code\\\": 404, \\\"msg\\\": \\\"model not found\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/system/i18n": {
+            "get": {
+                "description": "查询国际化数据",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "system"
+                ],
+                "summary": "查询国际化数据",
+                "operationId": "get-i8n",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "\u003ctoken\u003e",
+                        "description": "JWT Token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "客户端当前的版本号",
+                        "name": "current_version",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "查询成功 {\\\"version\\\":\\\"1\\\",\\\"content\\\":{\\\"zh\\\":{\\\"Uab\\\":\\\"aaa\\\",\\\"Uac\\\":\\\"bbb\\\"},\\\"en\\\":{\\\"Uab\\\":\\\"ccc\\\",\\\"Uac\\\":\\\"ddd\\\"}}}",
+                        "schema": {
+                            "$ref": "#/definitions/models.QueryI18nResp"
+                        }
+                    },
+                    "208": {
+                        "description": "版本无更新 {\\\"code\\\": 204, \\\"msg\\\": \\\"NoContent\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    },
+                    "401": {
+                        "description": "认证失败 {\\\"code\\\": 401, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    },
+                    "403": {
+                        "description": "拒绝访问 {\\\"code\\\": 403, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    },
+                    "503": {
+                        "description": "服务内部错误 {\\\"code\\\": 500, \\\"msg\\\": \\\"InternalServerError\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/system/i18nmb": {
+            "get": {
+                "description": "查询modbus国际化数据",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "system"
+                ],
+                "summary": "查询modbus国际化数据",
+                "operationId": "get-i8n-for-modbus",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "查询产品型号",
+                        "name": "model",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "查询成功 {\\\"zh\\\":{\\\"DCcn01bms#01102Bh\\\":\\\"告警状态\\\",\\\"DCcn01bms#01105Bh\\\":\\\"故障状态\\\"},\\\"en\\\":{\\\"DCcn01bms#01102Bh\\\":\\\"Alarm Status\\\",\\\"DCcn01bms#01105Bh\\\":\\\"Fault Status\\\"}}",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.TransEntry"
+                        }
+                    },
+                    "400": {
+                        "description": "认证失败 {\\\"code\\\": 400, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    },
+                    "404": {
+                        "description": "认证失败 {\\\"code\\\": 404, \\\"msg\\\": \\\"model not found\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/system/zone": {
+            "get": {
+                "description": "查询服务器时区",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "system"
+                ],
+                "summary": "查询服务器时区",
+                "operationId": "get-zoneinfo",
+                "responses": {
+                    "200": {
+                        "description": "查询成功 {\"now\":\"2024-01-02T14:22:31+08:00\",\"offset\":28800,\"zone\":\"Asia/Shanghai\"}",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.ZoneResp"
+                        }
+                    },
+                    "401": {
+                        "description": "认证失败 {\\\"code\\\": 401, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    },
+                    "503": {
+                        "description": "服务内部错误 {\\\"code\\\": 500, \\\"msg\\\": \\\"InternalServerError\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/user/login": {
+            "post": {
+                "description": "用户使用提供的用户名和密码进行登录",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "user"
+                ],
+                "summary": "用户登录",
+                "operationId": "user-login",
+                "parameters": [
+                    {
+                        "description": "登录请求参数",
+                        "name": "loginReq",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/handlers.LoginReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "登录成功 {\\\"access_token\\\": \\\"\\\", \\\"expires_in\\\": 0, \\\"refresh_token\\\":\\\"\\\", \\\"token_type\\\":\\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.LoginResp"
+                        }
+                    },
+                    "400": {
+                        "description": "用户名密码错误  {\\\"code\\\": 400, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    },
+                    "409": {
+                        "description": "用户已登录 {\\\"code\\\": 409, \\\"msg\\\": \\\"conflict: already login\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    },
+                    "500": {
+                        "description": "内部错误 {\\\"code\\\": 500, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    },
+                    "503": {
+                        "description": "服务不可访问 {\\\"code\\\": 503, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/user/refresh_token": {
+            "post": {
+                "description": "用户更新过期的token",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "user"
+                ],
+                "summary": "更新token",
+                "operationId": "refresh-token",
+                "parameters": [
+                    {
+                        "description": "token",
+                        "name": "RefreshTokenReq",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/handlers.RefreshTokenReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "更新成功 {\\\"access_token\\\": \\\"\\\", \\\"expires_in\\\": 0, \\\"refresh_token\\\":\\\"\\\", \\\"token_type\\\":\\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.RefreshTokenResp"
+                        }
+                    },
+                    "401": {
+                        "description": "认证失败 {\\\"code\\\": 401, \\\"msg\\\": \\\"\\\"}",
+                        "schema": {
+                            "$ref": "#/definitions/models.CommonResp"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "db.ModbusInteractive": {
+            "type": "object",
+            "properties": {
+                "baud": {
+                    "description": "波特率",
+                    "type": "integer"
+                },
+                "checkBit": {
+                    "description": "校验位",
+                    "type": "integer"
+                },
+                "dataBit": {
+                    "description": "数据位",
+                    "type": "integer"
+                },
+                "devType": {
+                    "description": "设备类型",
+                    "type": "integer"
+                },
+                "localPort": {
+                    "description": "本地端口",
+                    "type": "integer"
+                },
+                "stopBit": {
+                    "description": "停止位",
+                    "type": "integer"
+                },
+                "terminalAddr": {
+                    "description": "终端站址",
+                    "type": "integer"
+                }
+            }
+        },
+        "db.ModbusTransCodeTable01": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "string"
+                },
+                "codeId": {
+                    "type": "integer"
+                },
+                "currentValue": {
+                    "type": "number"
+                },
+                "dataType": {
+                    "type": "integer"
+                },
+                "factor": {
+                    "type": "number"
+                },
+                "functionCode": {
+                    "type": "string"
+                },
+                "groupId": {
+                    "type": "integer"
+                },
+                "ip": {
+                    "type": "integer"
+                },
+                "negate": {
+                    "type": "integer"
+                },
+                "permission": {
+                    "type": "string"
+                },
+                "registerNum": {
+                    "type": "integer"
+                },
+                "type": {
+                    "type": "integer"
+                },
+                "unit": {
+                    "type": "string"
+                }
+            }
+        },
+        "emsclient.PushRemoteResp": {
+            "type": "object",
+            "properties": {
+                "result": {
+                    "description": "gateway: endpoint",
+                    "type": "integer"
+                },
+                "seq": {
+                    "type": "integer"
+                }
+            }
+        },
+        "emsclient.SnData": {
+            "type": "object",
+            "properties": {
+                "addr": {
+                    "type": "string"
+                },
+                "cabnum": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "sn": {
+                    "type": "string"
+                }
+            }
+        },
+        "handlers.DataUnitEntry": {
+            "type": "object",
+            "additionalProperties": {
+                "type": "object",
+                "additionalProperties": {
+                    "type": "string"
+                }
+            }
+        },
+        "handlers.DeviceRemoteData": {
+            "type": "object",
+            "properties": {
+                "mqttid": {
+                    "type": "string"
+                },
+                "value": {
+                    "type": "number"
+                }
+            }
+        },
+        "handlers.EmsInfo": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "sn": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "integer"
+                }
+            }
+        },
+        "handlers.KickOutReq": {
+            "type": "object",
+            "properties": {
+                "username": {
+                    "type": "string"
+                }
+            }
+        },
+        "handlers.LogDumpReq": {
+            "type": "object",
+            "properties": {
+                "gatewaysn": {
+                    "type": "string"
+                },
+                "operation": {
+                    "description": "DumpDuration int    `json:\"duration\"`",
+                    "type": "integer"
+                },
+                "taskid": {
+                    "type": "integer"
+                }
+            }
+        },
+        "handlers.LogDumpResp": {
+            "type": "object",
+            "properties": {
+                "taskid": {
+                    "type": "integer"
+                }
+            }
+        },
+        "handlers.LoginReq": {
+            "type": "object",
+            "properties": {
+                "password": {
+                    "type": "string"
+                },
+                "username": {
+                    "type": "string"
+                }
+            }
+        },
+        "handlers.LoginResp": {
+            "type": "object",
+            "properties": {
+                "access_token": {
+                    "description": "Uname        string `json:\"username\"`\nUtype        string `json:\"usertype\"`",
+                    "type": "string"
+                },
+                "expires_in": {
+                    "type": "integer"
+                },
+                "refresh_token": {
+                    "type": "string"
+                },
+                "token_type": {
+                    "type": "string"
+                }
+            }
+        },
+        "handlers.NetworkConfig": {
+            "type": "object",
+            "properties": {
+                "gateway": {
+                    "type": "string"
+                },
+                "ip": {
+                    "type": "string"
+                },
+                "mask": {
+                    "type": "string"
+                }
+            }
+        },
+        "handlers.ProcessInfo": {
+            "type": "object",
+            "properties": {
+                "cpu": {
+                    "type": "string"
+                },
+                "describe": {
+                    "type": "string"
+                },
+                "mem": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "pid": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "integer"
+                }
+            }
+        },
+        "handlers.ProcessOper": {
+            "type": "object",
+            "properties": {
+                "checkpwd": {
+                    "description": "校验密码",
+                    "type": "string"
+                },
+                "op": {
+                    "description": "1 停止",
+                    "type": "integer"
+                }
+            }
+        },
+        "handlers.QueryEmsResp": {
+            "type": "object",
+            "properties": {
+                "content": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "$ref": "#/definitions/handlers.EmsInfo"
+                    }
+                },
+                "topic": {
+                    "type": "string"
+                }
+            }
+        },
+        "handlers.QueryGatewaysResp": {
+            "type": "object",
+            "properties": {
+                "content": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "$ref": "#/definitions/models.GatewayInfo"
+                    }
+                },
+                "topic": {
+                    "type": "string"
+                }
+            }
+        },
+        "handlers.RdData": {
+            "type": "object",
+            "properties": {
+                "content": {
+                    "type": "string"
+                }
+            }
+        },
+        "handlers.RebootReq": {
+            "type": "object",
+            "properties": {
+                "checkpwd": {
+                    "type": "string"
+                }
+            }
+        },
+        "handlers.RefreshTokenReq": {
+            "type": "object",
+            "properties": {
+                "refresh_token": {
+                    "type": "string"
+                }
+            }
+        },
+        "handlers.RefreshTokenResp": {
+            "type": "object",
+            "properties": {
+                "access_token": {
+                    "type": "string"
+                },
+                "expires_in": {
+                    "type": "integer"
+                },
+                "refresh_token": {
+                    "type": "string"
+                },
+                "token_type": {
+                    "type": "string"
+                }
+            }
+        },
+        "handlers.RemoteReq": {
+            "type": "object",
+            "properties": {
+                "checkpwd": {
+                    "type": "string"
+                },
+                "content": {},
+                "sn": {
+                    "type": "string"
+                }
+            }
+        },
+        "handlers.ResetPwdReq": {
+            "type": "object",
+            "properties": {
+                "username": {
+                    "type": "string"
+                }
+            }
+        },
+        "handlers.SystemTime": {
+            "type": "object",
+            "properties": {
+                "datetime": {
+                    "type": "string"
+                },
+                "zone": {
+                    "type": "string"
+                }
+            }
+        },
+        "handlers.TransEntry": {
+            "type": "object",
+            "additionalProperties": {
+                "type": "object",
+                "additionalProperties": {
+                    "type": "string"
+                }
+            }
+        },
+        "handlers.UpdatePwdReq": {
+            "type": "object",
+            "properties": {
+                "newpwd": {
+                    "type": "string"
+                },
+                "oldpwd": {
+                    "type": "string"
+                }
+            }
+        },
+        "handlers.ZoneResp": {
+            "type": "object",
+            "properties": {
+                "now": {
+                    "description": "服务器当前时间",
+                    "type": "string"
+                },
+                "offset": {
+                    "description": "服务器当前时区偏移量",
+                    "type": "integer"
+                },
+                "zone": {
+                    "description": "服务器当前时区",
+                    "type": "string"
+                }
+            }
+        },
+        "handlers.overViewData": {
+            "type": "object",
+            "additionalProperties": {
+                "type": "object",
+                "additionalProperties": {
+                    "$ref": "#/definitions/handlers.teleData"
+                }
+            }
+        },
+        "handlers.teleData": {
+            "type": "object",
+            "additionalProperties": {
+                "type": "object",
+                "additionalProperties": {
+                    "type": "number"
+                }
+            }
+        },
+        "models.CommonResp": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer"
+                },
+                "msg": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.DeviceData": {
+            "type": "object",
+            "properties": {
+                "content": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "$ref": "#/definitions/models.DeviceInfo"
+                    }
+                },
+                "topic": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.DeviceInfo": {
+            "type": "object",
+            "properties": {
+                "dev_code": {
+                    "type": "string"
+                },
+                "gateway": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "sn": {
+                    "type": "string"
+                },
+                "status": {
+                    "description": "1 - offline, 2 - online",
+                    "type": "integer"
+                }
+            }
+        },
+        "models.GatewayInfo": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "sn": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "integer"
+                }
+            }
+        },
+        "models.KeyValueInfo": {
+            "type": "object",
+            "properties": {
+                "at": {
+                    "type": "integer"
+                },
+                "k": {
+                    "type": "string"
+                },
+                "mt": {
+                    "type": "integer"
+                },
+                "v": {
+                    "type": "number"
+                }
+            }
+        },
+        "models.QueryDataUnitResp": {
+            "type": "object",
+            "properties": {
+                "content": {
+                    "type": "object",
+                    "additionalProperties": true
+                },
+                "version": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.QueryDevicesResp": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer"
+                },
+                "data": {
+                    "$ref": "#/definitions/models.DeviceData"
+                },
+                "msg": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.QueryI18nResp": {
+            "type": "object",
+            "properties": {
+                "content": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "version": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.TeleData": {
+            "type": "object",
+            "properties": {
+                "content": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/definitions/models.KeyValueInfo"
+                        }
+                    }
+                },
+                "topic": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.UserInfo": {
+            "type": "object",
+            "properties": {
+                "lastlogin": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "integer"
+                },
+                "username": {
+                    "type": "string"
+                },
+                "usertype": {
+                    "type": "string"
+                }
+            }
+        },
+        "scdnet.ProcLogType": {
+            "type": "object",
+            "properties": {
+                "typedesc": {
+                    "type": "string"
+                },
+                "typeidx": {
+                    "type": "integer"
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,1084 @@
+设备型号,点位,点位中文,点位英文,单位
+ECO-E150WS,PCcn01pcs#016Bh,总故障位,Fault General,
+ECO-E150WS,PCcn01pcs#01152Bh,并离网运行标志,On/off Grid Operation Sign,
+ECO-E150WS,PCcn01pcs#01151Bh,PCS告警总,PCS Alarm General,
+ECO-E150WS,PCcn01pcs#01153Bh,PCS通讯状态,PCS Comm Status,
+ECO-E150WS,DCcn01bms#010Bh,组端过压 1 级报警,Batt Modu Over Volt Alarm L1,
+ECO-E150WS,DCcn01bms#011Bh,组端过压 2 级报警,Batt Modu Over Volt Alarm L2,
+ECO-E150WS,DCcn01bms#012Bh,组端过压 3 级报警,Batt Modu Over Volt Alarm L3,
+ECO-E150WS,DCcn01bms#013Bh,组端欠压 1 级报警,Batt Modu Und Volt Alarm L1,
+ECO-E150WS,DCcn01bms#014Bh,组端欠压 2 级报警,Batt Modu Und Volt Alarm L2,
+ECO-E150WS,DCcn01bms#015Bh,组端欠压 3 级报警,Batt Modu Und Volt Alarm L3,
+ECO-E150WS,DCcn01bms#016Bh,组端放电过流 1 级报警,Batt Modu dchg Over Curr Alarm L1,
+ECO-E150WS,DCcn01bms#017Bh,组端放电过流 2 级报警,Batt Modu dchg Over Curr Alarm L2,
+ECO-E150WS,DCcn01bms#018Bh,组端放电过流 3 级报警,Batt Modu dchg Over Curr Alarm L3,
+ECO-E150WS,DCcn01bms#019Bh,组端充电过流 1 级报警,Batt Modu chg Over Curr Alarm L1,
+ECO-E150WS,DCcn01bms#0110Bh,组端充电过流 2 级报警,Batt Modu chg Over Curr Alarm L2,
+ECO-E150WS,DCcn01bms#0111Bh,组端充电过流 3 级报警,Batt Modu chg Over Curr Alarm L3,
+ECO-E150WS,DCcn01bms#0112Bh,组端绝缘 1 级报警,Batt Modu Insulation Alarm L1,
+ECO-E150WS,DCcn01bms#0113Bh,组端绝缘 2 级报警,Batt Modu Insulation Alarm L2,
+ECO-E150WS,DCcn01bms#0114Bh,组端绝缘 3 级报警,Batt Modu Insulation Alarm L3,
+ECO-E150WS,DCcn01bms#0115Bh,单体电池充电过温 1 级报警,Cell chg Over Temp Alarm L1,
+ECO-E150WS,DCcn01bms#0116Bh,单体电池充电过温 2 级报警,Cell chg Over Temp Alarm L2,
+ECO-E150WS,DCcn01bms#0117Bh,单体电池充电过温 3 级报警,Cell chg Over Temp Alarm L3,
+ECO-E150WS,DCcn01bms#0118Bh,单体电池充电欠温 1 级报警,Cell chg Und Temp Alarm L1,
+ECO-E150WS,DCcn01bms#0119Bh,单体电池充电欠温 2 级报警,Cell chg Und Temp Alarm L2,
+ECO-E150WS,DCcn01bms#0120Bh,单体电池充电欠温 3 级报警,Cell chg Und Temp Alarm L3,
+ECO-E150WS,DCcn01bms#0121Bh,单体电压过压 1 级报警,Cell Over Volt Alarm L1,
+ECO-E150WS,DCcn01bms#0122Bh,单体电压过压 2 级报警,Cell Over Volt Alarm L2,
+ECO-E150WS,DCcn01bms#0123Bh,单体电压过压 3 级报警,Cell Over Volt Alarm L3,
+ECO-E150WS,DCcn01bms#0124Bh,单体电压欠压 1 级报警,Cell Und Volt Alarm L1,
+ECO-E150WS,DCcn01bms#0125Bh,单体电压欠压 2 级报警,Cell Und Volt Alarm L2,
+ECO-E150WS,DCcn01bms#0126Bh,单体电压欠压 3 级报警,Cell Und Volt Alarm L3,
+ECO-E150WS,DCcn01bms#0127Bh,单体压差过高 1 级报警,Cell Volt Diff Alarm L1,
+ECO-E150WS,DCcn01bms#0128Bh,单体压差过高 2 级报警,Cell Volt Diff Alarm L2,
+ECO-E150WS,DCcn01bms#0129Bh,单体压差过高 3 级报警,Cell Volt Diff Alarm L3,
+ECO-E150WS,DCcn01bms#0130Bh,单体温差过高 1 级报警,Cell Temp Diff Alarm L1,
+ECO-E150WS,DCcn01bms#0131Bh,单体温差过高 2 级报警,Cell Temp Diff Alarm L2,
+ECO-E150WS,DCcn01bms#0132Bh,单体温差过高 3 级报警,Cell Temp Diff Alarm L3,
+ECO-E150WS,DCcn01bms#0133Bh,SOC 过低 1 级告警,SOC Low  Alarm L1,
+ECO-E150WS,DCcn01bms#0134Bh,SOC 过低 2 级告警,SOC Low  Alarm L2,
+ECO-E150WS,DCcn01bms#0135Bh,SOC 过低 3 级告警,SOC Low  Alarm L3,
+ECO-E150WS,DCcn01bms#0136Bh,动力插箱温度过高 1 级报警,PACK  Over Temp Alarm L1,
+ECO-E150WS,DCcn01bms#0137Bh,动力插箱温度过高 2 级报警,PACK  Over Temp Alarm L2,
+ECO-E150WS,DCcn01bms#0138Bh,动力插箱温度过高 3 级报警,PACK  Over Temp Alarm L3,
+ECO-E150WS,DCcn01bms#0139Bh,电池模组过压 1 级报警,Batt Modu Over Volt Alarm L1,
+ECO-E150WS,DCcn01bms#0140Bh,电池模组过压 2 级报警,Batt Modu Over Volt Alarm L2,
+ECO-E150WS,DCcn01bms#0141Bh,电池模组过压 3 级报警,Batt Modu Over Volt Alarm L3,
+ECO-E150WS,DCcn01bms#0142Bh,电池模组欠压 1 级报警,Batt Modu Und Volt Alarm L1,
+ECO-E150WS,DCcn01bms#0143Bh,电池模组欠压 2 级报警,Batt Modu Und Volt Alarm L2,
+ECO-E150WS,DCcn01bms#0144Bh,电池模组欠压 3 级报警,Batt Modu Und Volt Alarm L3,
+ECO-E150WS,DCcn01bms#0145Bh,DI1 故障,DI1 fault,
+ECO-E150WS,DCcn01bms#0146Bh,DI2 故障,DI2 fault,
+ECO-E150WS,DCcn01bms#0147Bh,DI3 故障,DI3 fault,
+ECO-E150WS,DCcn01bms#0148Bh,DI4 故障,DI4 fault,
+ECO-E150WS,DCcn01bms#0149Bh,DI5 故障,DI5 fault,
+ECO-E150WS,DCcn01bms#0150Bh,DI6 故障,DI6 fault,
+ECO-E150WS,DCcn01bms#0151Bh,DI7 故障,DI7 fault,
+ECO-E150WS,DCcn01bms#0152Bh,DI8 故障,DI8 fault,
+ECO-E150WS,DCcn01bms#0153Bh,内网通讯失联,Interior Comm Loss,
+ECO-E150WS,DCcn01bms#0154Bh,单体电压采集异常,Cell Volt Acquisition Abnormal,
+ECO-E150WS,DCcn01bms#0155Bh,单体温度采集异常,Cell Temp Acquisition Abnormal,
+ECO-E150WS,DCcn01bms#0156Bh,显控检测故障,Display Control Test Fault,
+ECO-E150WS,DCcn01bms#0157Bh,簇间压差大,Cluster Volt Diff Abnormal,
+ECO-E150WS,DCcn01bms#0158Bh,簇间跳机故障,Cluster Trip Fault,
+ECO-E150WS,DCcn01bms#0159Bh,电池极限故障,Cell Critical Status Fault,
+ECO-E150WS,DCcn01bms#0160Bh,项目软件版本参数不一致,Software Version Fault,
+ECO-E150WS,DCcn01bms#0161Bh,与 PCS 通讯故障,To PCS Comm Fault,
+ECO-E150WS,DCcn01bms#0162Bh,PC 强控调试模式,Forced PC Control on Debug Mode,
+ECO-E150WS,DCcn01bms#0163Bh,CAN 霍尔传感器故障,Can Hallsenso Fault,
+ECO-E150WS,DCcn01bms#0164Bh,CAN 霍尔传感器通讯故障,Can Hallsenso Comm Fault,
+ECO-E150WS,DCcn01bms#0165Bh,硬件自检异常,Hardware Selftest Fault,
+ECO-E150WS,DCcn01bms#0166Bh,单体电压线束故障,Cell Volt Harness Fault,
+ECO-E150WS,DCcn01bms#0167Bh,均衡故障,Balancing Fault,
+ECO-E150WS,DCcn01bms#0168Bh,EMS 通讯故障,EMS Comm Fault,
+ECO-E150WS,DCcn01bms#0169Bh,与三级 BMS 通讯故障,3-level BMS Comm Fault,
+ECO-E150WS,DCcn01bms#0170Bh,单体电池放电过温 1 级报警,Cell dchg Over Temp Alarm L1,
+ECO-E150WS,DCcn01bms#0171Bh,单体电池放电过温 2 级报警,Cell dchg Over Temp Alarm L2,
+ECO-E150WS,DCcn01bms#0172Bh,单体电池放电过温 3 级报警,Cell dchg Over Temp Alarm L3,
+ECO-E150WS,DCcn01bms#0173Bh,单体电池放电欠温 1 级报警,Cell dchg Und Temp Alarm L1,
+ECO-E150WS,DCcn01bms#0174Bh,单体电池放电欠温 2 级报警,Cell dchg Und Temp Alarm L2,
+ECO-E150WS,DCcn01bms#0175Bh,单体电池放电欠温 3 级报警,Cell dchg Und Temp Alarm L3,
+ECO-E150WS,DCcn01bms#0176Bh,SOC 过高 1 级告警,SOC too High  Alarm L1,
+ECO-E150WS,DCcn01bms#0177Bh,SOC 过高 2 级告警,SOC too High  Alarm L2,
+ECO-E150WS,DCcn01bms#0178Bh,SOC 过高 3 级告警,SOC too High  Alarm L3,
+ECO-E150WS,DCcn01bms#0179Bh,温升快报警 1 级报警,Temp FastRise Alarm L1,
+ECO-E150WS,DCcn01bms#0180Bh,温升快报警 2 级报警,Temp FastRise Alarm L2,
+ECO-E150WS,DCcn01bms#0181Bh,温升快报警 3 级报警,Temp FastRise Alarm L3,
+ECO-E150WS,DCcn01bms#01102Bh,告警状态,Alarm Status,
+ECO-E150WS,DCcn01bms#01105Bh,故障状态,Fault Status,
+ECO-E150WS,DCcn01bms#01106Bh,通讯状态,Comm Status,
+ECO-E150WS,Ocn01sj#018Bh,水浸传感器报警,Water Immersion Sensor Alarm,
+ECO-E150WS,Ocn01yg#019Bh,烟感传感器报警,Smoke Sensor Alarm,
+ECO-E150WS,Ocn01wd#0110Bh,温度传感器报警,Temp Sensor Alarm,
+ECO-E150WS,Ocn01xf#0111Bh,消防灭火器报警,Fire Extinguisher Alarm,
+ECO-E150WS,Ocn01gm#0112Bh,柜门状态,Cabinet Door Status,
+ECO-E150WS,Kcn01jtkg#0113Bh,急停开关状态,Emergency Stop Status,
+ECO-E150WS,Kcn01jxdlq#0114Bh,进线断路器状态,Cabinet breaker Status,
+ECO-E150WS,Kcn01hldlq#0115Bh,汇流断路器状态,Busbar Breaker Status,
+ECO-E150WS,Kcn01yx#01Kg,运行灯,Operation Indicator,
+ECO-E150WS,Kcn01gz#01Kg,故障灯,Fault Indicator,
+ECO-E150WS,Kcn01fsh#01Kg,风扇,Fan,
+ECO-E150WS,Kcn01tk1#01Kg,进线断路器脱扣,Cabinet Breaker Trip,
+ECO-E150WS,Kcn01tk2#01Kg,汇流断路器脱扣,Busbar Breaker Trip,
+ECO-E150WS,Kcn01io#015Bh,DO6,DO6,
+ECO-E150WS,Kcn01io#016Bh,DO7,DO7,
+ECO-E150WS,Kcn01io#017Bh,DO8,DO8,
+ECO-E150WS,ACcn01kt#01142Bh,空调1离线故障,HVAC 1 Offline Fault,
+ECO-E150WS,ACcn01kt#02143Bh,空调2离线故障,HVAC 2 Offline Fault,
+ECO-E150WS,PCcn01pcs#016Yc,PCS交流电流Ia有效值,PCS AC Ia effective value,A
+ECO-E150WS,PCcn01pcs#017Yc,PCS交流电流Ib有效值,PCS AC Ib effective value,A
+ECO-E150WS,PCcn01pcs#018Yc,PCS交流电流Ic有效值,PCS AC Ic effective value,A
+ECO-E150WS,PCcn01pcs#010Yc,PCC线电压Uab有效值,PCS AC Uab effective value,V
+ECO-E150WS,PCcn01pcs#011Yc,PCC线电压Ubc有效值,PCS AC Ubc effective value,V
+ECO-E150WS,PCcn01pcs#012Yc,PCC线电压Uca有效值,PCS AC Uca effective value,V
+ECO-E150WS,PCcn01pcs#0127Yc,直流母线总电压,DC Busbar Volt,V
+ECO-E150WS,PCcn01pcs#0131Yc,直流电流,DC Current,A
+ECO-E150WS,PCcn01pcs#0123Yc,交流有功功率,AC Active power,kW
+ECO-E150WS,PCcn01pcs#0124Yc,交流无功功率,AC Reactive Power,kVar
+ECO-E150WS,PCcn01pcs#0126Yc,功率因数,Power Factor,
+ECO-E150WS,PCcn01pcs#0132Yc,直流功率,DC Power,kW
+ECO-E150WS,PCcn01pcs#0112Yc,电网频率,Grid Frequency,Hz
+ECO-E150WS,PCcn01pcs#0156Yc,充放电功率给定,Chg/dchg Power Setting,kW
+ECO-E150WS,PCcn01pcs#0157Yc,无功功率给定,Reactive Power Setting,kVar
+ECO-E150WS,PCcn01pcs#0182Yc,转发运行状态,Operation Status (Transfer),
+ECO-E150WS,PCcn01pcs#0162Yc,硬件故障字 1,Hardware Fault Code 1,
+ECO-E150WS,PCcn01pcs#0163Yc,硬件故障字 2,Hardware Fault Code 2,
+ECO-E150WS,PCcn01pcs#0164Yc,电网故障字,Grid Fault Code,
+ECO-E150WS,PCcn01pcs#0165Yc,母线故障字,Busbar Fault Code,
+ECO-E150WS,PCcn01pcs#0166Yc,交流电容故障字,AC Capacitor Fault Code,
+ECO-E150WS,PCcn01pcs#0167Yc,系统故障字,System Fault Code,
+ECO-E150WS,PCcn01pcs#0168Yc,开关故障字,Switch Fault Code,
+ECO-E150WS,PCcn01pcs#0169Yc,其他故障字,Other Fault Code,
+ECO-E150WS,DCcn01bms#011Yc,电池簇电流值,Cluster Current Value,A
+ECO-E150WS,DCcn01bms#012Yc,电池簇总 SOC,Cluster SOC Total,%
+ECO-E150WS,DCcn01bms#013Yc,电池簇总 SOH,Cluster SOH Total,%
+ECO-E150WS,DCcn01bms#010Yc,电池簇电压,Cluster Volt,V
+ECO-E150WS,DCcn01bms#017Yc,电池簇电池状态,Cell Status,
+ECO-E150WS,DCcn01bms#0111Yc,电池最高温度,Maximum Cell Temperature,℃
+ECO-E150WS,DCcn01bms#0112Yc,电池最高温度所在模块号,Max Temp Module No.,
+ECO-E150WS,DCcn01bms#0113Yc,电池最高温度模块内序号,Max Temp Cell No.,
+ECO-E150WS,DCcn01bms#0114Yc,电池最低温度,Cell Min Temp,℃
+ECO-E150WS,DCcn01bms#0115Yc,电池最低温度所在模块号,Min Temp Module No.,
+ECO-E150WS,DCcn01bms#0116Yc,电池最低温度模块内序号,Min Temp Cell No.,
+ECO-E150WS,DCcn01bms#0117Yc,电池平均温度,Cell Avg Temp,℃
+ECO-E150WS,DCcn01bms#0118Yc,电池组电池总节数,Cell Quantity inside PACK,
+ECO-E150WS,DCcn01bms#0119Yc,单体平均电压,Cell Avg Voltage,V
+ECO-E150WS,DCcn01bms#0120Yc,最高单体电压,Cell Max Voltage,V
+ECO-E150WS,DCcn01bms#0121Yc,最高单体电压所在模块号,Max Volt Module No.,
+ECO-E150WS,DCcn01bms#0122Yc,最高单体电压模块内序号,Max Volt  Cell No.,
+ECO-E150WS,DCcn01bms#0123Yc,最低单体电压,Cell Min Voltage,V
+ECO-E150WS,DCcn01bms#0124Yc,最低单体电压所在模块号,Min Volt Module Nr,
+ECO-E150WS,DCcn01bms#0125Yc,最低单体电压模块内序号,Min Volt  Cell Nr,
+ECO-E150WS,DCcn01bms#0126Yc,单体平均 SOC,Cell SOC Average,%
+ECO-E150WS,DCcn01bms#0158Yc,累计充电电量,Accumulated charging Energy,kWh
+ECO-E150WS,DCcn01bms#0159Yc,累计放电电量,Accumulated discharging Energy,kWh
+ECO-E150WS,DCcn01bms#0170Yc,系统告警状态,System Alarm Status,
+ECO-E150WS,DCcn01bms#0196Yc,最大允许充电功率,Max Allowed Charging PWR,kW
+ECO-E150WS,DCcn01bms#0197Yc,最大允许放电功率,Max Allowed Discharging PWR,kW
+ECO-E150WS,DCcn01bms#01108Yc,单日累计充电电量,Daily Accumulated Energy Charged,kWh
+ECO-E150WS,DCcn01bms#01109Yc,单日累计放电电量,Daily Accumulated Energy Discharged,kWh
+ECO-E150WS,ACcn01kt#01141Yc,空调1整机状态,HVAC 1 Integral status,
+ECO-E150WS,ACcn01kt#02153Yc,空调2整机状态,HVAC 2 Integral status,
+ECO-E150WS,ACcn01kt#01165Yc,空调1故障,HVAC 1 Fault,
+ECO-E150WS,ACcn01kt#02166Yc,空调2故障,HVAC 2 Fault,
+ECO-E150WS,Ocn01dcdt#01169Yc,单体电压001,Cell Volt 001,V
+ECO-E150WS,Ocn01dcdt#01170Yc,单体电压002,Cell Volt 002,V
+ECO-E150WS,Ocn01dcdt#01171Yc,单体电压003,Cell Volt 003,V
+ECO-E150WS,Ocn01dcdt#01172Yc,单体电压004,Cell Volt 004,V
+ECO-E150WS,Ocn01dcdt#01173Yc,单体电压005,Cell Volt 005,V
+ECO-E150WS,Ocn01dcdt#01174Yc,单体电压006,Cell Volt 006,V
+ECO-E150WS,Ocn01dcdt#01175Yc,单体电压007,Cell Volt 007,V
+ECO-E150WS,Ocn01dcdt#01176Yc,单体电压008,Cell Volt 008,V
+ECO-E150WS,Ocn01dcdt#01177Yc,单体电压009,Cell Volt 009,V
+ECO-E150WS,Ocn01dcdt#01178Yc,单体电压010,Cell Volt 010,V
+ECO-E150WS,Ocn01dcdt#01179Yc,单体电压011,Cell Volt 011,V
+ECO-E150WS,Ocn01dcdt#01180Yc,单体电压012,Cell Volt 012,V
+ECO-E150WS,Ocn01dcdt#01181Yc,单体电压013,Cell Volt 013,V
+ECO-E150WS,Ocn01dcdt#01182Yc,单体电压014,Cell Volt 014,V
+ECO-E150WS,Ocn01dcdt#01183Yc,单体电压015,Cell Volt 015,V
+ECO-E150WS,Ocn01dcdt#01184Yc,单体电压016,Cell Volt 016,V
+ECO-E150WS,Ocn01dcdt#01185Yc,单体电压017,Cell Volt 017,V
+ECO-E150WS,Ocn01dcdt#01186Yc,单体电压018,Cell Volt 018,V
+ECO-E150WS,Ocn01dcdt#01187Yc,单体电压019,Cell Volt 019,V
+ECO-E150WS,Ocn01dcdt#01188Yc,单体电压020,Cell Volt 020,V
+ECO-E150WS,Ocn01dcdt#01189Yc,单体电压021,Cell Volt 021,V
+ECO-E150WS,Ocn01dcdt#01190Yc,单体电压022,Cell Volt 022,V
+ECO-E150WS,Ocn01dcdt#01191Yc,单体电压023,Cell Volt 023,V
+ECO-E150WS,Ocn01dcdt#01192Yc,单体电压024,Cell Volt 024,V
+ECO-E150WS,Ocn01dcdt#01193Yc,单体电压025,Cell Volt 025,V
+ECO-E150WS,Ocn01dcdt#01194Yc,单体电压026,Cell Volt 026,V
+ECO-E150WS,Ocn01dcdt#01195Yc,单体电压027,Cell Volt 027,V
+ECO-E150WS,Ocn01dcdt#01196Yc,单体电压028,Cell Volt 028,V
+ECO-E150WS,Ocn01dcdt#01197Yc,单体电压029,Cell Volt 029,V
+ECO-E150WS,Ocn01dcdt#01198Yc,单体电压030,Cell Volt 030,V
+ECO-E150WS,Ocn01dcdt#01199Yc,单体电压031,Cell Volt 031,V
+ECO-E150WS,Ocn01dcdt#01200Yc,单体电压032,Cell Volt 032,V
+ECO-E150WS,Ocn01dcdt#01201Yc,单体电压033,Cell Volt 033,V
+ECO-E150WS,Ocn01dcdt#01202Yc,单体电压034,Cell Volt 034,V
+ECO-E150WS,Ocn01dcdt#01203Yc,单体电压035,Cell Volt 035,V
+ECO-E150WS,Ocn01dcdt#01204Yc,单体电压036,Cell Volt 036,V
+ECO-E150WS,Ocn01dcdt#01205Yc,单体电压037,Cell Volt 037,V
+ECO-E150WS,Ocn01dcdt#01206Yc,单体电压038,Cell Volt 038,V
+ECO-E150WS,Ocn01dcdt#01207Yc,单体电压039,Cell Volt 039,V
+ECO-E150WS,Ocn01dcdt#01208Yc,单体电压040,Cell Volt 040,V
+ECO-E150WS,Ocn01dcdt#01209Yc,单体电压041,Cell Volt 041,V
+ECO-E150WS,Ocn01dcdt#01210Yc,单体电压042,Cell Volt 042,V
+ECO-E150WS,Ocn01dcdt#01211Yc,单体电压043,Cell Volt 043,V
+ECO-E150WS,Ocn01dcdt#01212Yc,单体电压044,Cell Volt 044,V
+ECO-E150WS,Ocn01dcdt#01213Yc,单体电压045,Cell Volt 045,V
+ECO-E150WS,Ocn01dcdt#01214Yc,单体电压046,Cell Volt 046,V
+ECO-E150WS,Ocn01dcdt#01215Yc,单体电压047,Cell Volt 047,V
+ECO-E150WS,Ocn01dcdt#01216Yc,单体电压048,Cell Volt 048,V
+ECO-E150WS,Ocn01dcdt#01217Yc,单体电压049,Cell Volt 049,V
+ECO-E150WS,Ocn01dcdt#01218Yc,单体电压050,Cell Volt 050,V
+ECO-E150WS,Ocn01dcdt#01219Yc,单体电压051,Cell Volt 051,V
+ECO-E150WS,Ocn01dcdt#01220Yc,单体电压052,Cell Volt 052,V
+ECO-E150WS,Ocn01dcdt#01221Yc,单体电压053,Cell Volt 053,V
+ECO-E150WS,Ocn01dcdt#01222Yc,单体电压054,Cell Volt 054,V
+ECO-E150WS,Ocn01dcdt#01223Yc,单体电压055,Cell Volt 055,V
+ECO-E150WS,Ocn01dcdt#01224Yc,单体电压056,Cell Volt 056,V
+ECO-E150WS,Ocn01dcdt#01225Yc,单体电压057,Cell Volt 057,V
+ECO-E150WS,Ocn01dcdt#01226Yc,单体电压058,Cell Volt 058,V
+ECO-E150WS,Ocn01dcdt#01227Yc,单体电压059,Cell Volt 059,V
+ECO-E150WS,Ocn01dcdt#01228Yc,单体电压060,Cell Volt 060,V
+ECO-E150WS,Ocn01dcdt#01229Yc,单体电压061,Cell Volt 061,V
+ECO-E150WS,Ocn01dcdt#01230Yc,单体电压062,Cell Volt 062,V
+ECO-E150WS,Ocn01dcdt#01231Yc,单体电压063,Cell Volt 063,V
+ECO-E150WS,Ocn01dcdt#01232Yc,单体电压064,Cell Volt 064,V
+ECO-E150WS,Ocn01dcdt#01233Yc,单体电压065,Cell Volt 065,V
+ECO-E150WS,Ocn01dcdt#01234Yc,单体电压066,Cell Volt 066,V
+ECO-E150WS,Ocn01dcdt#01235Yc,单体电压067,Cell Volt 067,V
+ECO-E150WS,Ocn01dcdt#01236Yc,单体电压068,Cell Volt 068,V
+ECO-E150WS,Ocn01dcdt#01237Yc,单体电压069,Cell Volt 069,V
+ECO-E150WS,Ocn01dcdt#01238Yc,单体电压070,Cell Volt 070,V
+ECO-E150WS,Ocn01dcdt#01239Yc,单体电压071,Cell Volt 071,V
+ECO-E150WS,Ocn01dcdt#01240Yc,单体电压072,Cell Volt 072,V
+ECO-E150WS,Ocn01dcdt#01241Yc,单体电压073,Cell Volt 073,V
+ECO-E150WS,Ocn01dcdt#01242Yc,单体电压074,Cell Volt 074,V
+ECO-E150WS,Ocn01dcdt#01243Yc,单体电压075,Cell Volt 075,V
+ECO-E150WS,Ocn01dcdt#01244Yc,单体电压076,Cell Volt 076,V
+ECO-E150WS,Ocn01dcdt#01245Yc,单体电压077,Cell Volt 077,V
+ECO-E150WS,Ocn01dcdt#01246Yc,单体电压078,Cell Volt 078,V
+ECO-E150WS,Ocn01dcdt#01247Yc,单体电压079,Cell Volt 079,V
+ECO-E150WS,Ocn01dcdt#01248Yc,单体电压080,Cell Volt 080,V
+ECO-E150WS,Ocn01dcdt#01249Yc,单体电压081,Cell Volt 081,V
+ECO-E150WS,Ocn01dcdt#01250Yc,单体电压082,Cell Volt 082,V
+ECO-E150WS,Ocn01dcdt#01251Yc,单体电压083,Cell Volt 083,V
+ECO-E150WS,Ocn01dcdt#01252Yc,单体电压084,Cell Volt 084,V
+ECO-E150WS,Ocn01dcdt#01253Yc,单体电压085,Cell Volt 085,V
+ECO-E150WS,Ocn01dcdt#01254Yc,单体电压086,Cell Volt 086,V
+ECO-E150WS,Ocn01dcdt#01255Yc,单体电压087,Cell Volt 087,V
+ECO-E150WS,Ocn01dcdt#01256Yc,单体电压088,Cell Volt 088,V
+ECO-E150WS,Ocn01dcdt#01257Yc,单体电压089,Cell Volt 089,V
+ECO-E150WS,Ocn01dcdt#01258Yc,单体电压090,Cell Volt 090,V
+ECO-E150WS,Ocn01dcdt#01259Yc,单体电压091,Cell Volt 091,V
+ECO-E150WS,Ocn01dcdt#01260Yc,单体电压092,Cell Volt 092,V
+ECO-E150WS,Ocn01dcdt#01261Yc,单体电压093,Cell Volt 093,V
+ECO-E150WS,Ocn01dcdt#01262Yc,单体电压094,Cell Volt 094,V
+ECO-E150WS,Ocn01dcdt#01263Yc,单体电压095,Cell Volt 095,V
+ECO-E150WS,Ocn01dcdt#01264Yc,单体电压096,Cell Volt 096,V
+ECO-E150WS,Ocn01dcdt#01265Yc,单体电压097,Cell Volt 097,V
+ECO-E150WS,Ocn01dcdt#01266Yc,单体电压098,Cell Volt 098,V
+ECO-E150WS,Ocn01dcdt#01267Yc,单体电压099,Cell Volt 099,V
+ECO-E150WS,Ocn01dcdt#01268Yc,单体电压100,Cell Volt 100,V
+ECO-E150WS,Ocn01dcdt#01269Yc,单体电压101,Cell Volt 101,V
+ECO-E150WS,Ocn01dcdt#01270Yc,单体电压102,Cell Volt 102,V
+ECO-E150WS,Ocn01dcdt#01271Yc,单体电压103,Cell Volt 103,V
+ECO-E150WS,Ocn01dcdt#01272Yc,单体电压104,Cell Volt 104,V
+ECO-E150WS,Ocn01dcdt#01273Yc,单体电压105,Cell Volt 105,V
+ECO-E150WS,Ocn01dcdt#01274Yc,单体电压106,Cell Volt 106,V
+ECO-E150WS,Ocn01dcdt#01275Yc,单体电压107,Cell Volt 107,V
+ECO-E150WS,Ocn01dcdt#01276Yc,单体电压108,Cell Volt 108,V
+ECO-E150WS,Ocn01dcdt#01277Yc,单体电压109,Cell Volt 109,V
+ECO-E150WS,Ocn01dcdt#01278Yc,单体电压110,Cell Volt 110,V
+ECO-E150WS,Ocn01dcdt#01279Yc,单体电压111,Cell Volt 111,V
+ECO-E150WS,Ocn01dcdt#01280Yc,单体电压112,Cell Volt 112,V
+ECO-E150WS,Ocn01dcdt#01281Yc,单体电压113,Cell Volt 113,V
+ECO-E150WS,Ocn01dcdt#01282Yc,单体电压114,Cell Volt 114,V
+ECO-E150WS,Ocn01dcdt#01283Yc,单体电压115,Cell Volt 115,V
+ECO-E150WS,Ocn01dcdt#01284Yc,单体电压116,Cell Volt 116,V
+ECO-E150WS,Ocn01dcdt#01285Yc,单体电压117,Cell Volt 117,V
+ECO-E150WS,Ocn01dcdt#01286Yc,单体电压118,Cell Volt 118,V
+ECO-E150WS,Ocn01dcdt#01287Yc,单体电压119,Cell Volt 119,V
+ECO-E150WS,Ocn01dcdt#01288Yc,单体电压120,Cell Volt 120,V
+ECO-E150WS,Ocn01dcdt#01289Yc,单体电压121,Cell Volt 121,V
+ECO-E150WS,Ocn01dcdt#01290Yc,单体电压122,Cell Volt 122,V
+ECO-E150WS,Ocn01dcdt#01291Yc,单体电压123,Cell Volt 123,V
+ECO-E150WS,Ocn01dcdt#01292Yc,单体电压124,Cell Volt 124,V
+ECO-E150WS,Ocn01dcdt#01293Yc,单体电压125,Cell Volt 125,V
+ECO-E150WS,Ocn01dcdt#01294Yc,单体电压126,Cell Volt 126,V
+ECO-E150WS,Ocn01dcdt#01295Yc,单体电压127,Cell Volt 127,V
+ECO-E150WS,Ocn01dcdt#01296Yc,单体电压128,Cell Volt 128,V
+ECO-E150WS,Ocn01dcdt#01297Yc,单体电压129,Cell Volt 129,V
+ECO-E150WS,Ocn01dcdt#01298Yc,单体电压130,Cell Volt 130,V
+ECO-E150WS,Ocn01dcdt#01299Yc,单体电压131,Cell Volt 131,V
+ECO-E150WS,Ocn01dcdt#01300Yc,单体电压132,Cell Volt 132,V
+ECO-E150WS,Ocn01dcdt#01301Yc,单体电压133,Cell Volt 133,V
+ECO-E150WS,Ocn01dcdt#01302Yc,单体电压134,Cell Volt 134,V
+ECO-E150WS,Ocn01dcdt#01303Yc,单体电压135,Cell Volt 135,V
+ECO-E150WS,Ocn01dcdt#01304Yc,单体电压136,Cell Volt 136,V
+ECO-E150WS,Ocn01dcdt#01305Yc,单体电压137,Cell Volt 137,V
+ECO-E150WS,Ocn01dcdt#01306Yc,单体电压138,Cell Volt 138,V
+ECO-E150WS,Ocn01dcdt#01307Yc,单体电压139,Cell Volt 139,V
+ECO-E150WS,Ocn01dcdt#01308Yc,单体电压140,Cell Volt 140,V
+ECO-E150WS,Ocn01dcdt#01309Yc,单体电压141,Cell Volt 141,V
+ECO-E150WS,Ocn01dcdt#01310Yc,单体电压142,Cell Volt 142,V
+ECO-E150WS,Ocn01dcdt#01311Yc,单体电压143,Cell Volt 143,V
+ECO-E150WS,Ocn01dcdt#01312Yc,单体电压144,Cell Volt 144,V
+ECO-E150WS,Ocn01dcdt#01313Yc,单体电压145,Cell Volt 145,V
+ECO-E150WS,Ocn01dcdt#01314Yc,单体电压146,Cell Volt 146,V
+ECO-E150WS,Ocn01dcdt#01315Yc,单体电压147,Cell Volt 147,V
+ECO-E150WS,Ocn01dcdt#01316Yc,单体电压148,Cell Volt 148,V
+ECO-E150WS,Ocn01dcdt#01317Yc,单体电压149,Cell Volt 149,V
+ECO-E150WS,Ocn01dcdt#01318Yc,单体电压150,Cell Volt 150,V
+ECO-E150WS,Ocn01dcdt#01319Yc,单体电压151,Cell Volt 151,V
+ECO-E150WS,Ocn01dcdt#01320Yc,单体电压152,Cell Volt 152,V
+ECO-E150WS,Ocn01dcdt#01321Yc,单体电压153,Cell Volt 153,V
+ECO-E150WS,Ocn01dcdt#01322Yc,单体电压154,Cell Volt 154,V
+ECO-E150WS,Ocn01dcdt#01323Yc,单体电压155,Cell Volt 155,V
+ECO-E150WS,Ocn01dcdt#01324Yc,单体电压156,Cell Volt 156,V
+ECO-E150WS,Ocn01dcdt#01325Yc,单体电压157,Cell Volt 157,V
+ECO-E150WS,Ocn01dcdt#01326Yc,单体电压158,Cell Volt 158,V
+ECO-E150WS,Ocn01dcdt#01327Yc,单体电压159,Cell Volt 159,V
+ECO-E150WS,Ocn01dcdt#01328Yc,单体电压160,Cell Volt 160,V
+ECO-E150WS,Ocn01dcdt#01329Yc,单体电压161,Cell Volt 161,V
+ECO-E150WS,Ocn01dcdt#01330Yc,单体电压162,Cell Volt 162,V
+ECO-E150WS,Ocn01dcdt#01331Yc,单体电压163,Cell Volt 163,V
+ECO-E150WS,Ocn01dcdt#01332Yc,单体电压164,Cell Volt 164,V
+ECO-E150WS,Ocn01dcdt#01333Yc,单体电压165,Cell Volt 165,V
+ECO-E150WS,Ocn01dcdt#01334Yc,单体电压166,Cell Volt 166,V
+ECO-E150WS,Ocn01dcdt#01335Yc,单体电压167,Cell Volt 167,V
+ECO-E150WS,Ocn01dcdt#01336Yc,单体电压168,Cell Volt 168,V
+ECO-E150WS,Ocn01dcdt#01337Yc,单体电压169,Cell Volt 169,V
+ECO-E150WS,Ocn01dcdt#01338Yc,单体电压170,Cell Volt 170,V
+ECO-E150WS,Ocn01dcdt#01339Yc,单体电压171,Cell Volt 171,V
+ECO-E150WS,Ocn01dcdt#01340Yc,单体电压172,Cell Volt 172,V
+ECO-E150WS,Ocn01dcdt#01341Yc,单体电压173,Cell Volt 173,V
+ECO-E150WS,Ocn01dcdt#01342Yc,单体电压174,Cell Volt 174,V
+ECO-E150WS,Ocn01dcdt#01343Yc,单体电压175,Cell Volt 175,V
+ECO-E150WS,Ocn01dcdt#01344Yc,单体电压176,Cell Volt 176,V
+ECO-E150WS,Ocn01dcdt#01345Yc,单体电压177,Cell Volt 177,V
+ECO-E150WS,Ocn01dcdt#01346Yc,单体电压178,Cell Volt 178,V
+ECO-E150WS,Ocn01dcdt#01347Yc,单体电压179,Cell Volt 179,V
+ECO-E150WS,Ocn01dcdt#01348Yc,单体电压180,Cell Volt 180,V
+ECO-E150WS,Ocn01dcdt#01349Yc,单体电压181,Cell Volt 181,V
+ECO-E150WS,Ocn01dcdt#01350Yc,单体电压182,Cell Volt 182,V
+ECO-E150WS,Ocn01dcdt#01351Yc,单体电压183,Cell Volt 183,V
+ECO-E150WS,Ocn01dcdt#01352Yc,单体电压184,Cell Volt 184,V
+ECO-E150WS,Ocn01dcdt#01353Yc,单体电压185,Cell Volt 185,V
+ECO-E150WS,Ocn01dcdt#01354Yc,单体电压186,Cell Volt 186,V
+ECO-E150WS,Ocn01dcdt#01355Yc,单体电压187,Cell Volt 187,V
+ECO-E150WS,Ocn01dcdt#01356Yc,单体电压188,Cell Volt 188,V
+ECO-E150WS,Ocn01dcdt#01357Yc,单体电压189,Cell Volt 189,V
+ECO-E150WS,Ocn01dcdt#01358Yc,单体电压190,Cell Volt 190,V
+ECO-E150WS,Ocn01dcdt#01359Yc,单体电压191,Cell Volt 191,V
+ECO-E150WS,Ocn01dcdt#01360Yc,单体电压192,Cell Volt 192,V
+ECO-E150WS,Ocn01dcdt#01361Yc,单体电压193,Cell Volt 193,V
+ECO-E150WS,Ocn01dcdt#01362Yc,单体电压194,Cell Volt 194,V
+ECO-E150WS,Ocn01dcdt#01363Yc,单体电压195,Cell Volt 195,V
+ECO-E150WS,Ocn01dcdt#01364Yc,单体电压196,Cell Volt 196,V
+ECO-E150WS,Ocn01dcdt#01365Yc,单体电压197,Cell Volt 197,V
+ECO-E150WS,Ocn01dcdt#01366Yc,单体电压198,Cell Volt 198,V
+ECO-E150WS,Ocn01dcdt#01367Yc,单体电压199,Cell Volt 199,V
+ECO-E150WS,Ocn01dcdt#01368Yc,单体电压200,Cell Volt 200,V
+ECO-E150WS,Ocn01dcdt#01369Yc,单体电压201,Cell Volt 201,V
+ECO-E150WS,Ocn01dcdt#01370Yc,单体电压202,Cell Volt 202,V
+ECO-E150WS,Ocn01dcdt#01371Yc,单体电压203,Cell Volt 203,V
+ECO-E150WS,Ocn01dcdt#01372Yc,单体电压204,Cell Volt 204,V
+ECO-E150WS,Ocn01dcdt#01373Yc,单体电压205,Cell Volt 205,V
+ECO-E150WS,Ocn01dcdt#01374Yc,单体电压206,Cell Volt 206,V
+ECO-E150WS,Ocn01dcdt#01375Yc,单体电压207,Cell Volt 207,V
+ECO-E150WS,Ocn01dcdt#01376Yc,单体电压208,Cell Volt 208,V
+ECO-E150WS,Ocn01dcdt#01377Yc,单体电压209,Cell Volt 209,V
+ECO-E150WS,Ocn01dcdt#01378Yc,单体电压210,Cell Volt 210,V
+ECO-E150WS,Ocn01dcdt#01379Yc,单体电压211,Cell Volt 211,V
+ECO-E150WS,Ocn01dcdt#01380Yc,单体电压212,Cell Volt 212,V
+ECO-E150WS,Ocn01dcdt#01381Yc,单体电压213,Cell Volt 213,V
+ECO-E150WS,Ocn01dcdt#01382Yc,单体电压214,Cell Volt 214,V
+ECO-E150WS,Ocn01dcdt#01383Yc,单体电压215,Cell Volt 215,V
+ECO-E150WS,Ocn01dcdt#01384Yc,单体电压216,Cell Volt 216,V
+ECO-E150WS,Ocn01dcdt#01385Yc,单体电压217,Cell Volt 217,V
+ECO-E150WS,Ocn01dcdt#01386Yc,单体电压218,Cell Volt 218,V
+ECO-E150WS,Ocn01dcdt#01387Yc,单体电压219,Cell Volt 219,V
+ECO-E150WS,Ocn01dcdt#01388Yc,单体电压220,Cell Volt 220,V
+ECO-E150WS,Ocn01dcdt#01389Yc,单体电压221,Cell Volt 221,V
+ECO-E150WS,Ocn01dcdt#01390Yc,单体电压222,Cell Volt 222,V
+ECO-E150WS,Ocn01dcdt#01391Yc,单体电压223,Cell Volt 223,V
+ECO-E150WS,Ocn01dcdt#01392Yc,单体电压224,Cell Volt 224,V
+ECO-E150WS,Ocn01dcdt#01393Yc,单体电压225,Cell Volt 225,V
+ECO-E150WS,Ocn01dcdt#01394Yc,单体电压226,Cell Volt 226,V
+ECO-E150WS,Ocn01dcdt#01395Yc,单体电压227,Cell Volt 227,V
+ECO-E150WS,Ocn01dcdt#01396Yc,单体电压228,Cell Volt 228,V
+ECO-E150WS,Ocn01dcdt#01397Yc,单体电压229,Cell Volt 229,V
+ECO-E150WS,Ocn01dcdt#01398Yc,单体电压230,Cell Volt 230,V
+ECO-E150WS,Ocn01dcdt#01399Yc,单体电压231,Cell Volt 231,V
+ECO-E150WS,Ocn01dcdt#01400Yc,单体电压232,Cell Volt 232,V
+ECO-E150WS,Ocn01dcdt#01401Yc,单体电压233,Cell Volt 233,V
+ECO-E150WS,Ocn01dcdt#01402Yc,单体电压234,Cell Volt 234,V
+ECO-E150WS,Ocn01dcdt#01403Yc,单体电压235,Cell Volt 235,V
+ECO-E150WS,Ocn01dcdt#01404Yc,单体电压236,Cell Volt 236,V
+ECO-E150WS,Ocn01dcdt#01405Yc,单体电压237,Cell Volt 237,V
+ECO-E150WS,Ocn01dcdt#01406Yc,单体电压238,Cell Volt 238,V
+ECO-E150WS,Ocn01dcdt#01407Yc,单体电压239,Cell Volt 239,V
+ECO-E150WS,Ocn01dcdt#01408Yc,单体电压240,Cell Volt 240,V
+ECO-E150WS,Ocn01dcdt#01409Yc,单体温度001,Cell Temp 001,℃
+ECO-E150WS,Ocn01dcdt#01410Yc,单体温度002,Cell Temp 002,℃
+ECO-E150WS,Ocn01dcdt#01411Yc,单体温度003,Cell Temp 003,℃
+ECO-E150WS,Ocn01dcdt#01412Yc,单体温度004,Cell Temp 004,℃
+ECO-E150WS,Ocn01dcdt#01413Yc,单体温度005,Cell Temp 005,℃
+ECO-E150WS,Ocn01dcdt#01414Yc,单体温度006,Cell Temp 006,℃
+ECO-E150WS,Ocn01dcdt#01415Yc,单体温度007,Cell Temp 007,℃
+ECO-E150WS,Ocn01dcdt#01416Yc,单体温度008,Cell Temp 008,℃
+ECO-E150WS,Ocn01dcdt#01417Yc,单体温度009,Cell Temp 009,℃
+ECO-E150WS,Ocn01dcdt#01418Yc,单体温度010,Cell Temp 010,℃
+ECO-E150WS,Ocn01dcdt#01419Yc,单体温度011,Cell Temp 011,℃
+ECO-E150WS,Ocn01dcdt#01420Yc,单体温度012,Cell Temp 012,℃
+ECO-E150WS,Ocn01dcdt#01421Yc,单体温度013,Cell Temp 013,℃
+ECO-E150WS,Ocn01dcdt#01422Yc,单体温度014,Cell Temp 014,℃
+ECO-E150WS,Ocn01dcdt#01423Yc,单体温度015,Cell Temp 015,℃
+ECO-E150WS,Ocn01dcdt#01424Yc,单体温度016,Cell Temp 016,℃
+ECO-E150WS,Ocn01dcdt#01425Yc,单体温度017,Cell Temp 017,℃
+ECO-E150WS,Ocn01dcdt#01426Yc,单体温度018,Cell Temp 018,℃
+ECO-E150WS,Ocn01dcdt#01427Yc,单体温度019,Cell Temp 019,℃
+ECO-E150WS,Ocn01dcdt#01428Yc,单体温度020,Cell Temp 020,℃
+ECO-E150WS,Ocn01dcdt#01429Yc,单体温度021,Cell Temp 021,℃
+ECO-E150WS,Ocn01dcdt#01430Yc,单体温度022,Cell Temp 022,℃
+ECO-E150WS,Ocn01dcdt#01431Yc,单体温度023,Cell Temp 023,℃
+ECO-E150WS,Ocn01dcdt#01432Yc,单体温度024,Cell Temp 024,℃
+ECO-E150WS,Ocn01dcdt#01433Yc,单体温度025,Cell Temp 025,℃
+ECO-E150WS,Ocn01dcdt#01434Yc,单体温度026,Cell Temp 026,℃
+ECO-E150WS,Ocn01dcdt#01435Yc,单体温度027,Cell Temp 027,℃
+ECO-E150WS,Ocn01dcdt#01436Yc,单体温度028,Cell Temp 028,℃
+ECO-E150WS,Ocn01dcdt#01437Yc,单体温度029,Cell Temp 029,℃
+ECO-E150WS,Ocn01dcdt#01438Yc,单体温度030,Cell Temp 030,℃
+ECO-E150WS,Ocn01dcdt#01439Yc,单体温度031,Cell Temp 031,℃
+ECO-E150WS,Ocn01dcdt#01440Yc,单体温度032,Cell Temp 032,℃
+ECO-E150WS,Ocn01dcdt#01441Yc,单体温度033,Cell Temp 033,℃
+ECO-E150WS,Ocn01dcdt#01442Yc,单体温度034,Cell Temp 034,℃
+ECO-E150WS,Ocn01dcdt#01443Yc,单体温度035,Cell Temp 035,℃
+ECO-E150WS,Ocn01dcdt#01444Yc,单体温度036,Cell Temp 036,℃
+ECO-E150WS,Ocn01dcdt#01445Yc,单体温度037,Cell Temp 037,℃
+ECO-E150WS,Ocn01dcdt#01446Yc,单体温度038,Cell Temp 038,℃
+ECO-E150WS,Ocn01dcdt#01447Yc,单体温度039,Cell Temp 039,℃
+ECO-E150WS,Ocn01dcdt#01448Yc,单体温度040,Cell Temp 040,℃
+ECO-E150WS,Ocn01dcdt#01449Yc,单体温度041,Cell Temp 041,℃
+ECO-E150WS,Ocn01dcdt#01450Yc,单体温度042,Cell Temp 042,℃
+ECO-E150WS,Ocn01dcdt#01451Yc,单体温度043,Cell Temp 043,℃
+ECO-E150WS,Ocn01dcdt#01452Yc,单体温度044,Cell Temp 044,℃
+ECO-E150WS,Ocn01dcdt#01453Yc,单体温度045,Cell Temp 045,℃
+ECO-E150WS,Ocn01dcdt#01454Yc,单体温度046,Cell Temp 046,℃
+ECO-E150WS,Ocn01dcdt#01455Yc,单体温度047,Cell Temp 047,℃
+ECO-E150WS,Ocn01dcdt#01456Yc,单体温度048,Cell Temp 048,℃
+ECO-E150WS,Ocn01dcdt#01457Yc,单体温度049,Cell Temp 049,℃
+ECO-E150WS,Ocn01dcdt#01458Yc,单体温度050,Cell Temp 050,℃
+ECO-E150WS,Ocn01dcdt#01459Yc,单体温度051,Cell Temp 051,℃
+ECO-E150WS,Ocn01dcdt#01460Yc,单体温度052,Cell Temp 052,℃
+ECO-E150WS,Ocn01dcdt#01461Yc,单体温度053,Cell Temp 053,℃
+ECO-E150WS,Ocn01dcdt#01462Yc,单体温度054,Cell Temp 054,℃
+ECO-E150WS,Ocn01dcdt#01463Yc,单体温度055,Cell Temp 055,℃
+ECO-E150WS,Ocn01dcdt#01464Yc,单体温度056,Cell Temp 056,℃
+ECO-E150WS,Ocn01dcdt#01465Yc,单体温度057,Cell Temp 057,℃
+ECO-E150WS,Ocn01dcdt#01466Yc,单体温度058,Cell Temp 058,℃
+ECO-E150WS,Ocn01dcdt#01467Yc,单体温度059,Cell Temp 059,℃
+ECO-E150WS,Ocn01dcdt#01468Yc,单体温度060,Cell Temp 060,℃
+ECO-E150WS,Ocn01dcdt#01469Yc,单体温度061,Cell Temp 061,℃
+ECO-E150WS,Ocn01dcdt#01470Yc,单体温度062,Cell Temp 062,℃
+ECO-E150WS,Ocn01dcdt#01471Yc,单体温度063,Cell Temp 063,℃
+ECO-E150WS,Ocn01dcdt#01472Yc,单体温度064,Cell Temp 064,℃
+ECO-E150WS,Ocn01dcdt#01473Yc,单体温度065,Cell Temp 065,℃
+ECO-E150WS,Ocn01dcdt#01474Yc,单体温度066,Cell Temp 066,℃
+ECO-E150WS,Ocn01dcdt#01475Yc,单体温度067,Cell Temp 067,℃
+ECO-E150WS,Ocn01dcdt#01476Yc,单体温度068,Cell Temp 068,℃
+ECO-E150WS,Ocn01dcdt#01477Yc,单体温度069,Cell Temp 069,℃
+ECO-E150WS,Ocn01dcdt#01478Yc,单体温度070,Cell Temp 070,℃
+ECO-E150WS,Ocn01dcdt#01479Yc,单体温度071,Cell Temp 071,℃
+ECO-E150WS,Ocn01dcdt#01480Yc,单体温度072,Cell Temp 072,℃
+ECO-E150WS,Ocn01dcdt#01481Yc,单体温度073,Cell Temp 073,℃
+ECO-E150WS,Ocn01dcdt#01482Yc,单体温度074,Cell Temp 074,℃
+ECO-E150WS,Ocn01dcdt#01483Yc,单体温度075,Cell Temp 075,℃
+ECO-E150WS,Ocn01dcdt#01484Yc,单体温度076,Cell Temp 076,℃
+ECO-E150WS,Ocn01dcdt#01485Yc,单体温度077,Cell Temp 077,℃
+ECO-E150WS,Ocn01dcdt#01486Yc,单体温度078,Cell Temp 078,℃
+ECO-E150WS,Ocn01dcdt#01487Yc,单体温度079,Cell Temp 079,℃
+ECO-E150WS,Ocn01dcdt#01488Yc,单体温度080,Cell Temp 080,℃
+ECO-E150WS,Ocn01dcdt#01489Yc,单体温度081,Cell Temp 081,℃
+ECO-E150WS,Ocn01dcdt#01490Yc,单体温度082,Cell Temp 082,℃
+ECO-E150WS,Ocn01dcdt#01491Yc,单体温度083,Cell Temp 083,℃
+ECO-E150WS,Ocn01dcdt#01492Yc,单体温度084,Cell Temp 084,℃
+ECO-E150WS,Ocn01dcdt#01493Yc,单体温度085,Cell Temp 085,℃
+ECO-E150WS,Ocn01dcdt#01494Yc,单体温度086,Cell Temp 086,℃
+ECO-E150WS,Ocn01dcdt#01495Yc,单体温度087,Cell Temp 087,℃
+ECO-E150WS,Ocn01dcdt#01496Yc,单体温度088,Cell Temp 088,℃
+ECO-E150WS,Ocn01dcdt#01497Yc,单体温度089,Cell Temp 089,℃
+ECO-E150WS,Ocn01dcdt#01498Yc,单体温度090,Cell Temp 090,℃
+ECO-E150WS,Ocn01dcdt#01499Yc,单体温度091,Cell Temp 091,℃
+ECO-E150WS,Ocn01dcdt#01500Yc,单体温度092,Cell Temp 092,℃
+ECO-E150WS,Ocn01dcdt#01501Yc,单体温度093,Cell Temp 093,℃
+ECO-E150WS,Ocn01dcdt#01502Yc,单体温度094,Cell Temp 094,℃
+ECO-E150WS,Ocn01dcdt#01503Yc,单体温度095,Cell Temp 095,℃
+ECO-E150WS,Ocn01dcdt#01504Yc,单体温度096,Cell Temp 096,℃
+ECO-E150WS,Ocn01dcdt#01505Yc,单体温度097,Cell Temp 097,℃
+ECO-E150WS,Ocn01dcdt#01506Yc,单体温度098,Cell Temp 098,℃
+ECO-E150WS,Ocn01dcdt#01507Yc,单体温度099,Cell Temp 099,℃
+ECO-E150WS,Ocn01dcdt#01508Yc,单体温度100,Cell Temp 100,℃
+ECO-E150WS,Ocn01dcdt#01509Yc,单体温度101,Cell Temp 101,℃
+ECO-E150WS,Ocn01dcdt#01510Yc,单体温度102,Cell Temp 102,℃
+ECO-E150WS,Ocn01dcdt#01511Yc,单体温度103,Cell Temp 103,℃
+ECO-E150WS,Ocn01dcdt#01512Yc,单体温度104,Cell Temp 104,℃
+ECO-E150WS,Ocn01dcdt#01513Yc,单体温度105,Cell Temp 105,℃
+ECO-E150WS,Ocn01dcdt#01514Yc,单体温度106,Cell Temp 106,℃
+ECO-E150WS,Ocn01dcdt#01515Yc,单体温度107,Cell Temp 107,℃
+ECO-E150WS,Ocn01dcdt#01516Yc,单体温度108,Cell Temp 108,℃
+ECO-E150WS,Ocn01dcdt#01517Yc,单体温度109,Cell Temp 109,℃
+ECO-E150WS,Ocn01dcdt#01518Yc,单体温度110,Cell Temp 110,℃
+ECO-E150WS,Ocn01dcdt#01519Yc,单体温度111,Cell Temp 111,℃
+ECO-E150WS,Ocn01dcdt#01520Yc,单体温度112,Cell Temp 112,℃
+ECO-E150WS,Ocn01dcdt#01521Yc,单体温度113,Cell Temp 113,℃
+ECO-E150WS,Ocn01dcdt#01522Yc,单体温度114,Cell Temp 114,℃
+ECO-E150WS,Ocn01dcdt#01523Yc,单体温度115,Cell Temp 115,℃
+ECO-E150WS,Ocn01dcdt#01524Yc,单体温度116,Cell Temp 116,℃
+ECO-E150WS,Ocn01dcdt#01525Yc,单体温度117,Cell Temp 117,℃
+ECO-E150WS,Ocn01dcdt#01526Yc,单体温度118,Cell Temp 118,℃
+ECO-E150WS,Ocn01dcdt#01527Yc,单体温度119,Cell Temp 119,℃
+ECO-E150WS,Ocn01dcdt#01528Yc,单体温度120,Cell Temp 120,℃
+ECO-E150WS,PCcn01pcs#0158Yc,离网模式设置,Off Grid Mode Setting,
+ECO-E150WS,PCcn01pcs#0159Yc,模块运行模式设置,Modu Oper Mode setting,
+ECO-E150WS,PCcn01pcs#0160Yc,开机、关机指令,Power on/Off Instruction,
+ECO-E150WS,PCcn01pcs#0161Yc,故障复位指令,Fault Reset Instruction,
+ECO-E150WS,PCcn01pcs#0156Yc,有功功率设定值,Active Power Setting,kW
+ECO-E150WS,DCcn01bms#01140Yc,复归指令（遥调）,Reset Instruction (Remote Regulation),
+ECO-E150WS,ACcn01kt#01167Yc,空调1开关机,HVAC-1 Power On/off,
+ECO-E150WS,ACcn01kt#02168Yc,空调2开关机,HVAC_2 Power On/off,
+ECO-E150WS,modbus_data_type_0,遥信,Telemetry,
+ECO-E150WS,modbus_data_type_1,遥测,Telesignaling,
+ECO-E150WS,modbus_data_type_2,电度,Pulse Telemetry,
+ECO-E150WS,modbus_data_type_3,遥控,Remote Control,
+ECO-E150WS,modbus_data_type_4,遥调,Remote Regulation,
+ECO-E233LS-G01-EN,PCcn01pcs#016Bh,总故障位,Fault General,
+ECO-E233LS-G01-EN,PCcn01pcs#01152Bh,并离网运行标志,On/off Grid Operation Sign,
+ECO-E233LS-G01-EN,PCcn01pcs#01151Bh,PCS告警总,PCS Alarm General,
+ECO-E233LS-G01-EN,PCcn01pcs#01153Bh,PCS通讯状态,PCS Comm Status,
+ECO-E233LS-G01-EN,DCcn01bms#010Bh,组端过压 1 级报警,Batt Modu Over Volt Alarm L1,
+ECO-E233LS-G01-EN,DCcn01bms#011Bh,组端过压 2 级报警,Batt Modu Over Volt Alarm L2,
+ECO-E233LS-G01-EN,DCcn01bms#012Bh,组端过压 3 级报警,Batt Modu Over Volt Alarm L3,
+ECO-E233LS-G01-EN,DCcn01bms#013Bh,组端欠压 1 级报警,Batt Modu Und Volt Alarm L1,
+ECO-E233LS-G01-EN,DCcn01bms#014Bh,组端欠压 2 级报警,Batt Modu Und Volt Alarm L2,
+ECO-E233LS-G01-EN,DCcn01bms#015Bh,组端欠压 3 级报警,Batt Modu Und Volt Alarm L3,
+ECO-E233LS-G01-EN,DCcn01bms#016Bh,组端放电过流 1 级报警,Batt Modu dchg Over Curr Alarm L1,
+ECO-E233LS-G01-EN,DCcn01bms#017Bh,组端放电过流 2 级报警,Batt Modu dchg Over Curr Alarm L2,
+ECO-E233LS-G01-EN,DCcn01bms#018Bh,组端放电过流 3 级报警,Batt Modu dchg Over Curr Alarm L3,
+ECO-E233LS-G01-EN,DCcn01bms#019Bh,组端充电过流 1 级报警,Batt Modu chg Over Curr Alarm L1,
+ECO-E233LS-G01-EN,DCcn01bms#0110Bh,组端充电过流 2 级报警,Batt Modu chg Over Curr Alarm L2,
+ECO-E233LS-G01-EN,DCcn01bms#0111Bh,组端充电过流 3 级报警,Batt Modu chg Over Curr Alarm L3,
+ECO-E233LS-G01-EN,DCcn01bms#0112Bh,组端绝缘 1 级报警,Batt Modu Insulation Alarm L1,
+ECO-E233LS-G01-EN,DCcn01bms#0113Bh,组端绝缘 2 级报警,Batt Modu Insulation Alarm L2,
+ECO-E233LS-G01-EN,DCcn01bms#0114Bh,组端绝缘 3 级报警,Batt Modu Insulation Alarm L3,
+ECO-E233LS-G01-EN,DCcn01bms#0115Bh,单体电池充电过温 1 级报警,Cell chg Over Temp Alarm L1,
+ECO-E233LS-G01-EN,DCcn01bms#0116Bh,单体电池充电过温 2 级报警,Cell chg Over Temp Alarm L2,
+ECO-E233LS-G01-EN,DCcn01bms#0117Bh,单体电池充电过温 3 级报警,Cell chg Over Temp Alarm L3,
+ECO-E233LS-G01-EN,DCcn01bms#0118Bh,单体电池充电欠温 1 级报警,Cell chg Und Temp Alarm L1,
+ECO-E233LS-G01-EN,DCcn01bms#0119Bh,单体电池充电欠温 2 级报警,Cell chg Und Temp Alarm L2,
+ECO-E233LS-G01-EN,DCcn01bms#0120Bh,单体电池充电欠温 3 级报警,Cell chg Und Temp Alarm L3,
+ECO-E233LS-G01-EN,DCcn01bms#0121Bh,单体电压过压 1 级报警,Cell Over Volt Alarm L1,
+ECO-E233LS-G01-EN,DCcn01bms#0122Bh,单体电压过压 2 级报警,Cell Over Volt Alarm L2,
+ECO-E233LS-G01-EN,DCcn01bms#0123Bh,单体电压过压 3 级报警,Cell Over Volt Alarm L3,
+ECO-E233LS-G01-EN,DCcn01bms#0124Bh,单体电压欠压 1 级报警,Cell Und Volt Alarm L1,
+ECO-E233LS-G01-EN,DCcn01bms#0125Bh,单体电压欠压 2 级报警,Cell Und Volt Alarm L2,
+ECO-E233LS-G01-EN,DCcn01bms#0126Bh,单体电压欠压 3 级报警,Cell Und Volt Alarm L3,
+ECO-E233LS-G01-EN,DCcn01bms#0127Bh,单体压差过高 1 级报警,Cell Volt Diff Alarm L1,
+ECO-E233LS-G01-EN,DCcn01bms#0128Bh,单体压差过高 2 级报警,Cell Volt Diff Alarm L2,
+ECO-E233LS-G01-EN,DCcn01bms#0129Bh,单体压差过高 3 级报警,Cell Volt Diff Alarm L3,
+ECO-E233LS-G01-EN,DCcn01bms#0130Bh,单体温差过高 1 级报警,Cell Temp Diff Alarm L1,
+ECO-E233LS-G01-EN,DCcn01bms#0131Bh,单体温差过高 2 级报警,Cell Temp Diff Alarm L2,
+ECO-E233LS-G01-EN,DCcn01bms#0132Bh,单体温差过高 3 级报警,Cell Temp Diff Alarm L3,
+ECO-E233LS-G01-EN,DCcn01bms#0133Bh,SOC 过低 1 级告警,SOC Low  Alarm L1,
+ECO-E233LS-G01-EN,DCcn01bms#0134Bh,SOC 过低 2 级告警,SOC Low  Alarm L2,
+ECO-E233LS-G01-EN,DCcn01bms#0135Bh,SOC 过低 3 级告警,SOC Low  Alarm L3,
+ECO-E233LS-G01-EN,DCcn01bms#0136Bh,动力插箱温度过高 1 级报警,PACK  Over Temp Alarm L1,
+ECO-E233LS-G01-EN,DCcn01bms#0137Bh,动力插箱温度过高 2 级报警,PACK  Over Temp Alarm L2,
+ECO-E233LS-G01-EN,DCcn01bms#0138Bh,动力插箱温度过高 3 级报警,PACK  Over Temp Alarm L3,
+ECO-E233LS-G01-EN,DCcn01bms#0139Bh,电池模组过压 1 级报警,Batt Modu Over Volt Alarm L1,
+ECO-E233LS-G01-EN,DCcn01bms#0140Bh,电池模组过压 2 级报警,Batt Modu Over Volt Alarm L2,
+ECO-E233LS-G01-EN,DCcn01bms#0141Bh,电池模组过压 3 级报警,Batt Modu Over Volt Alarm L3,
+ECO-E233LS-G01-EN,DCcn01bms#0142Bh,电池模组欠压 1 级报警,Batt Modu Und Volt Alarm L1,
+ECO-E233LS-G01-EN,DCcn01bms#0143Bh,电池模组欠压 2 级报警,Batt Modu Und Volt Alarm L2,
+ECO-E233LS-G01-EN,DCcn01bms#0144Bh,电池模组欠压 3 级报警,Batt Modu Und Volt Alarm L3,
+ECO-E233LS-G01-EN,DCcn01bms#0145Bh,DI1 故障,DI1 fault,
+ECO-E233LS-G01-EN,DCcn01bms#0146Bh,DI2 故障,DI2 fault,
+ECO-E233LS-G01-EN,DCcn01bms#0147Bh,DI3 故障,DI3 fault,
+ECO-E233LS-G01-EN,DCcn01bms#0148Bh,DI4 故障,DI4 fault,
+ECO-E233LS-G01-EN,DCcn01bms#0149Bh,DI5 故障,DI5 fault,
+ECO-E233LS-G01-EN,DCcn01bms#0150Bh,DI6 故障,DI6 fault,
+ECO-E233LS-G01-EN,DCcn01bms#0151Bh,DI7 故障,DI7 fault,
+ECO-E233LS-G01-EN,DCcn01bms#0152Bh,DI8 故障,DI8 fault,
+ECO-E233LS-G01-EN,DCcn01bms#0153Bh,内网通讯失联,Interior Comm Loss,
+ECO-E233LS-G01-EN,DCcn01bms#0154Bh,单体电压采集异常,Cell Volt Acquisition Abnormal,
+ECO-E233LS-G01-EN,DCcn01bms#0155Bh,单体温度采集异常,Cell Temp Acquisition Abnormal,
+ECO-E233LS-G01-EN,DCcn01bms#0156Bh,显控检测故障,Display Control Test Fault,
+ECO-E233LS-G01-EN,DCcn01bms#0157Bh,簇间压差大,Cluster Volt Diff Abnormal,
+ECO-E233LS-G01-EN,DCcn01bms#0158Bh,簇间跳机故障,Cluster Trip Fault,
+ECO-E233LS-G01-EN,DCcn01bms#0159Bh,电池极限故障,Cell Critical Status Fault,
+ECO-E233LS-G01-EN,DCcn01bms#0160Bh,项目软件版本参数不一致,Software Version Fault,
+ECO-E233LS-G01-EN,DCcn01bms#0161Bh,与 PCS 通讯故障,To PCS Comm Fault,
+ECO-E233LS-G01-EN,DCcn01bms#0162Bh,PC 强控调试模式,Forced PC Control on Debug Mode,
+ECO-E233LS-G01-EN,DCcn01bms#0163Bh,CAN 霍尔传感器故障,Can Hallsenso Fault,
+ECO-E233LS-G01-EN,DCcn01bms#0164Bh,CAN 霍尔传感器通讯故障,Can Hallsenso Comm Fault,
+ECO-E233LS-G01-EN,DCcn01bms#0165Bh,硬件自检异常,Hardware Selftest Fault,
+ECO-E233LS-G01-EN,DCcn01bms#0166Bh,单体电压线束故障,Cell Volt Harness Fault,
+ECO-E233LS-G01-EN,DCcn01bms#0167Bh,均衡故障,Balancing Fault,
+ECO-E233LS-G01-EN,DCcn01bms#0168Bh,EMS 通讯故障,EMS Comm Fault,
+ECO-E233LS-G01-EN,DCcn01bms#0169Bh,与三级 BMS 通讯故障,3-level BMS Comm Fault,
+ECO-E233LS-G01-EN,DCcn01bms#0170Bh,单体电池放电过温 1 级报警,Cell dchg Over Temp Alarm L1,
+ECO-E233LS-G01-EN,DCcn01bms#0171Bh,单体电池放电过温 2 级报警,Cell dchg Over Temp Alarm L2,
+ECO-E233LS-G01-EN,DCcn01bms#0172Bh,单体电池放电过温 3 级报警,Cell dchg Over Temp Alarm L3,
+ECO-E233LS-G01-EN,DCcn01bms#0173Bh,单体电池放电欠温 1 级报警,Cell dchg Und Temp Alarm L1,
+ECO-E233LS-G01-EN,DCcn01bms#0174Bh,单体电池放电欠温 2 级报警,Cell dchg Und Temp Alarm L2,
+ECO-E233LS-G01-EN,DCcn01bms#0175Bh,单体电池放电欠温 3 级报警,Cell dchg Und Temp Alarm L3,
+ECO-E233LS-G01-EN,DCcn01bms#0176Bh,SOC 过高 1 级告警,SOC too High  Alarm L1,
+ECO-E233LS-G01-EN,DCcn01bms#0177Bh,SOC 过高 2 级告警,SOC too High  Alarm L2,
+ECO-E233LS-G01-EN,DCcn01bms#0178Bh,SOC 过高 3 级告警,SOC too High  Alarm L3,
+ECO-E233LS-G01-EN,DCcn01bms#0179Bh,温升快报警 1 级报警,Temp FastRise Alarm L1,
+ECO-E233LS-G01-EN,DCcn01bms#0180Bh,温升快报警 2 级报警,Temp FastRise Alarm L2,
+ECO-E233LS-G01-EN,DCcn01bms#0181Bh,温升快报警 3 级报警,Temp FastRise Alarm L3,
+ECO-E233LS-G01-EN,DCcn01bms#01102Bh,告警状态,Alarm Status,
+ECO-E233LS-G01-EN,DCcn01bms#01105Bh,故障状态,Fault Status,
+ECO-E233LS-G01-EN,DCcn01bms#01106Bh,通讯状态,Comm Status,
+ECO-E233LS-G01-EN,Ocn01wd#018Bh,温度传感器报警,Water Immersion Sensor Alarm,
+ECO-E233LS-G01-EN,Ocn01yg#019Bh,烟雾传感器报警,Smoke Sensor Alarm,
+ECO-E233LS-G01-EN,Ocn01xf#0110Bh,消防灭火器报警,Temp Sensor Alarm,
+ECO-E233LS-G01-EN,Ocn01sj#0111Bh,水浸传感器报警,Fire Extinguisher Alarm,
+ECO-E233LS-G01-EN,Ocn01gm#0112Bh,柜门状态,Cabinet Door Status,
+ECO-E233LS-G01-EN,Kcn01jtkg#0113Bh,急停开关状态,Emergency Stop Status,
+ECO-E233LS-G01-EN,Kcn01jxdlq#0114Bh,进线断路器状态,Cabinet breaker Status,
+ECO-E233LS-G01-EN,Kcn01hldlq#0115Bh,汇流断路器状态,Busbar Breaker Status,
+ECO-E233LS-G01-EN,Kcn01yx#01Kg,运行灯,Operation Indicator,
+ECO-E233LS-G01-EN,Kcn01gz#01Kg,故障灯,Fault Indicator,
+ECO-E233LS-G01-EN,Kcn01io#015Bh,DO6,DO6,
+ECO-E233LS-G01-EN,Kcn01io#016Bh,DO7,DO7,
+ECO-E233LS-G01-EN,Kcn01csfs#01Kg,风扇启动,Fan Start,
+ECO-E233LS-G01-EN,Kcn01jxdlq#01Kg,进线断路器脱扣,Cabinet Breaker Trip,
+ECO-E233LS-G01-EN,Kcn01hldlq#01Kg,汇流断路器脱扣,Busbar Breaker Trip,
+ECO-E233LS-G01-EN,Kcn01io#017Bh,DO8,DO8,
+ECO-E233LS-G01-EN,Ocn01slkt#01158Bh,出水高温告警,Outflow Temp High Alarm,
+ECO-E233LS-G01-EN,Ocn01slkt#01159Bh,出水低温告警,Outflow Temp Low Alarm,
+ECO-E233LS-G01-EN,Ocn01slkt#01160Bh,出水温感故障,Outflow Temp Sensor Fault,
+ECO-E233LS-G01-EN,Ocn01slkt#01161Bh,回水温感故障,Inflow Temp Sensor Fault,
+ECO-E233LS-G01-EN,Ocn01slkt#01162Bh,补水告警,Feed Water Alarm,
+ECO-E233LS-G01-EN,Ocn01slkt#01171Bh,水冷系统合成故障,Liquid-cooled System Synthesis Fault,
+ECO-E233LS-G01-EN,Ocn01slkt#01165Bh,水冷离线故障,Liquid-cooled System Offline Fault,
+ECO-E233LS-G01-EN,PCcn01pcs#016Yc,PCS交流电流Ia有效值,PCS AC Ia effective value,A
+ECO-E233LS-G01-EN,PCcn01pcs#017Yc,PCS交流电流Ib有效值,PCS AC Ib effective value,A
+ECO-E233LS-G01-EN,PCcn01pcs#018Yc,PCS交流电流Ic有效值,PCS AC Ic effective value,A
+ECO-E233LS-G01-EN,PCcn01pcs#010Yc,PCC线电压Uab有效值,PCS AC Uab effective value,V
+ECO-E233LS-G01-EN,PCcn01pcs#011Yc,PCC线电压Ubc有效值,PCS AC Ubc effective value,V
+ECO-E233LS-G01-EN,PCcn01pcs#012Yc,PCC线电压Uca有效值,PCS AC Uca effective value,V
+ECO-E233LS-G01-EN,PCcn01pcs#0127Yc,直流母线总电压,DC Busbar Volt,V
+ECO-E233LS-G01-EN,PCcn01pcs#0131Yc,直流电流,DC Current,A
+ECO-E233LS-G01-EN,PCcn01pcs#0123Yc,交流有功功率,AC Active power,kW
+ECO-E233LS-G01-EN,PCcn01pcs#0124Yc,交流无功功率,AC Reactive Power,kVar
+ECO-E233LS-G01-EN,PCcn01pcs#0126Yc,功率因数,Power Factor,
+ECO-E233LS-G01-EN,PCcn01pcs#0132Yc,直流功率,DC Power,kW
+ECO-E233LS-G01-EN,PCcn01pcs#0112Yc,电网频率,Grid Frequency,Hz
+ECO-E233LS-G01-EN,PCcn01pcs#0156Yc,充放电功率给定,Chg/dchg Power Setting,kW
+ECO-E233LS-G01-EN,PCcn01pcs#0157Yc,无功功率给定,Reactive Power Setting,kVar
+ECO-E233LS-G01-EN,PCcn01pcs#0182Yc,转发运行状态,Operation Status (Transfer),
+ECO-E233LS-G01-EN,PCcn01pcs#0162Yc,硬件故障字 1,Hardware Fault Code 1,
+ECO-E233LS-G01-EN,PCcn01pcs#0163Yc,硬件故障字 2,Hardware Fault Code 2,
+ECO-E233LS-G01-EN,PCcn01pcs#0164Yc,电网故障字,Grid Fault Code,
+ECO-E233LS-G01-EN,PCcn01pcs#0165Yc,母线故障字,Busbar Fault Code,
+ECO-E233LS-G01-EN,PCcn01pcs#0166Yc,交流电容故障字,AC Capacitor Fault Code,
+ECO-E233LS-G01-EN,PCcn01pcs#0167Yc,系统故障字,System Fault Code,
+ECO-E233LS-G01-EN,PCcn01pcs#0168Yc,开关故障字,Switch Fault Code,
+ECO-E233LS-G01-EN,PCcn01pcs#0169Yc,其他故障字,Other Fault Code,
+ECO-E233LS-G01-EN,DCcn01bms#011Yc,电池簇电流值,Cluster Current Value,A
+ECO-E233LS-G01-EN,DCcn01bms#012Yc,电池簇总 SOC,Cluster SOC Total,%
+ECO-E233LS-G01-EN,DCcn01bms#013Yc,电池簇总 SOH,Cluster SOH Total,%
+ECO-E233LS-G01-EN,DCcn01bms#010Yc,电池簇电压,Cluster Volt,V
+ECO-E233LS-G01-EN,DCcn01bms#017Yc,电池簇电池状态,Cell Status,
+ECO-E233LS-G01-EN,DCcn01bms#0111Yc,电池最高温度,Maximum Cell Temperature,℃
+ECO-E233LS-G01-EN,DCcn01bms#0112Yc,电池最高温度所在模块号,Max Temp Module No.,
+ECO-E233LS-G01-EN,DCcn01bms#0113Yc,电池最高温度模块内序号,Max Temp Cell No.,
+ECO-E233LS-G01-EN,DCcn01bms#0114Yc,电池最低温度,Cell Min Temp,℃
+ECO-E233LS-G01-EN,DCcn01bms#0115Yc,电池最低温度所在模块号,Min Temp Module No.,
+ECO-E233LS-G01-EN,DCcn01bms#0116Yc,电池最低温度模块内序号,Min Temp Cell No.,
+ECO-E233LS-G01-EN,DCcn01bms#0117Yc,电池平均温度,Cell Avg Temp,℃
+ECO-E233LS-G01-EN,DCcn01bms#0118Yc,电池组电池总节数,Cell Quantity inside PACK,
+ECO-E233LS-G01-EN,DCcn01bms#0119Yc,单体平均电压,Cell Avg Voltage,V
+ECO-E233LS-G01-EN,DCcn01bms#0120Yc,最高单体电压,Cell Max Voltage,V
+ECO-E233LS-G01-EN,DCcn01bms#0121Yc,最高单体电压所在模块号,Max Volt Module No.,
+ECO-E233LS-G01-EN,DCcn01bms#0122Yc,最高单体电压模块内序号,Max Volt  Cell No.,
+ECO-E233LS-G01-EN,DCcn01bms#0123Yc,最低单体电压,Cell Min Voltage,V
+ECO-E233LS-G01-EN,DCcn01bms#0124Yc,最低单体电压所在模块号,Min Volt Module Nr,
+ECO-E233LS-G01-EN,DCcn01bms#0125Yc,最低单体电压模块内序号,Min Volt  Cell Nr,
+ECO-E233LS-G01-EN,DCcn01bms#0126Yc,单体平均 SOC,Cell SOC Average,%
+ECO-E233LS-G01-EN,DCcn01bms#0158Yc,累计充电电量,Accumulated charging Energy,kWh
+ECO-E233LS-G01-EN,DCcn01bms#0159Yc,累计放电电量,Accumulated discharging Energy,kWh
+ECO-E233LS-G01-EN,DCcn01bms#0170Yc,系统告警状态,System Alarm Status,
+ECO-E233LS-G01-EN,DCcn01bms#0196Yc,最大允许充电功率,Max Allowed Charging PWR,kW
+ECO-E233LS-G01-EN,DCcn01bms#0197Yc,最大允许放电功率,Max Allowed Discharging PWR,kW
+ECO-E233LS-G01-EN,DCcn01bms#01108Yc,单日累计充电电量,Daily Accumulated Energy Charged,kWh
+ECO-E233LS-G01-EN,DCcn01bms#01109Yc,单日累计放电电量,Daily Accumulated Energy Discharged,kWh
+ECO-E233LS-G01-EN,Ocn01slkt#01151Yc,出水温度,Outflow Temp,℃
+ECO-E233LS-G01-EN,Ocn01slkt#01152Yc,回水温度,Inflow Temp,℃
+ECO-E233LS-G01-EN,Ocn01slkt#01153Yc,排气温度,Exhaust Temp,℃
+ECO-E233LS-G01-EN,Ocn01slkt#01154Yc,环境温度,Ambient Temp,℃
+ECO-E233LS-G01-EN,Ocn01slkt#01155Yc,进水压力,Inflow Pressure,
+ECO-E233LS-G01-EN,Ocn01slkt#01156Yc,出水压力,Outflow Pressure,
+ECO-E233LS-G01-EN,Ocn01slkt#01164Yc,水泵当前转速,Pump Speed,%
+ECO-E233LS-G01-EN,Ocn01slkt#01165Yc,水泵状态,Pump Status,
+ECO-E233LS-G01-EN,Ocn01slkt#01166Yc,当前系统模式,System Mode,
+ECO-E233LS-G01-EN,Ocn01dcdt#01169Yc,单体电压001,Cell Volt 001,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01170Yc,单体电压002,Cell Volt 002,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01171Yc,单体电压003,Cell Volt 003,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01172Yc,单体电压004,Cell Volt 004,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01173Yc,单体电压005,Cell Volt 005,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01174Yc,单体电压006,Cell Volt 006,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01175Yc,单体电压007,Cell Volt 007,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01176Yc,单体电压008,Cell Volt 008,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01177Yc,单体电压009,Cell Volt 009,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01178Yc,单体电压010,Cell Volt 010,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01179Yc,单体电压011,Cell Volt 011,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01180Yc,单体电压012,Cell Volt 012,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01181Yc,单体电压013,Cell Volt 013,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01182Yc,单体电压014,Cell Volt 014,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01183Yc,单体电压015,Cell Volt 015,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01184Yc,单体电压016,Cell Volt 016,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01185Yc,单体电压017,Cell Volt 017,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01186Yc,单体电压018,Cell Volt 018,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01187Yc,单体电压019,Cell Volt 019,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01188Yc,单体电压020,Cell Volt 020,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01189Yc,单体电压021,Cell Volt 021,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01190Yc,单体电压022,Cell Volt 022,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01191Yc,单体电压023,Cell Volt 023,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01192Yc,单体电压024,Cell Volt 024,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01193Yc,单体电压025,Cell Volt 025,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01194Yc,单体电压026,Cell Volt 026,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01195Yc,单体电压027,Cell Volt 027,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01196Yc,单体电压028,Cell Volt 028,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01197Yc,单体电压029,Cell Volt 029,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01198Yc,单体电压030,Cell Volt 030,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01199Yc,单体电压031,Cell Volt 031,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01200Yc,单体电压032,Cell Volt 032,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01201Yc,单体电压033,Cell Volt 033,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01202Yc,单体电压034,Cell Volt 034,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01203Yc,单体电压035,Cell Volt 035,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01204Yc,单体电压036,Cell Volt 036,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01205Yc,单体电压037,Cell Volt 037,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01206Yc,单体电压038,Cell Volt 038,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01207Yc,单体电压039,Cell Volt 039,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01208Yc,单体电压040,Cell Volt 040,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01209Yc,单体电压041,Cell Volt 041,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01210Yc,单体电压042,Cell Volt 042,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01211Yc,单体电压043,Cell Volt 043,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01212Yc,单体电压044,Cell Volt 044,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01213Yc,单体电压045,Cell Volt 045,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01214Yc,单体电压046,Cell Volt 046,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01215Yc,单体电压047,Cell Volt 047,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01216Yc,单体电压048,Cell Volt 048,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01217Yc,单体电压049,Cell Volt 049,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01218Yc,单体电压050,Cell Volt 050,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01219Yc,单体电压051,Cell Volt 051,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01220Yc,单体电压052,Cell Volt 052,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01221Yc,单体电压053,Cell Volt 053,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01222Yc,单体电压054,Cell Volt 054,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01223Yc,单体电压055,Cell Volt 055,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01224Yc,单体电压056,Cell Volt 056,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01225Yc,单体电压057,Cell Volt 057,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01226Yc,单体电压058,Cell Volt 058,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01227Yc,单体电压059,Cell Volt 059,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01228Yc,单体电压060,Cell Volt 060,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01229Yc,单体电压061,Cell Volt 061,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01230Yc,单体电压062,Cell Volt 062,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01231Yc,单体电压063,Cell Volt 063,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01232Yc,单体电压064,Cell Volt 064,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01233Yc,单体电压065,Cell Volt 065,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01234Yc,单体电压066,Cell Volt 066,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01235Yc,单体电压067,Cell Volt 067,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01236Yc,单体电压068,Cell Volt 068,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01237Yc,单体电压069,Cell Volt 069,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01238Yc,单体电压070,Cell Volt 070,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01239Yc,单体电压071,Cell Volt 071,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01240Yc,单体电压072,Cell Volt 072,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01241Yc,单体电压073,Cell Volt 073,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01242Yc,单体电压074,Cell Volt 074,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01243Yc,单体电压075,Cell Volt 075,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01244Yc,单体电压076,Cell Volt 076,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01245Yc,单体电压077,Cell Volt 077,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01246Yc,单体电压078,Cell Volt 078,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01247Yc,单体电压079,Cell Volt 079,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01248Yc,单体电压080,Cell Volt 080,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01249Yc,单体电压081,Cell Volt 081,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01250Yc,单体电压082,Cell Volt 082,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01251Yc,单体电压083,Cell Volt 083,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01252Yc,单体电压084,Cell Volt 084,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01253Yc,单体电压085,Cell Volt 085,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01254Yc,单体电压086,Cell Volt 086,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01255Yc,单体电压087,Cell Volt 087,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01256Yc,单体电压088,Cell Volt 088,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01257Yc,单体电压089,Cell Volt 089,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01258Yc,单体电压090,Cell Volt 090,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01259Yc,单体电压091,Cell Volt 091,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01260Yc,单体电压092,Cell Volt 092,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01261Yc,单体电压093,Cell Volt 093,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01262Yc,单体电压094,Cell Volt 094,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01263Yc,单体电压095,Cell Volt 095,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01264Yc,单体电压096,Cell Volt 096,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01265Yc,单体电压097,Cell Volt 097,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01266Yc,单体电压098,Cell Volt 098,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01267Yc,单体电压099,Cell Volt 099,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01268Yc,单体电压100,Cell Volt 100,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01269Yc,单体电压101,Cell Volt 101,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01270Yc,单体电压102,Cell Volt 102,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01271Yc,单体电压103,Cell Volt 103,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01272Yc,单体电压104,Cell Volt 104,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01273Yc,单体电压105,Cell Volt 105,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01274Yc,单体电压106,Cell Volt 106,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01275Yc,单体电压107,Cell Volt 107,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01276Yc,单体电压108,Cell Volt 108,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01277Yc,单体电压109,Cell Volt 109,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01278Yc,单体电压110,Cell Volt 110,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01279Yc,单体电压111,Cell Volt 111,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01280Yc,单体电压112,Cell Volt 112,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01281Yc,单体电压113,Cell Volt 113,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01282Yc,单体电压114,Cell Volt 114,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01283Yc,单体电压115,Cell Volt 115,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01284Yc,单体电压116,Cell Volt 116,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01285Yc,单体电压117,Cell Volt 117,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01286Yc,单体电压118,Cell Volt 118,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01287Yc,单体电压119,Cell Volt 119,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01288Yc,单体电压120,Cell Volt 120,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01289Yc,单体电压121,Cell Volt 121,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01290Yc,单体电压122,Cell Volt 122,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01291Yc,单体电压123,Cell Volt 123,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01292Yc,单体电压124,Cell Volt 124,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01293Yc,单体电压125,Cell Volt 125,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01294Yc,单体电压126,Cell Volt 126,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01295Yc,单体电压127,Cell Volt 127,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01296Yc,单体电压128,Cell Volt 128,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01297Yc,单体电压129,Cell Volt 129,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01298Yc,单体电压130,Cell Volt 130,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01299Yc,单体电压131,Cell Volt 131,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01300Yc,单体电压132,Cell Volt 132,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01301Yc,单体电压133,Cell Volt 133,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01302Yc,单体电压134,Cell Volt 134,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01303Yc,单体电压135,Cell Volt 135,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01304Yc,单体电压136,Cell Volt 136,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01305Yc,单体电压137,Cell Volt 137,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01306Yc,单体电压138,Cell Volt 138,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01307Yc,单体电压139,Cell Volt 139,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01308Yc,单体电压140,Cell Volt 140,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01309Yc,单体电压141,Cell Volt 141,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01310Yc,单体电压142,Cell Volt 142,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01311Yc,单体电压143,Cell Volt 143,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01312Yc,单体电压144,Cell Volt 144,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01313Yc,单体电压145,Cell Volt 145,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01314Yc,单体电压146,Cell Volt 146,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01315Yc,单体电压147,Cell Volt 147,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01316Yc,单体电压148,Cell Volt 148,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01317Yc,单体电压149,Cell Volt 149,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01318Yc,单体电压150,Cell Volt 150,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01319Yc,单体电压151,Cell Volt 151,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01320Yc,单体电压152,Cell Volt 152,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01321Yc,单体电压153,Cell Volt 153,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01322Yc,单体电压154,Cell Volt 154,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01323Yc,单体电压155,Cell Volt 155,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01324Yc,单体电压156,Cell Volt 156,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01325Yc,单体电压157,Cell Volt 157,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01326Yc,单体电压158,Cell Volt 158,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01327Yc,单体电压159,Cell Volt 159,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01328Yc,单体电压160,Cell Volt 160,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01329Yc,单体电压161,Cell Volt 161,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01330Yc,单体电压162,Cell Volt 162,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01331Yc,单体电压163,Cell Volt 163,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01332Yc,单体电压164,Cell Volt 164,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01333Yc,单体电压165,Cell Volt 165,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01334Yc,单体电压166,Cell Volt 166,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01335Yc,单体电压167,Cell Volt 167,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01336Yc,单体电压168,Cell Volt 168,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01337Yc,单体电压169,Cell Volt 169,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01338Yc,单体电压170,Cell Volt 170,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01339Yc,单体电压171,Cell Volt 171,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01340Yc,单体电压172,Cell Volt 172,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01341Yc,单体电压173,Cell Volt 173,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01342Yc,单体电压174,Cell Volt 174,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01343Yc,单体电压175,Cell Volt 175,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01344Yc,单体电压176,Cell Volt 176,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01345Yc,单体电压177,Cell Volt 177,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01346Yc,单体电压178,Cell Volt 178,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01347Yc,单体电压179,Cell Volt 179,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01348Yc,单体电压180,Cell Volt 180,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01349Yc,单体电压181,Cell Volt 181,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01350Yc,单体电压182,Cell Volt 182,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01351Yc,单体电压183,Cell Volt 183,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01352Yc,单体电压184,Cell Volt 184,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01353Yc,单体电压185,Cell Volt 185,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01354Yc,单体电压186,Cell Volt 186,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01355Yc,单体电压187,Cell Volt 187,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01356Yc,单体电压188,Cell Volt 188,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01357Yc,单体电压189,Cell Volt 189,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01358Yc,单体电压190,Cell Volt 190,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01359Yc,单体电压191,Cell Volt 191,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01360Yc,单体电压192,Cell Volt 192,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01361Yc,单体电压193,Cell Volt 193,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01362Yc,单体电压194,Cell Volt 194,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01363Yc,单体电压195,Cell Volt 195,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01364Yc,单体电压196,Cell Volt 196,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01365Yc,单体电压197,Cell Volt 197,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01366Yc,单体电压198,Cell Volt 198,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01367Yc,单体电压199,Cell Volt 199,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01368Yc,单体电压200,Cell Volt 200,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01369Yc,单体电压201,Cell Volt 201,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01370Yc,单体电压202,Cell Volt 202,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01371Yc,单体电压203,Cell Volt 203,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01372Yc,单体电压204,Cell Volt 204,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01373Yc,单体电压205,Cell Volt 205,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01374Yc,单体电压206,Cell Volt 206,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01375Yc,单体电压207,Cell Volt 207,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01376Yc,单体电压208,Cell Volt 208,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01377Yc,单体电压209,Cell Volt 209,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01378Yc,单体电压210,Cell Volt 210,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01379Yc,单体电压211,Cell Volt 211,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01380Yc,单体电压212,Cell Volt 212,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01381Yc,单体电压213,Cell Volt 213,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01382Yc,单体电压214,Cell Volt 214,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01383Yc,单体电压215,Cell Volt 215,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01384Yc,单体电压216,Cell Volt 216,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01385Yc,单体电压217,Cell Volt 217,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01386Yc,单体电压218,Cell Volt 218,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01387Yc,单体电压219,Cell Volt 219,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01388Yc,单体电压220,Cell Volt 220,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01389Yc,单体电压221,Cell Volt 221,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01390Yc,单体电压222,Cell Volt 222,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01391Yc,单体电压223,Cell Volt 223,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01392Yc,单体电压224,Cell Volt 224,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01393Yc,单体电压225,Cell Volt 225,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01394Yc,单体电压226,Cell Volt 226,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01395Yc,单体电压227,Cell Volt 227,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01396Yc,单体电压228,Cell Volt 228,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01397Yc,单体电压229,Cell Volt 229,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01398Yc,单体电压230,Cell Volt 230,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01399Yc,单体电压231,Cell Volt 231,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01400Yc,单体电压232,Cell Volt 232,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01401Yc,单体电压233,Cell Volt 233,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01402Yc,单体电压234,Cell Volt 234,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01403Yc,单体电压235,Cell Volt 235,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01404Yc,单体电压236,Cell Volt 236,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01405Yc,单体电压237,Cell Volt 237,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01406Yc,单体电压238,Cell Volt 238,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01407Yc,单体电压239,Cell Volt 239,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01408Yc,单体电压240,Cell Volt 240,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01409Yc,单体电压241,Cell Volt 241,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01410Yc,单体电压242,Cell Volt 242,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01411Yc,单体电压243,Cell Volt 243,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01412Yc,单体电压244,Cell Volt 244,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01413Yc,单体电压245,Cell Volt 245,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01414Yc,单体电压246,Cell Volt 246,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01415Yc,单体电压247,Cell Volt 247,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01416Yc,单体电压248,Cell Volt 248,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01417Yc,单体电压249,Cell Volt 249,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01418Yc,单体电压250,Cell Volt 250,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01419Yc,单体电压251,Cell Volt 251,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01420Yc,单体电压252,Cell Volt 252,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01421Yc,单体电压253,Cell Volt 253,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01422Yc,单体电压254,Cell Volt 254,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01423Yc,单体电压255,Cell Volt 255,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01424Yc,单体电压256,Cell Volt 256,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01425Yc,单体电压257,Cell Volt 257,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01426Yc,单体电压258,Cell Volt 258,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01427Yc,单体电压259,Cell Volt 259,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01428Yc,单体电压260,Cell Volt 260,V
+ECO-E233LS-G01-EN,Ocn01dcdt#01585Yc,单体温度001,Cell Temp 001,℃
+ECO-E233LS-G01-EN,Ocn01dcdt#01586Yc,单体温度002,Cell Temp 002,℃
+ECO-E233LS-G01-EN,Ocn01dcdt#01587Yc,单体温度003,Cell Temp 003,℃
+ECO-E233LS-G01-EN,Ocn01dcdt#01588Yc,单体温度004,Cell Temp 004,℃
+ECO-E233LS-G01-EN,Ocn01dcdt#01589Yc,单体温度005,Cell Temp 005,℃
+ECO-E233LS-G01-EN,Ocn01dcdt#01590Yc,单体温度006,Cell Temp 006,℃
+ECO-E233LS-G01-EN,Ocn01dcdt#01591Yc,单体温度007,Cell Temp 007,℃
+ECO-E233LS-G01-EN,Ocn01dcdt#01592Yc,单体温度008,Cell Temp 008,℃
+ECO-E233LS-G01-EN,Ocn01dcdt#01593Yc,单体温度009,Cell Temp 009,℃
+ECO-E233LS-G01-EN,Ocn01dcdt#01594Yc,单体温度010,Cell Temp 010,℃
+ECO-E233LS-G01-EN,Ocn01dcdt#01595Yc,单体温度011,Cell Temp 011,℃
+ECO-E233LS-G01-EN,Ocn01dcdt#01596Yc,单体温度012,Cell Temp 012,℃
+ECO-E233LS-G01-EN,Ocn01dcdt#01597Yc,单体温度013,Cell Temp 013,℃
+ECO-E233LS-G01-EN,Ocn01dcdt#01598Yc,单体温度014,Cell Temp 014,℃
+ECO-E233LS-G01-EN,Ocn01dcdt#01599Yc,单体温度015,Cell Temp 015,℃
+ECO-E233LS-G01-EN,Ocn01dcdt#01600Yc,单体温度016,Cell Temp 016,℃
+ECO-E233LS-G01-EN,Ocn01dcdt#01601Yc,单体温度017,Cell Temp 017,℃
+ECO-E233LS-G01-EN,Ocn01dcdt#01602Yc,单体温度018,Cell Temp 018,℃
+ECO-E233LS-G01-EN,Ocn01dcdt#01603Yc,单体温度019,Cell Temp 019,℃
+ECO-E233LS-G01-EN,Ocn01dcdt#01604Yc,单体温度020,Cell Temp 020,℃
+ECO-E233LS-G01-EN,Ocn01dcdt#01605Yc,单体温度021,Cell Temp 021,℃
+ECO-E233LS-G01-EN,Ocn01dcdt#01606Yc,单体温度022,Cell Temp 022,℃
+ECO-E233LS-G01-EN,Ocn01dcdt#01607Yc,单体温度023,Cell Temp 023,℃
+ECO-E233LS-G01-EN,Ocn01dcdt#01608Yc,单体温度024,Cell Temp 024,℃
+ECO-E233LS-G01-EN,Ocn01dcdt#01609Yc,单体温度025,Cell Temp 025,℃
+ECO-E233LS-G01-EN,Ocn01dcdt#01610Yc,单体温度026,Cell Temp 026,℃
+ECO-E233LS-G01-EN,Ocn01dcdt#01611Yc,单体温度027,Cell Temp 027,℃
+ECO-E233LS-G01-EN,Ocn01dcdt#01612Yc,单体温度028,Cell Temp 028,℃
+ECO-E233LS-G01-EN,Ocn01dcdt#01613Yc,单体温度029,Cell Temp 029,℃
+ECO-E233LS-G01-EN,Ocn01dcdt#01614Yc,单体温度030,Cell Temp 030,℃
+ECO-E233LS-G01-EN,Ocn01dcdt#01615Yc,单体温度031,Cell Temp 031,℃
+ECO-E233LS-G01-EN,Ocn01dcdt#01616Yc,单体温度032,Cell Temp 032,℃
+ECO-E233LS-G01-EN,Ocn01dcdt#01617Yc,单体温度033,Cell Temp 033,℃
+ECO-E233LS-G01-EN,Ocn01dcdt#01618Yc,单体温度034,Cell Temp 034,℃
+ECO-E233LS-G01-EN,Ocn01dcdt#01619Yc,单体温度035,Cell Temp 035,℃
+ECO-E233LS-G01-EN,Ocn01dcdt#01620Yc,单体温度036,Cell Temp 036,℃
+ECO-E233LS-G01-EN,Ocn01dcdt#01621Yc,单体温度037,Cell Temp 037,℃
+ECO-E233LS-G01-EN,Ocn01dcdt#01622Yc,单体温度038,Cell Temp 038,℃
+ECO-E233LS-G01-EN,Ocn01dcdt#01623Yc,单体温度039,Cell Temp 039,℃
+ECO-E233LS-G01-EN,Ocn01dcdt#01624Yc,单体温度040,Cell Temp 040,℃
+ECO-E233LS-G01-EN,Ocn01dcdt#01625Yc,单体温度041,Cell Temp 041,℃
+ECO-E233LS-G01-EN,Ocn01dcdt#01626Yc,单体温度042,Cell Temp 042,℃
+ECO-E233LS-G01-EN,Ocn01dcdt#01627Yc,单体温度043,Cell Temp 043,℃
+ECO-E233LS-G01-EN,Ocn01dcdt#01628Yc,单体温度044,Cell Temp 044,℃
+ECO-E233LS-G01-EN,Ocn01dcdt#01629Yc,单体温度045,Cell Temp 045,℃
+ECO-E233LS-G01-EN,Ocn01dcdt#01630Yc,单体温度046,Cell Temp 046,℃
+ECO-E233LS-G01-EN,Ocn01dcdt#01631Yc,单体温度047,Cell Temp 047,℃
+ECO-E233LS-G01-EN,Ocn01dcdt#01632Yc,单体温度048,Cell Temp 048,℃
+ECO-E233LS-G01-EN,Ocn01dcdt#01633Yc,单体温度049,Cell Temp 049,℃
+ECO-E233LS-G01-EN,Ocn01dcdt#01634Yc,单体温度050,Cell Temp 050,℃
+ECO-E233LS-G01-EN,Ocn01dcdt#01635Yc,单体温度051,Cell Temp 051,℃
+ECO-E233LS-G01-EN,Ocn01dcdt#01636Yc,单体温度052,Cell Temp 052,℃
+ECO-E233LS-G01-EN,Ocn01dcdt#01637Yc,单体温度053,Cell Temp 053,℃
+ECO-E233LS-G01-EN,Ocn01dcdt#01638Yc,单体温度054,Cell Temp 054,℃
+ECO-E233LS-G01-EN,Ocn01dcdt#01639Yc,单体温度055,Cell Temp 055,℃
+ECO-E233LS-G01-EN,Ocn01dcdt#01640Yc,单体温度056,Cell Temp 056,℃
+ECO-E233LS-G01-EN,Ocn01dcdt#01641Yc,单体温度057,Cell Temp 057,℃
+ECO-E233LS-G01-EN,Ocn01dcdt#01642Yc,单体温度058,Cell Temp 058,℃
+ECO-E233LS-G01-EN,Ocn01dcdt#01643Yc,单体温度059,Cell Temp 059,℃
+ECO-E233LS-G01-EN,Ocn01dcdt#01644Yc,单体温度060,Cell Temp 060,℃
+ECO-E233LS-G01-EN,Ocn01dcdt#01645Yc,单体温度061,Cell Temp 061,℃
+ECO-E233LS-G01-EN,Ocn01dcdt#01646Yc,单体温度062,Cell Temp 062,℃
+ECO-E233LS-G01-EN,Ocn01dcdt#01647Yc,单体温度063,Cell Temp 063,℃
+ECO-E233LS-G01-EN,Ocn01dcdt#01648Yc,单体温度064,Cell Temp 064,℃
+ECO-E233LS-G01-EN,Ocn01dcdt#01649Yc,单体温度065,Cell Temp 065,℃
+ECO-E233LS-G01-EN,Ocn01dcdt#01650Yc,单体温度066,Cell Temp 066,℃
+ECO-E233LS-G01-EN,Ocn01dcdt#01651Yc,单体温度067,Cell Temp 067,℃
+ECO-E233LS-G01-EN,Ocn01dcdt#01652Yc,单体温度068,Cell Temp 068,℃
+ECO-E233LS-G01-EN,Ocn01dcdt#01653Yc,单体温度069,Cell Temp 069,℃
+ECO-E233LS-G01-EN,Ocn01dcdt#01654Yc,单体温度070,Cell Temp 070,℃
+ECO-E233LS-G01-EN,Ocn01dcdt#01655Yc,单体温度071,Cell Temp 071,℃
+ECO-E233LS-G01-EN,Ocn01dcdt#01656Yc,单体温度072,Cell Temp 072,℃
+ECO-E233LS-G01-EN,Ocn01dcdt#01657Yc,单体温度073,Cell Temp 073,℃
+ECO-E233LS-G01-EN,Ocn01dcdt#01658Yc,单体温度074,Cell Temp 074,℃
+ECO-E233LS-G01-EN,Ocn01dcdt#01659Yc,单体温度075,Cell Temp 075,℃
+ECO-E233LS-G01-EN,Ocn01dcdt#01660Yc,单体温度076,Cell Temp 076,℃
+ECO-E233LS-G01-EN,Ocn01dcdt#01661Yc,单体温度077,Cell Temp 077,℃
+ECO-E233LS-G01-EN,Ocn01dcdt#01662Yc,单体温度078,Cell Temp 078,℃
+ECO-E233LS-G01-EN,Ocn01dcdt#01663Yc,单体温度079,Cell Temp 079,℃
+ECO-E233LS-G01-EN,Ocn01dcdt#01664Yc,单体温度080,Cell Temp 080,℃
+ECO-E233LS-G01-EN,Ocn01dcdt#01665Yc,单体温度081,Cell Temp 081,℃
+ECO-E233LS-G01-EN,Ocn01dcdt#01666Yc,单体温度082,Cell Temp 082,℃
+ECO-E233LS-G01-EN,Ocn01dcdt#01667Yc,单体温度083,Cell Temp 083,℃
+ECO-E233LS-G01-EN,Ocn01dcdt#01668Yc,单体温度084,Cell Temp 084,℃
+ECO-E233LS-G01-EN,Ocn01dcdt#01669Yc,单体温度085,Cell Temp 085,℃
+ECO-E233LS-G01-EN,Ocn01dcdt#01670Yc,单体温度086,Cell Temp 086,℃
+ECO-E233LS-G01-EN,Ocn01dcdt#01671Yc,单体温度087,Cell Temp 087,℃
+ECO-E233LS-G01-EN,Ocn01dcdt#01672Yc,单体温度088,Cell Temp 088,℃
+ECO-E233LS-G01-EN,Ocn01dcdt#01673Yc,单体温度089,Cell Temp 089,℃
+ECO-E233LS-G01-EN,Ocn01dcdt#01674Yc,单体温度090,Cell Temp 090,℃
+ECO-E233LS-G01-EN,Ocn01dcdt#01675Yc,单体温度091,Cell Temp 091,℃
+ECO-E233LS-G01-EN,Ocn01dcdt#01676Yc,单体温度092,Cell Temp 092,℃
+ECO-E233LS-G01-EN,Ocn01dcdt#01677Yc,单体温度093,Cell Temp 093,℃
+ECO-E233LS-G01-EN,Ocn01dcdt#01678Yc,单体温度094,Cell Temp 094,℃
+ECO-E233LS-G01-EN,Ocn01dcdt#01679Yc,单体温度095,Cell Temp 095,℃
+ECO-E233LS-G01-EN,Ocn01dcdt#01680Yc,单体温度096,Cell Temp 096,℃
+ECO-E233LS-G01-EN,Ocn01dcdt#01681Yc,单体温度097,Cell Temp 097,℃
+ECO-E233LS-G01-EN,Ocn01dcdt#01682Yc,单体温度098,Cell Temp 098,℃
+ECO-E233LS-G01-EN,Ocn01dcdt#01683Yc,单体温度099,Cell Temp 099,℃
+ECO-E233LS-G01-EN,Ocn01dcdt#01684Yc,单体温度100,Cell Temp 100,℃
+ECO-E233LS-G01-EN,PCcn01pcs#0158Yc,离网模式设置,Off Grid Mode Setting,
+ECO-E233LS-G01-EN,PCcn01pcs#0159Yc,模块运行模式设置,Modu Oper Mode setting,
+ECO-E233LS-G01-EN,PCcn01pcs#0160Yc,开机、关机指令,Power on/Off Instruction,
+ECO-E233LS-G01-EN,PCcn01pcs#0161Yc,故障复位指令,Fault Reset Instruction,
+ECO-E233LS-G01-EN,PCcn01pcs#0156Yc,有功功率设定值,Active Power Setting,kW
+ECO-E233LS-G01-EN,DCcn01bms#01140Yc,复归指令（遥调）,Reset Instruction (Remote Regulation),
+ECO-E233LS-G01-EN,Ocn01slkt#01144Yc,系统开关机,On/Off,
+ECO-E233LS-G01-EN,Ocn01slkt#01145Yc,模式设置,Mode Set,
+ECO-E233LS-G01-EN,Ocn01slkt#01146Yc,控制温度选择,Choose Control Temp,
+ECO-E233LS-G01-EN,modbus_data_type_0,遥信,Telemetry,
+ECO-E233LS-G01-EN,modbus_data_type_1,遥测,Telesignaling,
+ECO-E233LS-G01-EN,modbus_data_type_2,电度,Pulse Telemetry,
+ECO-E233LS-G01-EN,modbus_data_type_3,遥控,Remote Control,
+ECO-E233LS-G01-EN,modbus_data_type_4,遥调,Remote Regulation,

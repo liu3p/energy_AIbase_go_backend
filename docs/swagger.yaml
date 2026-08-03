@@ -1,0 +1,2525 @@
+definitions:
+  db.ModbusInteractive:
+    properties:
+      baud:
+        description: 波特率
+        type: integer
+      checkBit:
+        description: 校验位
+        type: integer
+      dataBit:
+        description: 数据位
+        type: integer
+      devType:
+        description: 设备类型
+        type: integer
+      localPort:
+        description: 本地端口
+        type: integer
+      stopBit:
+        description: 停止位
+        type: integer
+      terminalAddr:
+        description: 终端站址
+        type: integer
+    type: object
+  db.ModbusTransCodeTable01:
+    properties:
+      code:
+        type: string
+      codeId:
+        type: integer
+      currentValue:
+        type: number
+      dataType:
+        type: integer
+      factor:
+        type: number
+      functionCode:
+        type: string
+      groupId:
+        type: integer
+      ip:
+        type: integer
+      negate:
+        type: integer
+      permission:
+        type: string
+      registerNum:
+        type: integer
+      type:
+        type: integer
+      unit:
+        type: string
+    type: object
+  emsclient.PushRemoteResp:
+    properties:
+      result:
+        description: 'gateway: endpoint'
+        type: integer
+      seq:
+        type: integer
+    type: object
+  emsclient.SnData:
+    properties:
+      addr:
+        type: string
+      cabnum:
+        type: integer
+      name:
+        type: string
+      sn:
+        type: string
+    type: object
+  handlers.DataUnitEntry:
+    additionalProperties:
+      additionalProperties:
+        type: string
+      type: object
+    type: object
+  handlers.DeviceRemoteData:
+    properties:
+      mqttid:
+        type: string
+      value:
+        type: number
+    type: object
+  handlers.EmsInfo:
+    properties:
+      name:
+        type: string
+      sn:
+        type: string
+      status:
+        type: integer
+    type: object
+  handlers.KickOutReq:
+    properties:
+      username:
+        type: string
+    type: object
+  handlers.LogDumpReq:
+    properties:
+      gatewaysn:
+        type: string
+      operation:
+        description: DumpDuration int    `json:"duration"`
+        type: integer
+      taskid:
+        type: integer
+    type: object
+  handlers.LogDumpResp:
+    properties:
+      taskid:
+        type: integer
+    type: object
+  handlers.LoginReq:
+    properties:
+      password:
+        type: string
+      username:
+        type: string
+    type: object
+  handlers.LoginResp:
+    properties:
+      access_token:
+        description: |-
+          Uname        string `json:"username"`
+          Utype        string `json:"usertype"`
+        type: string
+      expires_in:
+        type: integer
+      refresh_token:
+        type: string
+      token_type:
+        type: string
+    type: object
+  handlers.NetworkConfig:
+    properties:
+      gateway:
+        type: string
+      ip:
+        type: string
+      mask:
+        type: string
+    type: object
+  handlers.ProcessInfo:
+    properties:
+      cpu:
+        type: string
+      describe:
+        type: string
+      mem:
+        type: string
+      name:
+        type: string
+      pid:
+        type: string
+      status:
+        type: integer
+    type: object
+  handlers.ProcessOper:
+    properties:
+      checkpwd:
+        description: 校验密码
+        type: string
+      op:
+        description: 1 停止
+        type: integer
+    type: object
+  handlers.QueryEmsResp:
+    properties:
+      content:
+        additionalProperties:
+          $ref: '#/definitions/handlers.EmsInfo'
+        type: object
+      topic:
+        type: string
+    type: object
+  handlers.QueryGatewaysResp:
+    properties:
+      content:
+        additionalProperties:
+          $ref: '#/definitions/models.GatewayInfo'
+        type: object
+      topic:
+        type: string
+    type: object
+  handlers.RdData:
+    properties:
+      content:
+        type: string
+    type: object
+  handlers.RebootReq:
+    properties:
+      checkpwd:
+        type: string
+    type: object
+  handlers.RefreshTokenReq:
+    properties:
+      refresh_token:
+        type: string
+    type: object
+  handlers.RefreshTokenResp:
+    properties:
+      access_token:
+        type: string
+      expires_in:
+        type: integer
+      refresh_token:
+        type: string
+      token_type:
+        type: string
+    type: object
+  handlers.RemoteReq:
+    properties:
+      checkpwd:
+        type: string
+      content: {}
+      sn:
+        type: string
+    type: object
+  handlers.ResetPwdReq:
+    properties:
+      username:
+        type: string
+    type: object
+  handlers.SystemTime:
+    properties:
+      datetime:
+        type: string
+      zone:
+        type: string
+    type: object
+  handlers.TransEntry:
+    additionalProperties:
+      additionalProperties:
+        type: string
+      type: object
+    type: object
+  handlers.UpdatePwdReq:
+    properties:
+      newpwd:
+        type: string
+      oldpwd:
+        type: string
+    type: object
+  handlers.ZoneResp:
+    properties:
+      now:
+        description: 服务器当前时间
+        type: string
+      offset:
+        description: 服务器当前时区偏移量
+        type: integer
+      zone:
+        description: 服务器当前时区
+        type: string
+    type: object
+  handlers.overViewData:
+    additionalProperties:
+      additionalProperties:
+        $ref: '#/definitions/handlers.teleData'
+      type: object
+    type: object
+  handlers.teleData:
+    additionalProperties:
+      additionalProperties:
+        type: number
+      type: object
+    type: object
+  models.CommonResp:
+    properties:
+      code:
+        type: integer
+      msg:
+        type: string
+    type: object
+  models.DeviceData:
+    properties:
+      content:
+        additionalProperties:
+          $ref: '#/definitions/models.DeviceInfo'
+        type: object
+      topic:
+        type: string
+    type: object
+  models.DeviceInfo:
+    properties:
+      dev_code:
+        type: string
+      gateway:
+        type: string
+      name:
+        type: string
+      sn:
+        type: string
+      status:
+        description: 1 - offline, 2 - online
+        type: integer
+    type: object
+  models.GatewayInfo:
+    properties:
+      name:
+        type: string
+      sn:
+        type: string
+      status:
+        type: integer
+    type: object
+  models.KeyValueInfo:
+    properties:
+      at:
+        type: integer
+      k:
+        type: string
+      mt:
+        type: integer
+      v:
+        type: number
+    type: object
+  models.QueryDataUnitResp:
+    properties:
+      content:
+        additionalProperties: true
+        type: object
+      version:
+        type: string
+    type: object
+  models.QueryDevicesResp:
+    properties:
+      code:
+        type: integer
+      data:
+        $ref: '#/definitions/models.DeviceData'
+      msg:
+        type: string
+    type: object
+  models.QueryI18nResp:
+    properties:
+      content:
+        additionalProperties:
+          additionalProperties:
+            type: string
+          type: object
+        type: object
+      version:
+        type: string
+    type: object
+  models.TeleData:
+    properties:
+      content:
+        additionalProperties:
+          items:
+            $ref: '#/definitions/models.KeyValueInfo'
+          type: array
+        type: object
+      topic:
+        type: string
+    type: object
+  models.UserInfo:
+    properties:
+      lastlogin:
+        type: string
+      status:
+        type: integer
+      username:
+        type: string
+      usertype:
+        type: string
+    type: object
+  scdnet.ProcLogType:
+    properties:
+      typedesc:
+        type: string
+      typeidx:
+        type: integer
+    type: object
+info:
+  contact: {}
+paths:
+  /api/v1/log/ems:
+    get:
+      description: 查询ems设备信息
+      operationId: query-ems
+      parameters:
+      - default: <token>
+        description: JWT Token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 查询成功 {\"topic\":\"ems\",\"content\":{\"ems\":{\"sn\":\"ems\",\"name\":\"ems\",
+            \"status\":2}}}
+          schema:
+            $ref: '#/definitions/handlers.QueryEmsResp'
+        "401":
+          description: '认证失败 {\"code\": 401, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+        "403":
+          description: '拒绝访问 {\"code\": 403, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+        "404":
+          description: '没有找到ems {\"code\": 404, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+        "503":
+          description: '服务不可访问 {\"code\": 503, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+      summary: 查询ems设备
+      tags:
+      - ems
+  /api/v1/log/ems/prop:
+    get:
+      description: 查询指定网关下某子设备属性
+      operationId: query-ems-prop
+      parameters:
+      - default: <token>
+        description: JWT Token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 查询成功 {\"topic\":\"property\",\"content\":{\"11223355ems\":[{\"at\":1699263620341,\"k\":\"Runstate\",\"mt\":1699263620341,\"v\":1}]}}
+          schema:
+            $ref: '#/definitions/models.TeleData'
+        "401":
+          description: '认证失败 {\"code\": 401, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+        "403":
+          description: '拒绝访问 {\"code\": 403, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+        "503":
+          description: '服务不可访问 {\"code\": 503, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+      summary: 查询子设备属性
+      tags:
+      - ems
+  /api/v1/log/ems/remote/{method}:
+    post:
+      description: ems遥控或遥调下发
+      operationId: query-ems-remote
+      parameters:
+      - default: <token>
+        description: JWT Token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: 方法名
+        example: "1>ems策略下发：PolicyConfig,\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t2>手动/智能策略下发:\tPlanSet,\t3>AGC对象投入/退出:\tAGCExitCtrl,\t4>AGC对象远方/就地:AGCRemoteCtrl,\t5>储能一体机投入/退出:CabExitCtrl,\t6>AGC策略修改:AGCStrategyMod,\t7>并网点增删改:ParallelBranch"
+        in: path
+        name: method
+        required: true
+        type: string
+      - default: '{"content": "body", "sn": "项目sn号"}'
+        description: ems策略下发
+        example: '{"content":[{\"type\":1,\"bus\":\"bus1\",\"date\":\"2006-01-02\",\"config_data\":{\"plans\":[{\"p\":100.45,\"bt\":\"00:00\",\"et\":\"01:21\"},{\"p\":0,\"bt\":\"23:21\",\"et\":\"24:00\"},{\"p\":-100.45,\"bt\":\"01:21\",\"et\":\"23:21\"}],\"soc_up\":100,\"soc_dn\":48.5,\"interval\":15}},{\"type\":1,\"bus\":\"bus2\",\"date\":\"2006-01-02\",\"config_data\":{\"plans\":[{\"p\":110.45,\"bt\":\"00:00\",\"et\":\"01:21\"},{\"p\":10,\"bt\":\"23:21\",\"et\":\"24:00\"},{\"p\":-100.45,\"bt\":\"01:21\",\"et\":\"23:21\"}],\"soc_up\":100,\"soc_dn\":28,\"interval\":15}}],
+          "sn": "项目sn号"}'
+        in: body
+        name: RemoteReq-情况1
+        required: true
+        schema:
+          type: string
+      - default: '{"content": "", "sn": "项目sn号"}'
+        description: 手动/智能策略下发 (mode：类型0-手动策略，2-智能策略)
+        example: '{"content"：[{\"mode\":0,\"bus\":\"bus1\",\"date\":\"2006-01-02\",\"p\":100.0，\"max_p\":322.1\"soc_up\":85,\"soc_dn\":15，\"chg_max\":100,\"dchg_max\":200，\"chg_eff\":80,\"dchg_eff\":90}],
+          "sn": "项目sn号"}'
+        in: body
+        name: RemoteReq-情况2
+        required: true
+        schema:
+          type: string
+      - default: '{"content": "", "sn": "项目sn号"}'
+        description: AGC对象投入/退出  (0-退出；1-投入)
+        example: '{"content": {\"state\": 0}, "sn": "项目sn号"}'
+        in: body
+        name: RemoteReq-情况3
+        required: true
+        schema:
+          type: string
+      - default: '{"content": "", "sn": "项目sn号"}'
+        description: AGC对象远方/就地  (0-就地；1-远方)
+        example: '{"content": {\"state\": 0}, "sn": "项目sn号"}'
+        in: body
+        name: RemoteReq-情况4
+        required: true
+        schema:
+          type: string
+      - default: '{"content": "", "sn": "项目sn号"}'
+        description: 储能一体机投入/退出  (0-退出；1-投入)
+        example: '{"content": {\"state\": 0}, "sn": "项目sn号"}'
+        in: body
+        name: RemoteReq-情况5
+        required: true
+        schema:
+          type: string
+      - default: '{"content": "", "sn": "项目sn号"}'
+        description: AGC策略修改  (0-功率设定；1-计划曲线；2-智能模式)
+        example: '{"content": {\"state\": 0}, "sn": "项目sn号"}'
+        in: body
+        name: RemoteReq-情况6
+        required: true
+        schema:
+          type: string
+      - default: '{"content": "", "sn": "项目sn号"}'
+        description: 并网点增删改
+        example: '{"content"：[{\"bus\":\"bus1\",\"demand\":1000.2,\"trans_cap\":800.3,\"config_data\":[{\"sn\":\"esscab1\"},{\"sn\":\"esscab2\"}]},{\"bus\":\"bus2\",\"demand\":1000.2,\"trans_cap\":800.3,\"config_data\":[{\"sn\":\"esscab3\"},{\"sn\":\"esscab4\"}]}]",
+          "sn": "项目sn号"}'
+        in: body
+        name: RemoteReq-情况7
+        required: true
+        schema:
+          type: string
+      produces:
+      - application/json
+      responses:
+        "1":
+          description: "CODE 200.  ems策略下发 下发成功 {\\\"topic\\\": \\\"LocalPolicyUpAuto\\\",
+            \\\"content\\\": [{\\\"type\\\":1,\\\"bus\\\":\\\"bus1\\\",\\\"status\\\":0,\\\"exec_t\\\":\\\"2023-09-15\t\t\t\t\t\t\t\t\t\t14:17:00\\\",\\\"from\\\":2,\\\"plans\\\":[{\\\"p\\\":100.45,\\\"bt\\\":\\\"00:00\\\",\\\"et\\\":\\\"01:21\\\"},{\\\"p\\\":0,\\\"bt\\\":\\\"23:21\\\",\\\"et\\\":\\\"24:00\\\"},{\\\"p\\\":-100.45,\\\"bt\\\":\\\"01:21\\\",\\\"et\\\":\\\"23:21\\\"}]},{\\\"type\\\":1,\\\"bus\\\":\\\"bus2\\\",\\\"status\\\":0,\\\"exec_t\\\":\\\"2023-09-15\t14:17:00\\\",\\\"from\\\":2,\\\"plans\\\":[{\\\"p\\\":100.45,\\\"bt\\\":\\\"00:00\\\",\\\"et\\\":\\\"01:21\\\"},{\\\"p\\\":0,\\\"bt\\\":\\\"23:21\\\",\\\"et\\\":\\\"24:00\\\"},{\\\"p\\\":-100.45,\\\"bt\\\":\\\"01:21\\\",\\\"et\\\":\\\"23:21\\\"}]}]}"
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+        "2":
+          description: "CODE 200.  手动/智能策略下发  手动策略 下发成功 {\\\"topic\\\": \\\"LocalPolicyUpHand\\\",
+            \\\"content\\\": [{\\\"type\\\":1,\\\"bus\\\":\\\"bus1\\\",\\\"status\\\":0,\\\"exec_t\\\":\\\"2023-09-15\t\t\t\t\t\t\t\t14:17:00\\\",\\\"soc_up\\\":90,\\\"soc_dn\\\":15,\\\"p\\\":100.1,\\\"from\\\":0}]}"
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+        "3":
+          description: "CODE 200.  手动/智能策略下发  智能策略 下发成功 {\\\"topic\\\": \\\"LocalPolicyUpSmart\\\",
+            \\\"content\\\": [{\\\"max_p\\\":233.2,\\\"bus\\\":\\\"bus1\\\",\\\"type\\\":1,\\\"status\\\":0,\\\"from\\\":2,\\\"exec_t\\\":\\\"2023-09-15\t14:17:00\\\",\\\"chg_max\\\":40.2,\\\"dchg_max\\\":40.2,\\\"chg_eff\\\":89.9,\\\"dchg_eff\\\":89.9,\\\"ele_state\\\":0,\\\"chg_cpt\\\":100,\\\"dchg_cpt\\\":20,\\\"soc\\\":25,\\\"soc_up\\\":85,\\\"soc_dn\\\":15}]"
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+        "4":
+          description: 'CODE 200.  AGC对象投入/退出 下发成功 {\"topic\": \"AGCExitCtrlReport\",
+            \"content\": {\"ack:\": true}}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+        "5":
+          description: 'CODE 200.  AGC对象远方/就地 下发成功 {\"topic\": \"AGCRemoteCtrlReport\",
+            \"content\": {\"ack:\": true}}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+        "6":
+          description: 'CODE 200.  储能一体机投入/退出 下发成功  {\"topic\": \"CabExitCtrlReport\",
+            \"content\": {\"ack:\": true}}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+        "7":
+          description: 'CODE 200.  AGC策略修改 下发成功 {\"topic\": \"AGCStrategyModReport\",
+            \"content\": {\"ack:\": true}}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+        "8":
+          description: "CODE 200.  并网点增删改 下发成功 {\\\"topic\\\": \\\"ParallelBranchReport\\\",
+            \\\"content\\\": [{\\\"k\t\\\":\\\"20231128e\tms\t\\\",\\\"v\\\":[{\\\"from\t\\\":1,\\\"bus\\\":\\\"bus1\\\",\\\"demand\\\":1000.2,\\\"trans_cap\\\":800.3,\\\"config_data\\\":[{\\\"sn\\\":\\\"esscab1\\\"},{\\\"sn\\\":\\\"esscab2\\\"}]},{\\\"from\t\\\":1,\\\"bus\\\":\\\"bus2\\\",\\\"demand\\\":1000.2,\\\"trans_cap\\\":800.3,\\\"config_data\\\":[{\\\"sn\\\":\\\"esscab3\\\"},{\\\"sn\\\":\\\"esscab4\\\"}]}]}]}"
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+        "9":
+          description: 'CODE 401.  认证失败 {\"code\": 401, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+        "10":
+          description: 'CODE 403.  拒绝访问 {\"code\": 403, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+        "11":
+          description: 'CODE 503.  服务不可访问 {\"code\": 503, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+      summary: ems遥控/调
+      tags:
+      - ems
+  /api/v1/log/ems/telemetry:
+    get:
+      description: 查询ems的遥测数据
+      operationId: query-ems-yc
+      parameters:
+      - default: <token>
+        description: JWT Token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 查询成功 {\"topic\":\"telemetry\",\"content\":{\"11223355ems\":[{\"at\":1699263620341,\"k\":\"Uab\",\"mt\":1699263620341,\"v\":400}]}}
+          schema:
+            $ref: '#/definitions/models.TeleData'
+        "401":
+          description: '认证失败 {\"code\": 401, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+        "403":
+          description: '拒绝访问 {\"code\": 403, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+        "503":
+          description: '服务不可访问 {\"code\": 503, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+      summary: 查询ems遥测
+      tags:
+      - ems
+  /api/v1/log/ems/telesignal:
+    get:
+      description: 查询ems的遥信数据
+      operationId: query-ems-yx
+      parameters:
+      - default: <token>
+        description: JWT Token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 查询成功 {\"topic\":\"telesignal\",\"content\":{\"ems\":[{\"at\":1699263620341,\"k\":\"Uab\",\"mt\":1699263620341,\"v\":400}]}}
+          schema:
+            $ref: '#/definitions/models.TeleData'
+        "401":
+          description: '认证失败 {\"code\": 401, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+        "403":
+          description: '拒绝访问 {\"code\": 403, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+        "503":
+          description: '服务不可访问 {\"code\": 503, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+      summary: 查询ems遥信
+      tags:
+      - ems
+  /api/v1/log/gateways:
+    get:
+      description: 查询全部网关信息
+      operationId: query-gateways
+      parameters:
+      - default: <token>
+        description: JWT Token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '查询成功 {\"topic\": \"gateways\", \"content\": {\"gateway_sn1\":{\"name\":\"\",\"address\":\"\",
+            \"status\":2}, "gateway_sn2\":{\"name\":\"\",\"address\":\"\", \"status\":2}}}'
+          schema:
+            $ref: '#/definitions/handlers.QueryGatewaysResp'
+        "401":
+          description: '认证失败 {\"code\": 401, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+        "403":
+          description: '拒绝访问 {\"code\": 403, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+        "503":
+          description: '服务不可访问 {\"code\": 503, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+      summary: 查询网关
+      tags:
+      - gateways
+  /api/v1/log/gateways/{gateway_sn}/dev_telemetry:
+    post:
+      description: 查询指定网关下多个子设备遥测
+      operationId: query-multi-devices-yc
+      parameters:
+      - default: <token>
+        description: JWT Token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: 网关sn
+        in: path
+        name: gateway_sn
+        required: true
+        type: string
+      - description: 设备sn数组
+        in: body
+        name: devices
+        required: true
+        schema:
+          items:
+            type: string
+          type: array
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 查询成功 {\"topic\":\"tm\",\"content\":{\"11223355esscab1pcs1\":[{\"at\":1699263620341,\"k\":\"Uab\",\"mt\":1699263620341,\"v\":400}],\"11223355esscab1ac11\":[{\"at\":1699263620341,\"k\":\"Runstate\",\"mt\":1699263620341,\"v\":0}]}}
+          schema:
+            $ref: '#/definitions/models.TeleData'
+        "401":
+          description: '认证失败 {\"code\": 401, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+        "403":
+          description: '拒绝访问 {\"code\": 403, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+        "404":
+          description: '没找到gateway {\"code\": 404, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+        "503":
+          description: '服务不可访问 {\"code\": 503, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+      summary: 查询多个子设备遥测
+      tags:
+      - gateways
+  /api/v1/log/gateways/{gateway_sn}/dev_telesignal:
+    post:
+      description: 查询指定网关下多个子设备遥信
+      operationId: query-multi-devices-yx
+      parameters:
+      - default: <token>
+        description: JWT Token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: 网关sn
+        in: path
+        name: gateway_sn
+        required: true
+        type: string
+      - description: 设备sn数组
+        in: body
+        name: devices
+        required: true
+        schema:
+          items:
+            type: string
+          type: array
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 查询成功 {\"topic\":\"ts\",\"content\":{\"11223355esscab1pcs1\":[{\"at\":1699263620341,\"k\":\"Uab\",\"mt\":1699263620341,\"v\":400}],\"11223355esscab1ac11\":[{\"at\":1699263620341,\"k\":\"Runstate\",\"mt\":1699263620341,\"v\":0}]}}
+          schema:
+            $ref: '#/definitions/models.TeleData'
+        "401":
+          description: '认证失败 {\"code\": 401, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+        "403":
+          description: '拒绝访问 {\"code\": 403, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+        "404":
+          description: '没找到gateway {\"code\": 404, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+        "503":
+          description: '服务不可访问 {\"code\": 503, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+      summary: 查询多个子设备遥信
+      tags:
+      - gateways
+  /api/v1/log/gateways/{gateway_sn}/devices:
+    get:
+      description: 查询指定网关下子设备信息
+      operationId: query-devices
+      parameters:
+      - default: <token>
+        description: JWT Token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: 网关sn
+        in: path
+        name: gateway_sn
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '查询成功 {\"topic\": \"devices\", \"content\": {\"device_sn1\":{\"name\":\"\",\"dev_code\":\"\"},
+            "device_sn2\":{\"name\":\"\",\"dev_code\":\"\"}}}'
+          schema:
+            $ref: '#/definitions/models.QueryDevicesResp'
+        "401":
+          description: '认证失败 {\"code\": 401, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+        "403":
+          description: '拒绝访问 {\"code\": 403, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+        "404":
+          description: '没找到gateway {\"code\": 404, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+        "503":
+          description: '服务不可访问 {\"code\": 503, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+      summary: 查询子设备
+      tags:
+      - gateways
+  /api/v1/log/gateways/{gateway_sn}/devices/{device_sn}/adjust:
+    get:
+      description: 查询指定网关下某子设备的遥设点
+      operationId: query-devices-adjust
+      parameters:
+      - default: <token>
+        description: JWT Token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: 网关sn
+        in: path
+        name: gateway_sn
+        required: true
+        type: string
+      - default: esscab1pcs1
+        description: 子设备sn
+        in: path
+        name: device_sn
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 查询成功 [{\"mqttid\":\"OnOff\",\"value\":0}]
+          schema:
+            $ref: '#/definitions/handlers.DeviceRemoteData'
+        "401":
+          description: '认证失败 {\"code\": 401, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+        "403":
+          description: '拒绝访问 {\"code\": 403, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+        "404":
+          description: '没找到gateway {\"code\": 404, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+        "503":
+          description: '服务不可访问 {\"code\": 503, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+      summary: 查询子设备遥设点
+      tags:
+      - gateways
+  /api/v1/log/gateways/{gateway_sn}/devices/{device_sn}/history/{mqttid}:
+    post:
+      description: 查询点位历史数据
+      operationId: mqttid-his
+      parameters:
+      - default: <token>
+        description: JWT Token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: 网关sn, ems设备写ems即可
+        example: '"esscab1"'
+        in: path
+        name: gateway_sn
+        required: true
+        type: string
+      - description: 子设备sn, ems设备写ems即可
+        example: '"esscab1ac1"'
+        in: path
+        name: device_sn
+        required: true
+        type: string
+      - description: mqttid点名
+        in: path
+        name: mqttid
+        required: true
+        type: string
+      - description: '请求消息体 内容是{date: 2024-01-26}格式的json结构，指定历史记录的日期'
+        in: body
+        name: content
+        required: true
+        schema:
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功 ，例：{\"date\":\"2024-01-26\",\"list_data\":[{\"data\":100,\"time\":\"00:00\"},{\"data\":100,\"time\":\"00:05\"},{\"data\":100,\"time\":\"00:10\"}...]
+          schema:
+            type: object
+        "400":
+          description: '参数错误 {\"code\": 400, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+        "401":
+          description: '认证失败 {\"code\": 401, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+        "403":
+          description: '拒绝访问 {\"code\": 403, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+        "503":
+          description: '服务不可访问 {\"code\": 503, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+      summary: 查询点位历史数据
+      tags:
+      - gateways
+  /api/v1/log/gateways/{gateway_sn}/devices/{device_sn}/prop:
+    get:
+      description: 查询指定网关下某子设备属性
+      operationId: query-devices-prop
+      parameters:
+      - default: <token>
+        description: JWT Token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: 网关sn
+        in: path
+        name: gateway_sn
+        required: true
+        type: string
+      - default: 11223355esscab1pcs1
+        description: 子设备sn
+        in: path
+        name: device_sn
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 查询成功 {\"topic\":\"prop\",\"content\":{\"11223355esscab1pcs1\":[{\"at\":1699263620341,\"k\":\"Uab\",\"mt\":1699263620341,\"v\":400}]}}
+          schema:
+            $ref: '#/definitions/models.TeleData'
+        "401":
+          description: '认证失败 {\"code\": 401, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+        "403":
+          description: '拒绝访问 {\"code\": 403, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+        "404":
+          description: '没找到gateway {\"code\": 404, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+        "503":
+          description: '服务不可访问 {\"code\": 503, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+      summary: 查询子设备属性
+      tags:
+      - gateways
+  /api/v1/log/gateways/{gateway_sn}/devices/{device_sn}/remote:
+    get:
+      description: 查询指定网关下某子设备的遥控点
+      operationId: query-devices-remote
+      parameters:
+      - default: <token>
+        description: JWT Token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: 网关sn
+        in: path
+        name: gateway_sn
+        required: true
+        type: string
+      - default: esscab1pcs1
+        description: 子设备sn
+        in: path
+        name: device_sn
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 查询成功 [{\"mqttid\":\"OnOff\",\"value\":0}]
+          schema:
+            $ref: '#/definitions/handlers.DeviceRemoteData'
+        "401":
+          description: '认证失败 {\"code\": 401, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+        "403":
+          description: '拒绝访问 {\"code\": 403, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+        "404":
+          description: '没找到gateway {\"code\": 404, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+        "503":
+          description: '服务不可访问 {\"code\": 503, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+      summary: 查询子设备遥控点
+      tags:
+      - gateways
+  /api/v1/log/gateways/{gateway_sn}/devices/{device_sn}/remote/{method}:
+    post:
+      description: 查询指定网关下某子设备属性
+      operationId: devices-remote
+      parameters:
+      - default: <token>
+        description: JWT Token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: 网关sn
+        example: '"esscab1"'
+        in: path
+        name: gateway_sn
+        required: true
+        type: string
+      - description: 子设备sn
+        example: '"esscab1ac1"'
+        in: path
+        name: device_sn
+        required: true
+        type: string
+      - description: 方法名
+        example: '"OnOff"'
+        in: path
+        name: method
+        required: true
+        type: string
+      - description: '遥控/调。content的内容是{state: 0}格式的json结构，【不是字符串】，数值填写在state中。 checkpwd的内容是用户密码做校验用'
+        in: body
+        name: RemoteReq
+        required: true
+        schema:
+          $ref: '#/definitions/handlers.RemoteReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '下发成功 {\"topic\": \"\", \"content\": \"6\"}'
+          schema:
+            $ref: '#/definitions/emsclient.PushRemoteResp'
+        "400":
+          description: '下发失败 5-应答失败,7-发令超时,8-撤消,9-应答超时,10-异常,11-遥控/调点不存在 {\"code\":
+            5, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+        "401":
+          description: '认证失败 {\"code\": 401, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+        "404":
+          description: '没找到gateway {\"code\": 404, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+        "408":
+          description: '遥控下发响应超时 {\"code\": 408, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+        "503":
+          description: '服务不可访问 {\"code\": 503, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+      summary: 子设备遥控/调
+      tags:
+      - gateways
+  /api/v1/log/gateways/{gateway_sn}/devices/{device_sn}/telemetry:
+    get:
+      description: 查询指定网关下某子设备遥测
+      operationId: query-devices-yc
+      parameters:
+      - default: <token>
+        description: JWT Token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: 网关sn
+        in: path
+        name: gateway_sn
+        required: true
+        type: string
+      - default: 11223355esscab1pcs1
+        description: 子设备sn
+        in: path
+        name: device_sn
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 查询成功 {\"topic\":\"tm\",\"content\":{\"11223355esscab1pcs1\":[{\"at\":1699263620341,\"k\":\"Uab\",\"mt\":1699263620341,\"v\":400}]}}
+          schema:
+            $ref: '#/definitions/models.TeleData'
+        "401":
+          description: '认证失败 {\"code\": 401, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+        "403":
+          description: '拒绝访问 {\"code\": 403, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+        "404":
+          description: '没找到gateway {\"code\": 404, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+        "503":
+          description: '服务不可访问 {\"code\": 503, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+      summary: 查询子设备遥测
+      tags:
+      - gateways
+  /api/v1/log/gateways/{gateway_sn}/devices/{device_sn}/telesignal:
+    get:
+      description: 查询指定网关下某子设备遥信
+      operationId: query-devices-yx
+      parameters:
+      - default: <token>
+        description: JWT Token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: 网关sn
+        in: path
+        name: gateway_sn
+        required: true
+        type: string
+      - default: 11223355esscab1pcs1
+        description: 子设备sn
+        in: path
+        name: device_sn
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 查询成功 {\"topic\":\"ts\",\"content\":{\"11223355esscab1pcs1\":[{\"at\":1699263620341,\"k\":\"Uab\",\"mt\":1699263620341,\"v\":400}]}}
+          schema:
+            $ref: '#/definitions/models.TeleData'
+        "401":
+          description: '认证失败 {\"code\": 401, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+        "403":
+          description: '拒绝访问 {\"code\": 403, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+        "404":
+          description: '没找到gateway {\"code\": 404, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+        "503":
+          description: '服务不可访问 {\"code\": 503, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+      summary: 查询子设备遥信
+      tags:
+      - gateways
+  /api/v1/log/overview/{model}:
+    get:
+      description: 查询概览信息
+      operationId: query-overview
+      parameters:
+      - default: <token>
+        description: JWT Token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: 概览的产品型号
+        in: path
+        name: model
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 查询成功 {\"ess.bms\":{\"esscab1bms1\":{\"yc\":{\"Idc\":32.400024,\"Udc\":750.10004}}},\"ess.pcs\":{\"esscab1pcs1\":{\"yc\":{\"PChgMax\":100,\"RunState\":1}}}}
+          schema:
+            $ref: '#/definitions/handlers.overViewData'
+        "401":
+          description: '认证失败 {\"code\": 401, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+        "403":
+          description: '拒绝访问 {\"code\": 403, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+        "404":
+          description: '没有找到model {\"code\": 404, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+        "503":
+          description: '服务不可访问 {\"code\": 503, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+      summary: 查询概览信息
+      tags:
+      - ems
+  /api/v1/log/rd/{method}:
+    post:
+      description: 定制转发接口
+      operationId: rd-post
+      parameters:
+      - default: <token>
+        description: JWT Token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: 方法名
+        in: path
+        name: method
+        required: true
+        type: string
+      - description: 转发消息体
+        in: body
+        name: RdData
+        required: true
+        schema:
+          $ref: '#/definitions/handlers.RdData'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '成功 {\"code\": 200, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+        "401":
+          description: '认证失败 {\"code\": 401, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+        "403":
+          description: '拒绝访问 {\"code\": 403, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+        "503":
+          description: '服务不可访问 {\"code\": 503, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+      summary: 定制转发
+      tags:
+      - ems
+  /api/v1/log/rd/logdump:
+    post:
+      description: 控制收集日志的启停。返回内容taskid是收集日志任务执行的唯一标识。收集完成（或者出错）会有相应的推送消息，topic类型：logdump。收集成功后，可以通过GET
+        /api/v1/log/rd/logdump/{taskid}来下载收集的日志文件。
+      operationId: log-task-post
+      parameters:
+      - default: <token>
+        description: JWT Token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: 请求消息体 operation：操作 1 开始收集， 2 停止收集；taskid：停止日志（operation为2）的时候，需要传递taskid；gatewaysn：网关sn，用于指定收集日志的机柜。
+        in: body
+        name: LogDumpReq
+        required: true
+        schema:
+          $ref: '#/definitions/handlers.LogDumpReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '成功 {\"taskid\": 1708481804673}。 执行完成后会推送：{\"topic\":\"logdump\",\"content\":{\"taskid\":1708481804673,\"result\":0}},
+            其中result： 0 成功， 1 生成（部分）失败， 2 因冲突停止 3 失败，0和1的情况可以通过taskid拉取到文件包。'
+          schema:
+            $ref: '#/definitions/handlers.LogDumpResp'
+        "400":
+          description: '参数错误 {\"code\": 400, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+        "401":
+          description: '认证失败 {\"code\": 401, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+        "403":
+          description: '拒绝访问 {\"code\": 403, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+        "503":
+          description: '服务不可访问 {\"code\": 503, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+      summary: 启动/停止收集日志(localapp)
+      tags:
+      - system
+  /api/v1/log/rd/logdump/{taskid}:
+    get:
+      description: 获取收集的日志
+      operationId: log-task-get
+      parameters:
+      - default: <token>
+        description: JWT Token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: 任务id
+        in: path
+        name: taskid
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '成功 {\"code\": 200, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+        "401":
+          description: '认证失败 {\"code\": 401, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+        "403":
+          description: '拒绝访问 {\"code\": 403, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+        "404":
+          description: 文件不存在
+          schema:
+            type: string
+        "503":
+          description: '服务不可访问 {\"code\": 503, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+      summary: 获取收集的日志(localapp)
+      tags:
+      - system
+  /api/v1/log/rd/proclist/{gatewaysn}:
+    get:
+      description: 查询进程信息
+      operationId: proc-get
+      parameters:
+      - default: <token>
+        description: JWT Token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: 任务id
+        in: path
+        name: taskid
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '成功 {\"code\": 200, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+        "401":
+          description: '认证失败 {\"code\": 401, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+        "403":
+          description: '拒绝访问 {\"code\": 403, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+        "404":
+          description: 文件不存在
+          schema:
+            type: string
+        "503":
+          description: '服务不可访问 {\"code\": 503, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+      summary: 查询进程信息(localapp)
+      tags:
+      - system
+    post:
+      description: 进程管理控制
+      operationId: proc-post
+      parameters:
+      - default: <token>
+        description: JWT Token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: 任务id
+        in: path
+        name: taskid
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '成功 {\"code\": 200, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+        "401":
+          description: '认证失败 {\"code\": 401, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+        "403":
+          description: '拒绝访问 {\"code\": 403, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+        "404":
+          description: 文件不存在
+          schema:
+            type: string
+        "503":
+          description: '服务不可访问 {\"code\": 503, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+      summary: 进程管理控制(localapp)
+      tags:
+      - system
+  /api/v1/log/system/modbus/config:
+    get:
+      consumes:
+      - application/json
+      description: 转发参数，通讯方式、查询
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 查询成功,DevType值为1表示Modbus_TCP方式,5表示Modbus-RTU式;LocalPort表示端口号;
+            Baud表示波特率；CheckBit表示校验方式；StopBit表示停止位；DataBit表示数据位；TerminalAddr表示通讯地址
+            {\"DevType\":1,\"LocalPort\":0,\"Baud\":9600,\"CheckBit\":0,\"StopBit\":1,\"DataBit\":8,\"TerminalAddr\":1}
+          schema:
+            $ref: '#/definitions/db.ModbusInteractive'
+        "500":
+          description: '服务内部错误 {\"code\": 500, \"msg\": \"select db error\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+      summary: 转发参数，通讯方式查询
+      tags:
+      - system
+    post:
+      consumes:
+      - application/json
+      description: 转发参数，通讯方式参数写入
+      parameters:
+      - default: <token>
+        description: JWT Token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: DevType值为1表示Modbus_TCP方式,5表示Modbus-RTU式;LocalPort表示端口号; Baud表示波特率；CheckBit表示校验方式；StopBit表示停止位；DataBit表示数据位；TerminalAddr表示通讯地址
+          {\
+        in: body
+        name: ModbusInteractive
+        required: true
+        schema:
+          $ref: '#/definitions/db.ModbusInteractive'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '操作成功 {\"code\": 0, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+        "500":
+          description: '服务内部错误 {\"code\": 500, \"msg\": \"update db error\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+      summary: 转发参数，通讯方式参数写入
+      tags:
+      - system
+  /api/v1/log/system/modbus/transdata:
+    get:
+      consumes:
+      - application/json
+      description: 转发参数表参数库与实时库数据查询
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 查询成功，字段说明与原型中字段同含义 {\"GroupId\":0,\"Code\":\"PCcn01pcs#010Bh\",\"CodeId\":0,\"Factor\":1,\"Negate\":0,\"Type\":0,\"IP\":0,\"RegisterNum\":1,\"DataType\":1,\"Unit\":\"\",\"CurrentValue\":1,\"FunctionCode\":\"01\",\"Permission\":\"R\"},{\"GroupId\":0,\"Code\":\"PCcn01pcs#011Bh\",\"CodeId\":1,\"Factor\":1,\"Negate\":0,\"Type\":0,\"IP\":1,\"RegisterNum\":1,\"DataType\":1,\"Unit\":\"\",\"CurrentValue\":0,\"FunctionCode\":\"01\",\"Permission\":\"R\"}]
+          schema:
+            $ref: '#/definitions/db.ModbusTransCodeTable01'
+        "500":
+          description: '服务内部错误 {\"code\": 500, \"msg\": \"select db error\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+      summary: 转发参数表参数库与实时库数据查询
+      tags:
+      - system
+  /api/v1/log/system/network/config:
+    get:
+      consumes:
+      - application/json
+      description: 查询本地网络配置
+      operationId: query-networkconfig
+      parameters:
+      - default: <token>
+        description: JWT Token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功 {\"ip\":\"192.168.2.27\", \"mask\":\"255.255.254.0\", \"gateway\":\"192.168.2.1\"}
+          schema:
+            $ref: '#/definitions/handlers.NetworkConfig'
+        "401":
+          description: '认证失败 {\"code\": 401, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+        "403":
+          description: '拒绝访问 {\"code\": 403, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+        "503":
+          description: '服务不可访问 {\"code\": 503, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+      summary: locaweb查询本地网络配置
+      tags:
+      - system
+    post:
+      consumes:
+      - application/json
+      description: 修改本地网络配置
+      operationId: config-networkconfig
+      parameters:
+      - default: <token>
+        description: JWT Token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: 网络参数配置
+        in: body
+        name: networkConfig
+        required: true
+        schema:
+          $ref: '#/definitions/handlers.NetworkConfig'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功 {\"ip\":\"192.168.2.27\", \"mask\":\"255.255.254.0\", \"gateway\":\"192.168.2.1\"}
+          schema:
+            $ref: '#/definitions/handlers.NetworkConfig'
+        "401":
+          description: '认证失败 {\"code\": 401, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+        "403":
+          description: '拒绝访问 {\"code\": 403, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+        "503":
+          description: '服务不可访问 {\"code\": 503, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+      summary: locaweb修改本地网络配置
+      tags:
+      - system
+  /api/v1/log/system/process:
+    get:
+      consumes:
+      - application/json
+      description: 查询本地线程信息
+      operationId: query-process
+      parameters:
+      - default: <token>
+        description: JWT Token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功, status：0 未运行，非0 运行中 [{\"name\":\"transsrv\", \"pid\":\"9876\",
+            \"status\":1, \"describe\":\"something\"}]
+          schema:
+            items:
+              $ref: '#/definitions/handlers.ProcessInfo'
+            type: array
+        "401":
+          description: '认证失败 {\"code\": 401, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+        "403":
+          description: '拒绝访问 {\"code\": 403, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+        "503":
+          description: '服务不可访问 {\"code\": 503, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+      summary: locaweb查询本地线程信息
+      tags:
+      - system
+  /api/v1/log/system/process/{procid}:
+    post:
+      consumes:
+      - application/json
+      description: 操作指定的本地线程
+      operationId: oper-process
+      parameters:
+      - default: <token>
+        description: JWT Token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: 请求的进程id
+        in: path
+        name: procid
+        required: true
+        type: string
+      - description: 线程操作参数 op：1 重启
+        in: body
+        name: ProcessOper
+        required: true
+        schema:
+          $ref: '#/definitions/handlers.ProcessOper'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '操作成功 {\"code\": 0, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+        "401":
+          description: '认证失败 {\"code\": 401, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+        "403":
+          description: '拒绝访问 {\"code\": 403, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+        "404":
+          description: '进程id不存在 {\"code\": 404, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+        "503":
+          description: '服务不可访问 {\"code\": 503, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+      summary: locaweb操作指定的本地线程
+      tags:
+      - system
+  /api/v1/log/system/process/{procid}/logdump/{logtypeid}:
+    get:
+      description: 控制台日志推送websocket接口
+      operationId: ws-conn-logpush
+      parameters:
+      - default: <token>
+        description: JWT Token或者放到url
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - default: <token>
+        description: JWT Token 或者放到Header
+        in: query
+        name: authorization
+        required: true
+        type: string
+      - description: 日志请求的进程id
+        in: path
+        name: procid
+        required: true
+        type: string
+      - description: 日志请求的日志类型id
+        in: path
+        name: logtypeid
+        required: true
+        type: string
+      responses:
+        "200":
+          description: 直接推送日志文本
+          schema:
+            type: string
+      summary: 控制台日志推送websocket接口
+      tags:
+      - websocket
+  /api/v1/log/system/process/{procid}/logfile:
+    get:
+      consumes:
+      - application/json
+      description: 下载指定进程的日志文件，进程启动或未启动都可以获取
+      operationId: log-file
+      parameters:
+      - default: <token>
+        description: JWT Token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: 日志请求的进程id
+        in: path
+        name: procid
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 操作成功 返回文件
+          schema:
+            type: file
+        "401":
+          description: '认证失败 {\"code\": 401, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+        "403":
+          description: '拒绝访问 {\"code\": 403, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+        "404":
+          description: 文件不存在
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+        "503":
+          description: '服务不可访问 {\"code\": 503, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+      summary: localweb下载指定进程的日志文件
+      tags:
+      - system
+  /api/v1/log/system/process/{procid}/logtype:
+    post:
+      consumes:
+      - application/json
+      description: 下载指定网关柜的日志
+      operationId: log-type
+      parameters:
+      - default: <token>
+        description: JWT Token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: 日志请求的进程id
+        in: path
+        name: procid
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 操作成功 [{\"typeidx\":9876,\"typedesc\":"abcd"}, {\"typeidx\":9877,\"typedesc\":"abcde"}]
+          schema:
+            items:
+              $ref: '#/definitions/scdnet.ProcLogType'
+            type: array
+        "401":
+          description: '认证失败 {\"code\": 401, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+        "403":
+          description: '拒绝访问 {\"code\": 403, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+        "404":
+          description: '进程不存在 {\"code\": 404, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+        "503":
+          description: '服务不可访问 {\"code\": 503, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+      summary: localweb查询进程的日志类型
+      tags:
+      - system
+  /api/v1/log/system/project/sn:
+    get:
+      consumes:
+      - application/json
+      description: 查询项目sn
+      operationId: get-sn
+      parameters:
+      - default: <token>
+        description: JWT Token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 查询成功 {\"addr\":\"某地\",\"cabnum\":1,\"name\":\"测试项目\",\"sn\":\"98798798\"}
+          schema:
+            $ref: '#/definitions/emsclient.SnData'
+        "401":
+          description: '认证失败 {\"code\": 401, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+        "403":
+          description: '拒绝访问 {\"code\": 403, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+        "503":
+          description: '服务不可访问 {\"code\": 503, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+      summary: 查询项目sn
+      tags:
+      - system
+    post:
+      consumes:
+      - application/json
+      description: 配置项目sn
+      operationId: set-sn
+      parameters:
+      - default: <token>
+        description: JWT Token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: 配置项目sn请求结构 {\
+        in: body
+        name: SnData
+        required: true
+        schema:
+          $ref: '#/definitions/emsclient.SnData'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '配置项目sn成功 {\"code\": 0, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+        "401":
+          description: '认证失败 {\"code\": 401, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+        "403":
+          description: '拒绝访问 {\"code\": 403, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+        "503":
+          description: '服务不可访问 {\"code\": 503, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+      summary: 配置项目sn
+      tags:
+      - system
+  /api/v1/log/system/reboot:
+    post:
+      consumes:
+      - application/json
+      description: 重启工控机
+      operationId: reboot-system
+      parameters:
+      - default: <token>
+        description: JWT Token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: 重启参数配置
+        in: body
+        name: rebootReq
+        required: true
+        schema:
+          $ref: '#/definitions/handlers.RebootReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功 {\"code\":200, \"message\":\"\"}
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+        "401":
+          description: '认证失败 {\"code\": 401, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+        "403":
+          description: '拒绝访问 {\"code\": 403, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+        "503":
+          description: '服务不可访问 {\"code\": 503, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+      summary: locaweb重启工控机
+      tags:
+      - system
+  /api/v1/log/system/time:
+    post:
+      consumes:
+      - application/json
+      description: 设置系统时间
+      operationId: set-time
+      parameters:
+      - default: <token>
+        description: JWT Token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: 系统时间,填入datetime部分即可
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/handlers.SystemTime'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功 {\"code\":200, \"message\":\"\"}
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+        "400":
+          description: '参数错误 {\"code\": 400, \"msg\": \"Bad Request\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+        "401":
+          description: '认证失败 {\"code\": 401, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+        "500":
+          description: '服务内部错误 {\"code\": 500, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+      summary: 设置系统时间
+      tags:
+      - system
+  /api/v1/log/system/timezone:
+    post:
+      consumes:
+      - application/json
+      description: 设置系统时区
+      operationId: set-timezone
+      parameters:
+      - default: <token>
+        description: JWT Token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: 系统时区,填入zone部分即可
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/handlers.SystemTime'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功 {\"code\":200, \"message\":\"\"}
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+        "400":
+          description: '参数错误 {\"code\": 400, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+        "401":
+          description: '认证失败 {\"code\": 401, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+        "500":
+          description: '服务内部错误 {\"code\": 500, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+      summary: 设置系统时区
+      tags:
+      - system
+  /api/v1/log/user/all:
+    get:
+      consumes:
+      - application/json
+      description: 获取全部用户信息
+      operationId: all-user-info
+      parameters:
+      - default: <token>
+        description: JWT Token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '获取成功 [{\"username\": \"config\", \"usertype\": \"configurer\"},
+            {\"username\": \"oper\", \"usertype\": \"operator\"}]'
+          schema:
+            items:
+              $ref: '#/definitions/models.UserInfo'
+            type: array
+        "401":
+          description: '认证失败 {\"code\": 401, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+        "403":
+          description: '拒绝访问，仅允许超级管理员调用 {\"code\": 403, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+      summary: 获取全部用户信息
+      tags:
+      - user
+  /api/v1/log/user/info:
+    get:
+      consumes:
+      - application/json
+      description: 获取用户信息
+      operationId: user-info
+      parameters:
+      - default: <token>
+        description: JWT Token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '获取成功 {\"username\": \"config\", \"usertype\": \"configurer\"}'
+          schema:
+            $ref: '#/definitions/models.UserInfo'
+        "401":
+          description: '认证失败 {\"code\": 401, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+      summary: 用户信息
+      tags:
+      - user
+  /api/v1/log/user/kickout:
+    post:
+      consumes:
+      - application/json
+      description: 超管踢在线用户下线
+      operationId: kickout-user
+      parameters:
+      - default: <token>
+        description: JWT Token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: 踢下线用户名
+        in: body
+        name: KickOutReq
+        required: true
+        schema:
+          $ref: '#/definitions/handlers.KickOutReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '重置密码成功 {\"code\": 0, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+        "401":
+          description: '认证失败 {\"code\": 401, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+        "403":
+          description: '拒绝访问，仅允许超级管理员调用 {\"code\": 403, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+        "503":
+          description: '服务不可访问 {\"code\": 503, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+      summary: 踢在线用户下线
+      tags:
+      - user
+  /api/v1/log/user/logout:
+    post:
+      consumes:
+      - application/json
+      description: 用户退出登录
+      operationId: user-logout
+      parameters:
+      - default: <token>
+        description: JWT Token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '登出成功 {\"code\": 0, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+        "401":
+          description: '认证失败 {\"code\": 401, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+      summary: 用户登出
+      tags:
+      - user
+  /api/v1/log/user/onlines:
+    get:
+      consumes:
+      - application/json
+      description: 超管查询在线用户信息
+      operationId: onlines-user
+      parameters:
+      - default: <token>
+        description: JWT Token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 查询成功 [{\"username\":\"oper-2\", \"usertype\":\"操作\"}]
+          schema:
+            items:
+              $ref: '#/definitions/models.UserInfo'
+            type: array
+        "401":
+          description: '认证失败 {\"code\": 401, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+        "403":
+          description: '拒绝访问，仅允许超级管理员调用 {\"code\": 403, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+        "503":
+          description: '服务不可访问 {\"code\": 503, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+      summary: 查询在线用户信息
+      tags:
+      - user
+  /api/v1/log/user/resetpwd:
+    post:
+      consumes:
+      - application/json
+      description: 超管重置用户密码
+      operationId: reset-pwd
+      parameters:
+      - default: <token>
+        description: JWT Token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: 踢下线用户名
+        in: body
+        name: ResetPwdReq
+        required: true
+        schema:
+          $ref: '#/definitions/handlers.ResetPwdReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '重置密码成功 {\"code\": 0, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+        "401":
+          description: '认证失败 {\"code\": 401, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+        "403":
+          description: '拒绝访问 {\"code\": 403, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+        "503":
+          description: '服务不可访问 {\"code\": 503, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+      summary: 重置密码
+      tags:
+      - user
+  /api/v1/log/user/updatepwd:
+    post:
+      consumes:
+      - application/json
+      description: 修改用户自己的密码
+      operationId: update-pwd
+      parameters:
+      - default: <token>
+        description: JWT Token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: 登录请求参数
+        in: body
+        name: UpdatePwdReq
+        required: true
+        schema:
+          $ref: '#/definitions/handlers.UpdatePwdReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '修改密码成功 {\"code\": 0, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+        "400":
+          description: '参数错误 {\"code\": 400, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+        "401":
+          description: '认证失败 {\"code\": 401, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+        "412":
+          description: '旧密码不正确 {\"code\": 412, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+        "503":
+          description: '服务不可访问 {\"code\": 503, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+      summary: 修改密码
+      tags:
+      - user
+  /api/v1/log/ws/push:
+    get:
+      description: 处理WebSocket连接
+      operationId: ws-conn
+      parameters:
+      - default: <token>
+        description: JWT Token或者放到url
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - default: <token>
+        description: JWT Token 或者放到Header
+        in: query
+        name: authorization
+        required: true
+        type: string
+      responses:
+        "200":
+          description: '推送遥测，遥信，属性，设备状态。 遥测，遥信，属性 参照其查询接口返回。 设备状态示例(1-离线 2-在线)：{\"topic\":\"status\",\"content\":{\"11223355esscab1pcs1\":
+            2, \"11223355esscab1ac1\": 1}}'
+          schema:
+            type: string
+      summary: 处理WebSocket连接
+      tags:
+      - websocket
+  /api/v1/system/dataunit:
+    get:
+      consumes:
+      - application/json
+      description: 查询单位数据
+      operationId: get-dataunit
+      parameters:
+      - default: <token>
+        description: JWT Token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: 客户端当前的版本号
+        in: query
+        name: current_version
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 查询成功 {"version":"1","content":{"PRated":"kW","QRated":"kVar"}}
+          schema:
+            $ref: '#/definitions/models.QueryDataUnitResp'
+        "208":
+          description: '版本无更新 {\"code\": 204, \"msg\": \"NoContent\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+        "401":
+          description: '认证失败 {\"code\": 401, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+        "403":
+          description: '拒绝访问 {\"code\": 403, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+        "503":
+          description: '服务内部错误 {\"code\": 500, \"msg\": \"InternalServerError\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+      summary: 查询单位数据
+      tags:
+      - system
+  /api/v1/system/dataunitmb:
+    get:
+      consumes:
+      - application/json
+      description: 查询modbus单位数据
+      operationId: get-dataunit-for-modbus
+      parameters:
+      - description: 查询产品型号
+        in: query
+        name: model
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '查询成功 {\"DCcn01bms#010Yc\":{\"unit\": \"V\"}, \"DCcn01bms#01108Yc\":{\"unit\":
+            \"kWh\"}}'
+          schema:
+            $ref: '#/definitions/handlers.DataUnitEntry'
+        "400":
+          description: '认证失败 {\"code\": 400, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+        "404":
+          description: '认证失败 {\"code\": 404, \"msg\": \"model not found\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+      summary: 查询modbus单位数据
+      tags:
+      - system
+  /api/v1/system/i18n:
+    get:
+      consumes:
+      - application/json
+      description: 查询国际化数据
+      operationId: get-i8n
+      parameters:
+      - default: <token>
+        description: JWT Token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: 客户端当前的版本号
+        in: query
+        name: current_version
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 查询成功 {\"version\":\"1\",\"content\":{\"zh\":{\"Uab\":\"aaa\",\"Uac\":\"bbb\"},\"en\":{\"Uab\":\"ccc\",\"Uac\":\"ddd\"}}}
+          schema:
+            $ref: '#/definitions/models.QueryI18nResp'
+        "208":
+          description: '版本无更新 {\"code\": 204, \"msg\": \"NoContent\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+        "401":
+          description: '认证失败 {\"code\": 401, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+        "403":
+          description: '拒绝访问 {\"code\": 403, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+        "503":
+          description: '服务内部错误 {\"code\": 500, \"msg\": \"InternalServerError\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+      summary: 查询国际化数据
+      tags:
+      - system
+  /api/v1/system/i18nmb:
+    get:
+      consumes:
+      - application/json
+      description: 查询modbus国际化数据
+      operationId: get-i8n-for-modbus
+      parameters:
+      - description: 查询产品型号
+        in: query
+        name: model
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 查询成功 {\"zh\":{\"DCcn01bms#01102Bh\":\"告警状态\",\"DCcn01bms#01105Bh\":\"故障状态\"},\"en\":{\"DCcn01bms#01102Bh\":\"Alarm
+            Status\",\"DCcn01bms#01105Bh\":\"Fault Status\"}}
+          schema:
+            $ref: '#/definitions/handlers.TransEntry'
+        "400":
+          description: '认证失败 {\"code\": 400, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+        "404":
+          description: '认证失败 {\"code\": 404, \"msg\": \"model not found\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+      summary: 查询modbus国际化数据
+      tags:
+      - system
+  /api/v1/system/zone:
+    get:
+      consumes:
+      - application/json
+      description: 查询服务器时区
+      operationId: get-zoneinfo
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 查询成功 {"now":"2024-01-02T14:22:31+08:00","offset":28800,"zone":"Asia/Shanghai"}
+          schema:
+            $ref: '#/definitions/handlers.ZoneResp'
+        "401":
+          description: '认证失败 {\"code\": 401, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+        "503":
+          description: '服务内部错误 {\"code\": 500, \"msg\": \"InternalServerError\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+      summary: 查询服务器时区
+      tags:
+      - system
+  /api/v1/user/login:
+    post:
+      consumes:
+      - application/json
+      description: 用户使用提供的用户名和密码进行登录
+      operationId: user-login
+      parameters:
+      - description: 登录请求参数
+        in: body
+        name: loginReq
+        required: true
+        schema:
+          $ref: '#/definitions/handlers.LoginReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '登录成功 {\"access_token\": \"\", \"expires_in\": 0, \"refresh_token\":\"\",
+            \"token_type\":\"\"}'
+          schema:
+            $ref: '#/definitions/handlers.LoginResp'
+        "400":
+          description: '用户名密码错误  {\"code\": 400, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+        "409":
+          description: '用户已登录 {\"code\": 409, \"msg\": \"conflict: already login\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+        "500":
+          description: '内部错误 {\"code\": 500, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+        "503":
+          description: '服务不可访问 {\"code\": 503, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+      summary: 用户登录
+      tags:
+      - user
+  /api/v1/user/refresh_token:
+    post:
+      consumes:
+      - application/json
+      description: 用户更新过期的token
+      operationId: refresh-token
+      parameters:
+      - description: token
+        in: body
+        name: RefreshTokenReq
+        required: true
+        schema:
+          $ref: '#/definitions/handlers.RefreshTokenReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '更新成功 {\"access_token\": \"\", \"expires_in\": 0, \"refresh_token\":\"\",
+            \"token_type\":\"\"}'
+          schema:
+            $ref: '#/definitions/handlers.RefreshTokenResp'
+        "401":
+          description: '认证失败 {\"code\": 401, \"msg\": \"\"}'
+          schema:
+            $ref: '#/definitions/models.CommonResp'
+      summary: 更新token
+      tags:
+      - user
+swagger: "2.0"

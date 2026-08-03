@@ -1,0 +1,45 @@
+# Go build
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Go test
+*.test
+
+# Go coverage
+*.out
+
+# Dependency
+vendor/
+
+# Frontend dist (embedded in binary, not tracked)
+dist/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+.obsidian/workspace.json
+.obsidian/workspace-mobile.json
+.obsidian/cache
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment
+.env
+
+# CMake build artifacts
+cgolibparse/libparsesrc/build/
+paramter/paramter/build/
+
+# Codegraph index
+.codegraph/
+
+# Backup git
+.git123/

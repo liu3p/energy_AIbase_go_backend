@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Users>
+    <User>
+        <Id>user1</Id>
+        <Name>admin</Name>
+        <Password>DE62789A13DBA4EE7AC01AFA4D44AF9C</Password> <!-- 示例 MD5 加密后密码，实际建议用 bcrypt -->
+        <Type>1</Type>
+        <Role>admin</Role>
+    </User>
+    <User>
+        <Id>user2</Id>
+        <Name>config</Name>
+        <Password>DE62789A13DBA4EE7AC01AFA4D44AF9C</Password>
+        <Type>2</Type>
+        <Role>config</Role>
+    </User>
+    <User>
+        <Id>user3</Id>
+        <Name>oper</Name>
+        <Password>DE62789A13DBA4EE7AC01AFA4D44AF9C</Password>
+        <Type>3</Type>
+        <Role>ops</Role>
+    </User>
+    <User>
+        <Id>user4</Id>
+        <Name>guest</Name>
+        <Password>DE62789A13DBA4EE7AC01AFA4D44AF9C</Password>
+        <Type>4</Type>
+        <Role>guest</Role>
+    </User>
+</Users>

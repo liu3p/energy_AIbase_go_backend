@@ -1,0 +1,3997 @@
+{
+  "version": "1",
+  "content": {
+    "ess.eco_PRated": {
+      "unit": "kW"
+    },
+    "ess.eco_QRated": {
+      "unit": "kVar"
+    },
+    "ess.eco_VRated": {
+      "unit": "V"
+    },
+    "ess.eco_SocRated": {
+      "unit": "kWh"
+    },
+    "ess.eco_DebugMode": {
+      "values": {
+        "0": "ess.eco_DebugMode_val_0",
+        "1": "ess.eco_DebugMode_val_1"
+      }
+    },
+    "ess.eco_AgcMode": {
+      "values": {
+        "0": "ess.eco_AgcMode_val_0",
+        "1": "ess.eco_AgcMode_val_1",
+        "2": "ess.eco_AgcMode_val_2"
+      }
+    },
+    "ess.eco_AgcStrategy": {
+      "values": {
+        "0": "ess.eco_AgcStrategy_val_0",
+        "1": "ess.eco_AgcStrategy_val_1"
+      }
+    },
+    "ess.eco_AgcExit": {
+      "values": {
+        "0": "ess.eco_AgcExit_val_0",
+        "1": "ess.eco_AgcExit_val_1"
+      }
+    },
+    "ess.eco_AgcRemote": {
+      "values": {
+        "0": "ess.eco_AgcRemote_val_0",
+        "1": "ess.eco_AgcRemote_val_1"
+      }
+    },
+    "ess.eco_AgcChgEnd": {
+      "values": {
+        "0": "ess.eco_AgcChgEnd_val_0",
+        "1": "ess.eco_AgcChgEnd_val_1"
+      }
+    },
+    "ess.eco_AgcDchgEnd": {
+      "values": {
+        "0": "ess.eco_AgcDchgEnd_val_0",
+        "1": "ess.eco_AgcDchgEnd_val_1"
+      }
+    },
+    "ess.eco_AgcChgLock": {
+      "values": {
+        "0": "ess.eco_AgcChgLock_val_0",
+        "1": "ess.eco_AgcChgLock_val_1"
+      }
+    },
+    "ess.eco_AgcDchgLock": {
+      "values": {
+        "0": "ess.eco_AgcDchgLock_val_0",
+        "1": "ess.eco_AgcDchgLock_val_1"
+      }
+    },
+    "ess.eco_AGCReversePower": {
+      "values": {
+        "0": "ess.eco_AGCReversePower_val_0",
+        "1": "ess.eco_AGCReversePower_val_1"
+      }
+    },
+    "ess.eco_AgcRunState": {
+      "values": {
+        "0": "ess.eco_AgcRunState_val_0",
+        "1": "ess.eco_AgcRunState_val_1",
+        "2": "ess.eco_AgcRunState_val_2",
+        "3": "ess.eco_AgcRunState_val_3"
+      }
+    },
+    "ess.eco_AgcBusType": {
+      "values": {
+        "0": "ess.eco_AgcBusType_val_0",
+        "1": "ess.eco_AgcBusType_val_1",
+        "2": "ess.eco_AgcBusType_val_2",
+        "3": "ess.eco_AgcBusType_val_3"
+      }
+    },
+    "ess.eco_AgcChgMax": {
+      "unit": "kW"
+    },
+    "ess.eco_AgcDchgMax": {
+      "unit": "kW"
+    },
+    "ess.eco_AgcChgTime": {
+      "unit": "min"
+    },
+    "ess.eco_AgcDchgTime": {
+      "unit": "min"
+    },
+    "ess.eco_AgcChgKwh": {
+      "unit": "kWh"
+    },
+    "ess.eco_AgcDchgKwh": {
+      "unit": "kWh"
+    },
+    "ess.eco_UaBus1": {
+      "unit": "V"
+    },
+    "ess.eco_UbBus1": {
+      "unit": "V"
+    },
+    "ess.eco_UcBus1": {
+      "unit": "V"
+    },
+    "ess.eco_IaBus1": {
+      "unit": "A"
+    },
+    "ess.eco_IbBus1": {
+      "unit": "A"
+    },
+    "ess.eco_IcBus1": {
+      "unit": "A"
+    },
+    "ess.eco_PaBus1": {
+      "unit": "kW"
+    },
+    "ess.eco_PbBus1": {
+      "unit": "kW"
+    },
+    "ess.eco_PcBus1": {
+      "unit": "kW"
+    },
+    "ess.eco_QaBus1": {
+      "unit": "kVar"
+    },
+    "ess.eco_QbBus1": {
+      "unit": "kVar"
+    },
+    "ess.eco_QcBus1": {
+      "unit": "kVar"
+    },
+    "ess.eco_PBus1": {
+      "unit": "kW"
+    },
+    "ess.eco_QBus1": {
+      "unit": "kVar"
+    },
+    "ess.eco_FreqBus1": {
+      "unit": "Hz"
+    },
+    "ess.eco_DemBus1": {
+      "unit": "kW"
+    },
+    "ess.eco_TransBus1": {
+      "unit": "kVA"
+    },
+    "ess.eco_PsetBus1": {
+      "unit": "kW"
+    },
+    "ess.eco_PsetFdBus1": {
+      "unit": "kW"
+    },
+    "ess.eco_ChgMaxBus1": {
+      "unit": "kW"
+    },
+    "ess.eco_DchgMaxBus1": {
+      "unit": "kW"
+    },
+    "ess.eco_ChgTimeBus1": {
+      "unit": "min"
+    },
+    "ess.eco_DchgTimeBus1": {
+      "unit": "min"
+    },
+    "ess.eco_LChgDailyBus1": {
+      "unit": "kWh"
+    },
+    "ess.eco_UaBus2": {
+      "unit": "V"
+    },
+    "ess.eco_UbBus2": {
+      "unit": "V"
+    },
+    "ess.eco_UcBus2": {
+      "unit": "V"
+    },
+    "ess.eco_IaBus2": {
+      "unit": "A"
+    },
+    "ess.eco_IbBus2": {
+      "unit": "A"
+    },
+    "ess.eco_IcBus2": {
+      "unit": "A"
+    },
+    "ess.eco_PaBus2": {
+      "unit": "kW"
+    },
+    "ess.eco_PbBus2": {
+      "unit": "kW"
+    },
+    "ess.eco_PcBus2": {
+      "unit": "kW"
+    },
+    "ess.eco_QaBus2": {
+      "unit": "kVar"
+    },
+    "ess.eco_QbBus2": {
+      "unit": "kVar"
+    },
+    "ess.eco_QcBus2": {
+      "unit": "kVar"
+    },
+    "ess.eco_PBus2": {
+      "unit": "kW"
+    },
+    "ess.eco_QBus2": {
+      "unit": "kVar"
+    },
+    "ess.eco_FreqBus2": {
+      "unit": "Hz"
+    },
+    "ess.eco_DemBus2": {
+      "unit": "kW"
+    },
+    "ess.eco_TransBus2": {
+      "unit": "kVA"
+    },
+    "ess.eco_PsetBus2": {
+      "unit": "kW"
+    },
+    "ess.eco_PsetFdBus2": {
+      "unit": "kW"
+    },
+    "ess.eco_ChgMaxBus2": {
+      "unit": "kW"
+    },
+    "ess.eco_DchgMaxBus2": {
+      "unit": "kW"
+    },
+    "ess.eco_ChgTimeBus2": {
+      "unit": "min"
+    },
+    "ess.eco_DchgTimeBus2": {
+      "unit": "min"
+    },
+    "ess.eco_LChgDailyBus2": {
+      "unit": "kWh"
+    },
+    "ess.eco_ChgDaily": {
+      "unit": "kWh"
+    },
+    "ess.eco_DchgDaily": {
+      "unit": "kWh"
+    },
+    "ess.eco_PTotal": {
+      "unit": "kW"
+    },
+    "ess.eco_QTotal": {
+      "unit": "kVar"
+    },
+    "ess.eco_Pset": {
+      "unit": "kW"
+    },
+    "ess.eco_DemSetBus1": {
+      "unit": "kW"
+    },
+    "ess.eco_DemSetBus2": {
+      "unit": "kW"
+    },
+    "ess.eco_TransSet1": {
+      "unit": "kW"
+    },
+    "ess.eco_TransSet2": {
+      "unit": "kW"
+    },
+    "ess.pcs_PRated": {
+      "unit": "kW"
+    },
+    "ess.pcs_PMax": {
+      "unit": "kW"
+    },
+    "ess.pcs_QMax": {
+      "unit": "kW"
+    },
+    "ess.pcs_URated": {
+      "unit": "V"
+    },
+    "ess.pcs_Flt": {
+      "values": {
+        "0": "ess.pcs_Flt_val_0",
+        "1": "ess.pcs_Flt_val_1"
+      }
+    },
+    "ess.pcs_Alm": {
+      "values": {
+        "0": "ess.pcs_Alm_val_0",
+        "1": "ess.pcs_Alm_val_1"
+      }
+    },
+    "ess.pcs_Remote": {
+      "values": {
+        "0": "ess.pcs_Remote_val_0",
+        "1": "ess.pcs_Remote_val_1"
+      }
+    },
+    "ess.pcs_Emergency": {
+      "values": {
+        "0": "ess.pcs_Emergency_val_0",
+        "1": "ess.pcs_Emergency_val_1"
+      }
+    },
+    "ess.pcs_GridConn": {
+      "values": {
+        "0": "ess.pcs_GridConn_val_0",
+        "1": "ess.pcs_GridConn_val_1"
+      }
+    },
+    "ess.pcs_FltBus": {
+      "values": {
+        "0": "ess.pcs_FltBus_val_0",
+        "1": "ess.pcs_FltBus_val_1"
+      }
+    },
+    "ess.pcs_FltOvUa": {
+      "values": {
+        "0": "ess.pcs_FltOvUa_val_0",
+        "1": "ess.pcs_FltOvUa_val_1"
+      }
+    },
+    "ess.pcs_FltOvUb": {
+      "values": {
+        "0": "ess.pcs_FltOvUb_val_0",
+        "1": "ess.pcs_FltOvUb_val_1"
+      }
+    },
+    "ess.pcs_FltOvUc": {
+      "values": {
+        "0": "ess.pcs_FltOvUc_val_0",
+        "1": "ess.pcs_FltOvUc_val_1"
+      }
+    },
+    "ess.pcs_FltUndUa": {
+      "values": {
+        "0": "ess.pcs_FltUndUa_val_0",
+        "1": "ess.pcs_FltUndUa_val_1"
+      }
+    },
+    "ess.pcs_FltUndUb": {
+      "values": {
+        "0": "ess.pcs_FltUndUb_val_0",
+        "1": "ess.pcs_FltUndUb_val_1"
+      }
+    },
+    "ess.pcs_FltUndUc": {
+      "values": {
+        "0": "ess.pcs_FltUndUc_val_0",
+        "1": "ess.pcs_FltUndUc_val_1"
+      }
+    },
+    "ess.pcs_FltBusdiff": {
+      "values": {
+        "0": "ess.pcs_FltBusdiff_val_0",
+        "1": "ess.pcs_FltBusdiff_val_1"
+      }
+    },
+    "ess.pcs_FltOvIdc": {
+      "values": {
+        "0": "ess.pcs_FltOvIdc_val_0",
+        "1": "ess.pcs_FltOvIdc_val_1"
+      }
+    },
+    "ess.pcs_FltOvIa": {
+      "values": {
+        "0": "ess.pcs_FltOvIa_val_0",
+        "1": "ess.pcs_FltOvIa_val_1"
+      }
+    },
+    "ess.pcs_FltOvIb": {
+      "values": {
+        "0": "ess.pcs_FltOvIb_val_0",
+        "1": "ess.pcs_FltOvIb_val_1"
+      }
+    },
+    "ess.pcs_FltOvIc": {
+      "values": {
+        "0": "ess.pcs_FltOvIc_val_0",
+        "1": "ess.pcs_FltOvIc_val_1"
+      }
+    },
+    "ess.pcs_FltOvIn": {
+      "values": {
+        "0": "ess.pcs_FltOvIn_val_0",
+        "1": "ess.pcs_FltOvIn_val_1"
+      }
+    },
+    "ess.pcs_FltOvFreq": {
+      "values": {
+        "0": "ess.pcs_FltOvFreq_val_0",
+        "1": "ess.pcs_FltOvFreq_val_1"
+      }
+    },
+    "ess.pcs_FltUndFreq": {
+      "values": {
+        "0": "ess.pcs_FltUndFreq_val_0",
+        "1": "ess.pcs_FltUndFreq_val_1"
+      }
+    },
+    "ess.pcs_FltPha": {
+      "values": {
+        "0": "ess.pcs_FltPha_val_0",
+        "1": "ess.pcs_FltPha_val_1"
+      }
+    },
+    "ess.pcs_FltPhaLack": {
+      "values": {
+        "0": "ess.pcs_FltPhaLack_val_0",
+        "1": "ess.pcs_FltPhaLack_val_1"
+      }
+    },
+    "ess.pcs_FltRevDc": {
+      "values": {
+        "0": "ess.pcs_FltRevDc_val_0",
+        "1": "ess.pcs_FltRevDc_val_1"
+      }
+    },
+    "ess.pcs_FltCan": {
+      "values": {
+        "0": "ess.pcs_FltCan_val_0",
+        "1": "ess.pcs_FltCan_val_1"
+      }
+    },
+    "ess.pcs_FltBmsCom": {
+      "values": {
+        "0": "ess.pcs_FltBmsCom_val_0",
+        "1": "ess.pcs_FltBmsCom_val_1"
+      }
+    },
+    "ess.pcs_FltEmsCom": {
+      "values": {
+        "0": "ess.pcs_FltEmsCom_val_0",
+        "1": "ess.pcs_FltEmsCom_val_1"
+      }
+    },
+    "ess.pcs_FltOvTigbf": {
+      "values": {
+        "0": "ess.pcs_FltOvTigbf_val_0",
+        "1": "ess.pcs_FltOvTigbf_val_1"
+      }
+    },
+    "ess.pcs_FltOvI": {
+      "values": {
+        "0": "ess.pcs_FltOvI_val_0",
+        "1": "ess.pcs_FltOvI_val_1"
+      }
+    },
+    "ess.pcs_FltAcPreChga": {
+      "values": {
+        "0": "ess.pcs_FltAcPreChga_val_0",
+        "1": "ess.pcs_FltAcPreChga_val_1"
+      }
+    },
+    "ess.pcs_FltAcPreChgb": {
+      "values": {
+        "0": "ess.pcs_FltAcPreChgb_val_0",
+        "1": "ess.pcs_FltAcPreChgb_val_1"
+      }
+    },
+    "ess.pcs_FltAcPreChgc": {
+      "values": {
+        "0": "ess.pcs_FltAcPreChgc_val_0",
+        "1": "ess.pcs_FltAcPreChgc_val_1"
+      }
+    },
+    "ess.pcs_FltOvUess": {
+      "values": {
+        "0": "ess.pcs_FltOvUess_val_0",
+        "1": "ess.pcs_FltOvUess_val_1"
+      }
+    },
+    "ess.pcs_FltUndUess": {
+      "values": {
+        "0": "ess.pcs_FltUndUess_val_0",
+        "1": "ess.pcs_FltUndUess_val_1"
+      }
+    },
+    "ess.pcs_FltEpo": {
+      "values": {
+        "0": "ess.pcs_FltEpo_val_0",
+        "1": "ess.pcs_FltEpo_val_1"
+      }
+    },
+    "ess.pcs_FltLimIzb": {
+      "values": {
+        "0": "ess.pcs_FltLimIzb_val_0",
+        "1": "ess.pcs_FltLimIzb_val_1"
+      }
+    },
+    "ess.pcs_FltOvIph": {
+      "values": {
+        "0": "ess.pcs_FltOvIph_val_0",
+        "1": "ess.pcs_FltOvIph_val_1"
+      }
+    },
+    "ess.pcs_Flt24v": {
+      "values": {
+        "0": "ess.pcs_Flt24v_val_0",
+        "1": "ess.pcs_Flt24v_val_1"
+      }
+    },
+    "ess.pcs_Flt15v": {
+      "values": {
+        "0": "ess.pcs_Flt15v_val_0",
+        "1": "ess.pcs_Flt15v_val_1"
+      }
+    },
+    "ess.pcs_FltFan": {
+      "values": {
+        "0": "ess.pcs_FltFan_val_0",
+        "1": "ess.pcs_FltFan_val_1"
+      }
+    },
+    "ess.pcs_FltConn": {
+      "values": {
+        "0": "ess.pcs_FltConn_val_0",
+        "1": "ess.pcs_FltConn_val_1"
+      }
+    },
+    "ess.pcs_FltArrester": {
+      "values": {
+        "0": "ess.pcs_FltArrester_val_0",
+        "1": "ess.pcs_FltArrester_val_1"
+      }
+    },
+    "ess.pcs_FltOvTph": {
+      "values": {
+        "0": "ess.pcs_FltOvTph_val_0",
+        "1": "ess.pcs_FltOvTph_val_1"
+      }
+    },
+    "ess.pcs_FltFire": {
+      "values": {
+        "0": "ess.pcs_FltFire_val_0",
+        "1": "ess.pcs_FltFire_val_1"
+      }
+    },
+    "ess.pcs_FltEssDry": {
+      "values": {
+        "0": "ess.pcs_FltEssDry_val_0",
+        "1": "ess.pcs_FltEssDry_val_1"
+      }
+    },
+    "ess.pcs_FltOvLoad": {
+      "values": {
+        "0": "ess.pcs_FltOvLoad_val_0",
+        "1": "ess.pcs_FltOvLoad_val_1"
+      }
+    },
+    "ess.pcs_FltUnbUac": {
+      "values": {
+        "0": "ess.pcs_FltUnbUac_val_0",
+        "1": "ess.pcs_FltUnbUac_val_1"
+      }
+    },
+    "ess.pcs_FltUnbIac": {
+      "values": {
+        "0": "ess.pcs_FltUnbIac_val_0",
+        "1": "ess.pcs_FltUnbIac_val_1"
+      }
+    },
+    "ess.pcs_FltPreOvBus": {
+      "values": {
+        "0": "ess.pcs_FltPreOvBus_val_0",
+        "1": "ess.pcs_FltPreOvBus_val_1"
+      }
+    },
+    "ess.pcs_FltPreUndBus": {
+      "values": {
+        "0": "ess.pcs_FltPreUndBus_val_0",
+        "1": "ess.pcs_FltPreUndBus_val_1"
+      }
+    },
+    "ess.pcs_FltOvUrect": {
+      "values": {
+        "0": "ess.pcs_FltOvUrect_val_0",
+        "1": "ess.pcs_FltOvUrect_val_1"
+      }
+    },
+    "ess.pcs_FltUndUrect": {
+      "values": {
+        "0": "ess.pcs_FltUndUrect_val_0",
+        "1": "ess.pcs_FltUndUrect_val_1"
+      }
+    },
+    "ess.pcs_FltOvUrbus": {
+      "values": {
+        "0": "ess.pcs_FltOvUrbus_val_0",
+        "1": "ess.pcs_FltOvUrbus_val_1"
+      }
+    },
+    "ess.pcs_FltUndUrbus": {
+      "values": {
+        "0": "ess.pcs_FltUndUrbus_val_0",
+        "1": "ess.pcs_FltUndUrbus_val_1"
+      }
+    },
+    "ess.pcs_FltUndUbus": {
+      "values": {
+        "0": "ess.pcs_FltUndUbus_val_0",
+        "1": "ess.pcs_FltUndUbus_val_1"
+      }
+    },
+    "ess.pcs_FltOvIprechg": {
+      "values": {
+        "0": "ess.pcs_FltOvIprechg_val_0",
+        "1": "ess.pcs_FltOvIprechg_val_1"
+      }
+    },
+    "ess.pcs_FltOvIphs": {
+      "values": {
+        "0": "ess.pcs_FltOvIphs_val_0",
+        "1": "ess.pcs_FltOvIphs_val_1"
+      }
+    },
+    "ess.pcs_FltAd0": {
+      "values": {
+        "0": "ess.pcs_FltAd0_val_0",
+        "1": "ess.pcs_FltAd0_val_1"
+      }
+    },
+    "ess.pcs_FltBms": {
+      "values": {
+        "0": "ess.pcs_FltBms_val_0",
+        "1": "ess.pcs_FltBms_val_1"
+      }
+    },
+    "ess.pcs_FltSts": {
+      "values": {
+        "0": "ess.pcs_FltSts_val_0",
+        "1": "ess.pcs_FltSts_val_1"
+      }
+    },
+    "ess.pcs_FltRelayOn": {
+      "values": {
+        "0": "ess.pcs_FltRelayOn_val_0",
+        "1": "ess.pcs_FltRelayOn_val_1"
+      }
+    },
+    "ess.pcs_FltRelayOff": {
+      "values": {
+        "0": "ess.pcs_FltRelayOff_val_0",
+        "1": "ess.pcs_FltRelayOff_val_1"
+      }
+    },
+    "ess.pcs_FltRelayOnSt": {
+      "values": {
+        "0": "ess.pcs_FltRelayOnSt_val_0",
+        "1": "ess.pcs_FltRelayOnSt_val_1"
+      }
+    },
+    "ess.pcs_FltRelayOffSt": {
+      "values": {
+        "0": "ess.pcs_FltRelayOffSt_val_0",
+        "1": "ess.pcs_FltRelayOffSt_val_1"
+      }
+    },
+    "ess.pcs_FltMainRelayOn": {
+      "values": {
+        "0": "ess.pcs_FltMainRelayOn_val_0",
+        "1": "ess.pcs_FltMainRelayOn_val_1"
+      }
+    },
+    "ess.pcs_FltMainRelayOff": {
+      "values": {
+        "0": "ess.pcs_FltMainRelayOff_val_0",
+        "1": "ess.pcs_FltMainRelayOff_val_1"
+      }
+    },
+    "ess.pcs_FltMainRelayOnSt": {
+      "values": {
+        "0": "ess.pcs_FltMainRelayOnSt_val_0",
+        "1": "ess.pcs_FltMainRelayOnSt_val_1"
+      }
+    },
+    "ess.pcs_FltMainRelayOffSt": {
+      "values": {
+        "0": "ess.pcs_FltMainRelayOffSt_val_0",
+        "1": "ess.pcs_FltMainRelayOffSt_val_1"
+      }
+    },
+    "ess.pcs_FltMainRelay": {
+      "values": {
+        "0": "ess.pcs_FltMainRelay_val_0",
+        "1": "ess.pcs_FltMainRelay_val_1"
+      }
+    },
+    "ess.pcs_FltDcRelayOpen": {
+      "values": {
+        "0": "ess.pcs_FltDcRelayOpen_val_0",
+        "1": "ess.pcs_FltDcRelayOpen_val_1"
+      }
+    },
+    "ess.pcs_FltIso": {
+      "values": {
+        "0": "ess.pcs_FltIso_val_0",
+        "1": "ess.pcs_FltIso_val_1"
+      }
+    },
+    "ess.pcs_FltRes": {
+      "values": {
+        "0": "ess.pcs_FltRes_val_0",
+        "1": "ess.pcs_FltRes_val_1"
+      }
+    },
+    "ess.pcs_FltHigtU": {
+      "values": {
+        "0": "ess.pcs_FltHigtU_val_0",
+        "1": "ess.pcs_FltHigtU_val_1"
+      }
+    },
+    "ess.pcs_FltLowU": {
+      "values": {
+        "0": "ess.pcs_FltLowU_val_0",
+        "1": "ess.pcs_FltLowU_val_1"
+      }
+    },
+    "ess.pcs_FltSync": {
+      "values": {
+        "0": "ess.pcs_FltSync_val_0",
+        "1": "ess.pcs_FltSync_val_1"
+      }
+    },
+    "ess.pcs_FltShort": {
+      "values": {
+        "0": "ess.pcs_FltShort_val_0",
+        "1": "ess.pcs_FltShort_val_1"
+      }
+    },
+    "ess.pcs_FltNoGrid": {
+        "values": {
+            "0": "ess.pcs_FltNoGrid_val_0",
+            "1": "ess.pcs_FltNoGrid_val_1"
+        }
+    },
+    "ess.pcs_FltGridOverV": {
+        "values": {
+            "0": "ess.pcs_FltGridOverV_val_0",
+            "1": "ess.pcs_FltGridOverV_val_1"
+        }
+    },
+    "ess.pcs_FltGridUnderV": {
+        "values": {
+            "0": "ess.pcs_FltGridUnderV_val_0",
+            "1": "ess.pcs_FltGridUnderV_val_1"
+        }
+    },
+    "ess.pcs_FltGridOverF": {
+        "values": {
+            "0": "ess.pcs_FltGridOverF_val_0",
+            "1": "ess.pcs_FltGridOverF_val_1"
+        }
+    },
+    "ess.pcs_FltGridUnderF": {
+        "values": {
+            "0": "ess.pcs_FltGridUnderF_val_0",
+            "1": "ess.pcs_FltGridUnderF_val_1"
+        }
+    },
+    "ess.pcs_FltGridUnbal": {
+        "values": {
+            "0": "ess.pcs_FltGridUnbal_val_0",
+            "1": "ess.pcs_FltGridUnbal_val_1"
+        }
+    },
+    "ess.pcs_FltGridFreqJit": {
+        "values": {
+            "0": "ess.pcs_FltGridFreqJit_val_0",
+            "1": "ess.pcs_FltGridFreqJit_val_1"
+        }
+    },
+    "ess.pcs_FltGridBackFlow": {
+        "values": {
+            "0": "ess.pcs_FltGridBackFlow_val_0",
+            "1": "ess.pcs_FltGridBackFlow_val_1"
+        }
+    },
+    "ess.pcs_FltGridCurrTrack": {
+        "values": {
+            "0": "ess.pcs_FltGridCurrTrack_val_0",
+            "1": "ess.pcs_FltGridCurrTrack_val_1"
+        }
+    },
+    "ess.pcs_FltMeterCommFail": {
+        "values": {
+            "0": "ess.pcs_FltMeterCommFail_val_0",
+            "1": "ess.pcs_FltMeterCommFail_val_1"
+        }
+    },
+    "ess.pcs_FltFailSafe": {
+        "values": {
+            "0": "ess.pcs_FltFailSafe_val_0",
+            "1": "ess.pcs_FltFailSafe_val_1"
+        }
+    },
+    "ess.pcs_FltMeterSelErr": {
+        "values": {
+            "0": "ess.pcs_FltMeterSelErr_val_0",
+            "1": "ess.pcs_FltMeterSelErr_val_1"
+        }
+    },
+    "ess.pcs_FltEPMHardLim": {
+        "values": {
+            "0": "ess.pcs_FltEPMHardLim_val_0",
+            "1": "ess.pcs_FltEPMHardLim_val_1"
+        }
+    },
+    "ess.pcs_FltG100CurrLim": {
+        "values": {
+            "0": "ess.pcs_FltG100CurrLim_val_0",
+            "1": "ess.pcs_FltG100CurrLim_val_1"
+        }
+    },
+    "ess.pcs_FltGridPhaseErr": {
+        "values": {
+            "0": "ess.pcs_FltGridPhaseErr_val_0",
+            "1": "ess.pcs_FltGridPhaseErr_val_1"
+        }
+    },
+    "ess.pcs_FltBckpOverV": {
+        "values": {
+            "0": "ess.pcs_FltBckpOverV_val_0",
+            "1": "ess.pcs_FltBckpOverV_val_1"
+        }
+    },
+    "ess.pcs_FltBckpOverLd": {
+        "values": {
+            "0": "ess.pcs_FltBckpOverLd_val_0",
+            "1": "ess.pcs_FltBckpOverLd_val_1"
+        }
+    },
+    "ess.pcs_FltGridBckpOverLd": {
+        "values": {
+            "0": "ess.pcs_FltGridBckpOverLd_val_0",
+            "1": "ess.pcs_FltGridBckpOverLd_val_1"
+        }
+    },
+    "ess.pcs_FltHiGridBckpUndV": {
+        "values": {
+            "0": "ess.pcs_FltHiGridBckpUndV_val_0",
+            "1": "ess.pcs_FltHiGridBckpUndV_val_1"
+        }
+    },
+    "ess.pcs_FltBattNotConn": {
+        "values": {
+            "0": "ess.pcs_FltBattNotConn_val_0",
+            "1": "ess.pcs_FltBattNotConn_val_1"
+        }
+    },
+    "ess.pcs_FltBattOverV": {
+        "values": {
+            "0": "ess.pcs_FltBattOverV_val_0",
+            "1": "ess.pcs_FltBattOverV_val_1"
+        }
+    },
+    "ess.pcs_FltBattUnderV": {
+        "values": {
+            "0": "ess.pcs_FltBattUnderV_val_0",
+            "1": "ess.pcs_FltBattUnderV_val_1"
+        }
+    },
+    "ess.pcs_FltBattBMSWarn": {
+        "values": {
+            "0": "ess.pcs_FltBattBMSWarn_val_0",
+            "1": "ess.pcs_FltBattBMSWarn_val_1"
+        }
+    },
+    "ess.pcs_FltBattNameErr": {
+        "values": {
+            "0": "ess.pcs_FltBattNameErr_val_0",
+            "1": "ess.pcs_FltBattNameErr_val_1"
+        }
+    },
+    "ess.pcs_FltPbBatLowTemp": {
+        "values": {
+            "0": "ess.pcs_FltPbBatLowTemp_val_0",
+            "1": "ess.pcs_FltPbBatLowTemp_val_1"
+        }
+    },
+    "ess.pcs_FltPbBatHighTemp": {
+        "values": {
+            "0": "ess.pcs_FltPbBatHighTemp_val_0",
+            "1": "ess.pcs_FltPbBatHighTemp_val_1"
+        }
+    },
+    "ess.pcs_FltDCOverV": {
+        "values": {
+            "0": "ess.pcs_FltDCOverV_val_0",
+            "1": "ess.pcs_FltDCOverV_val_1"
+        }
+    },
+    "ess.pcs_FltDCMotherOverV": {
+        "values": {
+            "0": "ess.pcs_FltDCMotherOverV_val_0",
+            "1": "ess.pcs_FltDCMotherOverV_val_1"
+        }
+    },
+    "ess.pcs_FltDCMotherUnbal": {
+        "values": {
+            "0": "ess.pcs_FltDCMotherUnbal_val_0",
+            "1": "ess.pcs_FltDCMotherUnbal_val_1"
+        }
+    },
+    "ess.pcs_FltDCMotherUnderV": {
+        "values": {
+            "0": "ess.pcs_FltDCMotherUnderV_val_0",
+            "1": "ess.pcs_FltDCMotherUnderV_val_1"
+        }
+    },
+    "ess.pcs_FltDCMotherUnbal2": {
+        "values": {
+            "0": "ess.pcs_FltDCMotherUnbal2_val_0",
+            "1": "ess.pcs_FltDCMotherUnbal2_val_1"
+        }
+    },
+    "ess.pcs_FltDCAOverC": {
+        "values": {
+            "0": "ess.pcs_FltDCAOverC_val_0",
+            "1": "ess.pcs_FltDCAOverC_val_1"
+        }
+    },
+    "ess.pcs_FltDCBOverC": {
+        "values": {
+            "0": "ess.pcs_FltDCBOverC_val_0",
+            "1": "ess.pcs_FltDCBOverC_val_1"
+        }
+    },
+    "ess.pcs_FltDCInPerturb": {
+        "values": {
+            "0": "ess.pcs_FltDCInPerturb_val_0",
+            "1": "ess.pcs_FltDCInPerturb_val_1"
+        }
+    },
+    "ess.pcs_FltGridOverC": {
+        "values": {
+            "0": "ess.pcs_FltGridOverC_val_0",
+            "1": "ess.pcs_FltGridOverC_val_1"
+        }
+    },
+    "ess.pcs_FltIGBTOverC": {
+        "values": {
+            "0": "ess.pcs_FltIGBTOverC_val_0",
+            "1": "ess.pcs_FltIGBTOverC_val_1"
+        }
+    },
+    "ess.pcs_FltGridPerturb02": {
+        "values": {
+            "0": "ess.pcs_FltGridPerturb02_val_0",
+            "1": "ess.pcs_FltGridPerturb02_val_1"
+        }
+    },
+    "ess.pcs_FltArcSelfProt": {
+        "values": {
+            "0": "ess.pcs_FltArcSelfProt_val_0",
+            "1": "ess.pcs_FltArcSelfProt_val_1"
+        }
+    },
+    "ess.pcs_FltGridFaultPred": {
+        "values": {
+            "0": "ess.pcs_FltGridFaultPred_val_0",
+            "1": "ess.pcs_FltGridFaultPred_val_1"
+        }
+    },
+    "ess.pcs_FltGridCurrSample": {
+        "values": {
+            "0": "ess.pcs_FltGridCurrSample_val_0",
+            "1": "ess.pcs_FltGridCurrSample_val_1"
+        }
+    },
+    "ess.pcs_FltDSPSelfCheck": {
+        "values": {
+            "0": "ess.pcs_FltDSPSelfCheck_val_0",
+            "1": "ess.pcs_FltDSPSelfCheck_val_1"
+        }
+    },
+    "ess.pcs_FltBattDischOverC": {
+        "values": {
+            "0": "ess.pcs_FltBattDischOverC_val_0",
+            "1": "ess.pcs_FltBattDischOverC_val_1"
+        }
+    },
+    "ess.pcs_FltGridPerturb": {
+        "values": {
+            "0": "ess.pcs_FltGridPerturb_val_0",
+            "1": "ess.pcs_FltGridPerturb_val_1"
+        }
+    },
+    "ess.pcs_FltDCCompLarge": {
+        "values": {
+            "0": "ess.pcs_FltDCCompLarge_val_0",
+            "1": "ess.pcs_FltDCCompLarge_val_1"
+        }
+    },
+    "ess.pcs_FltOverTempProt": {
+        "values": {
+            "0": "ess.pcs_FltOverTempProt_val_0",
+            "1": "ess.pcs_FltOverTempProt_val_1"
+        }
+    },
+    "ess.pcs_FltRelayCheckProt": {
+        "values": {
+            "0": "ess.pcs_FltRelayCheckProt_val_0",
+            "1": "ess.pcs_FltRelayCheckProt_val_1"
+        }
+    },
+    "ess.pcs_FltUnderTempProt": {
+        "values": {
+            "0": "ess.pcs_FltUnderTempProt_val_0",
+            "1": "ess.pcs_FltUnderTempProt_val_1"
+        }
+    },
+    "ess.pcs_FltPVInsulFault": {
+        "values": {
+            "0": "ess.pcs_FltPVInsulFault_val_0",
+            "1": "ess.pcs_FltPVInsulFault_val_1"
+        }
+    },
+    "ess.pcs_Flt12VUnderVP": {
+        "values": {
+            "0": "ess.pcs_Flt12VUnderVP_val_0",
+            "1": "ess.pcs_Flt12VUnderVP_val_1"
+        }
+    },
+    "ess.pcs_FltLeakageCurProt": {
+        "values": {
+            "0": "ess.pcs_FltLeakageCurProt_val_0",
+            "1": "ess.pcs_FltLeakageCurProt_val_1"
+        }
+    },
+    "ess.pcs_FltLeakageSelfProt": {
+        "values": {
+            "0": "ess.pcs_FltLeakageSelfProt_val_0",
+            "1": "ess.pcs_FltLeakageSelfProt_val_1"
+        }
+    },
+    "ess.pcs_FltDSPInitProt": {
+        "values": {
+            "0": "ess.pcs_FltDSPInitProt_val_0",
+            "1": "ess.pcs_FltDSPInitProt_val_1"
+        }
+    },
+    "ess.pcs_FltDSPBProt": {
+        "values": {
+            "0": "ess.pcs_FltDSPBProt_val_0",
+            "1": "ess.pcs_FltDSPBProt_val_1"
+        }
+    },
+    "ess.pcs_FltBattOverVHW": {
+        "values": {
+            "0": "ess.pcs_FltBattOverVHW_val_0",
+            "1": "ess.pcs_FltBattOverVHW_val_1"
+        }
+    },
+    "ess.pcs_FltLLCHWOverC": {
+        "values": {
+            "0": "ess.pcs_FltLLCHWOverC_val_0",
+            "1": "ess.pcs_FltLLCHWOverC_val_1"
+        }
+    },
+    "ess.pcs_FltGridSideInstOverC": {
+        "values": {
+            "0": "ess.pcs_FltGridSideInstOverC_val_0",
+            "1": "ess.pcs_FltGridSideInstOverC_val_1"
+        }
+    },
+    "ess.pcs_FltCANCommFail": {
+        "values": {
+            "0": "ess.pcs_FltCANCommFail_val_0",
+            "1": "ess.pcs_FltCANCommFail_val_1"
+        }
+    },
+    "ess.pcs_FltDSPCommFail": {
+        "values": {
+            "0": "ess.pcs_FltDSPCommFail_val_0",
+            "1": "ess.pcs_FltDSPCommFail_val_1"
+        }
+    },
+    "ess.pcs_UPSType": {
+        "values": {
+            "0": "ess.pcs_UPSType_val_0",
+            "1": "ess.pcs_UPSType_val_1"
+        }
+    },
+    "ess.pcs_SelfUseMode": {
+        "values": {
+            "0": "ess.pcs_SelfUseMode_val_0",
+            "1": "ess.pcs_SelfUseMode_val_1"
+        }
+    },
+    "ess.pcs_SelfUseTimed": {
+        "values": {
+            "0": "ess.pcs_SelfUseTimed_val_0",
+            "1": "ess.pcs_SelfUseTimed_val_1"
+        }
+    },
+    "ess.pcs_GridFeedPrior": {
+        "values": {
+            "0": "ess.pcs_GridFeedPrior_val_0",
+            "1": "ess.pcs_GridFeedPrior_val_1"
+        }
+    },
+    "ess.pcs_GridFeedTimed": {
+        "values": {
+            "0": "ess.pcs_GridFeedTimed_val_0",
+            "1": "ess.pcs_GridFeedTimed_val_1"
+        }
+    },
+    "ess.pcs_BattHoldMode": {
+        "values": {
+            "0": "ess.pcs_BattHoldMode_val_0",
+            "1": "ess.pcs_BattHoldMode_val_1"
+        }
+    },
+    "ess.pcs_OffGridMode": {
+        "values": {
+            "0": "ess.pcs_OffGridMode_val_0",
+            "1": "ess.pcs_OffGridMode_val_1"
+        }
+    },
+    "ess.pcs_RemoteCtrlMode": {
+        "values": {
+            "0": "ess.pcs_RemoteCtrlMode_val_0",
+            "1": "ess.pcs_RemoteCtrlMode_val_1"
+        }
+    },
+    "ess.pcs_PassiveMode": {
+        "values": {
+            "0": "ess.pcs_PassiveMode_val_0",
+            "1": "ess.pcs_PassiveMode_val_1"
+        }
+    },
+    "ess.pcs_PeakShaveMode": {
+        "values": {
+            "0": "ess.pcs_PeakShaveMode_val_0",
+            "1": "ess.pcs_PeakShaveMode_val_1"
+        }
+    },
+    "ess.pcs_PeakShaveTimed": {
+        "values": {
+            "0": "ess.pcs_PeakShaveTimed_val_0",
+            "1": "ess.pcs_PeakShaveTimed_val_1"
+        }
+    },
+    "ess.pcs_Ua": {
+      "unit": "V"
+    },
+    "ess.pcs_Ub": {
+      "unit": "V"
+    },
+    "ess.pcs_Uc": {
+      "unit": "V"
+    },
+    "ess.pcs_Ia": {
+      "unit": "A"
+    },
+    "ess.pcs_Ib": {
+      "unit": "A"
+    },
+    "ess.pcs_Ic": {
+      "unit": "A"
+    },
+    "ess.pcs_Freq": {
+      "unit": "Hz"
+    },
+    "ess.pcs_P": {
+      "unit": "kW"
+    },
+    "ess.pcs_Q": {
+      "unit": "kVar"
+    },
+    "ess.pcs_Pdc": {
+      "unit": "kW"
+    },
+    "ess.pcs_Udc": {
+      "unit": "V"
+    },
+    "ess.pcs_Idc": {
+      "unit": "A"
+    },
+    "ess.pcs_PChgMax": {
+      "unit": "kW"
+    },
+    "ess.pcs_PDchgMax": {
+      "unit": "kW"
+    },
+    "ess.pcs_PsetFb": {
+      "unit": "kW"
+    },
+    "ess.pcs_QsetFb": {
+      "unit": "kW"
+    },
+    "ess.pcs_RunState": {
+      "values": {
+        "0": "ess.pcs_RunState_val_0",
+        "1": "ess.pcs_RunState_val_1",
+        "2": "ess.pcs_RunState_val_2",
+        "3": "ess.pcs_RunState_val_3",
+        "4": "ess.pcs_RunState_val_4"
+      }
+    },
+    "ess.pcs_Pset": {
+      "unit": "kW"
+    },
+    "ess.pcs_QSet": {
+      "unit": "kW"
+    },
+    "ess.pcs_OffGridVolSet": {
+      "unit": "V"
+    },
+    "ess.pcs_OffGridFreqSet": {
+      "unit": "Hz"
+    },
+    "ess.pcs_AmT": {
+      "unit": "℃"
+    },
+    "ess.pcs_IgbtT": {
+      "unit": "℃"
+    },
+    "ess.hpcs_PRated": {
+      "unit": "kW"
+    },
+    "ess.hpcs_PMax": {
+      "unit": "kW"
+    },
+    "ess.hpcs_QMax": {
+      "unit": "kW"
+    },
+    "ess.hpcs_URated": {
+      "unit": "V"
+    },
+    "ess.hpcs_Flt": {
+      "values": {
+        "0": "ess.hpcs_Flt_val_0",
+        "1": "ess.hpcs_Flt_val_1"
+      }
+    },
+    "ess.hpcs_Alm": {
+      "values": {
+        "0": "ess.hpcs_Alm_val_0",
+        "1": "ess.hpcs_Alm_val_1"
+      }
+    },
+    "ess.hpcs_Remote": {
+      "values": {
+        "0": "ess.hpcs_Remote_val_0",
+        "1": "ess.hpcs_Remote_val_1"
+      }
+    },
+    "ess.hpcs_Emergency": {
+      "values": {
+        "0": "ess.hpcs_Emergency_val_0",
+        "1": "ess.hpcs_Emergency_val_1"
+      }
+    },
+    "ess.hpcs_GridConn": {
+      "values": {
+        "0": "ess.hpcs_GridConn_val_0",
+        "1": "ess.hpcs_GridConn_val_1"
+      }
+    },
+    "ess.hpcs_FltBus": {
+      "values": {
+        "0": "ess.hpcs_FltBus_val_0",
+        "1": "ess.hpcs_FltBus_val_1"
+      }
+    },
+    "ess.hpcs_FltOvUa": {
+      "values": {
+        "0": "ess.hpcs_FltOvUa_val_0",
+        "1": "ess.hpcs_FltOvUa_val_1"
+      }
+    },
+    "ess.hpcs_FltOvUb": {
+      "values": {
+        "0": "ess.hpcs_FltOvUb_val_0",
+        "1": "ess.hpcs_FltOvUb_val_1"
+      }
+    },
+    "ess.hpcs_FltOvUc": {
+      "values": {
+        "0": "ess.hpcs_FltOvUc_val_0",
+        "1": "ess.hpcs_FltOvUc_val_1"
+      }
+    },
+    "ess.hpcs_FltUndUa": {
+      "values": {
+        "0": "ess.hpcs_FltUndUa_val_0",
+        "1": "ess.hpcs_FltUndUa_val_1"
+      }
+    },
+    "ess.hpcs_FltUndUb": {
+      "values": {
+        "0": "ess.hpcs_FltUndUb_val_0",
+        "1": "ess.hpcs_FltUndUb_val_1"
+      }
+    },
+    "ess.hpcs_FltUndUc": {
+      "values": {
+        "0": "ess.hpcs_FltUndUc_val_0",
+        "1": "ess.hpcs_FltUndUc_val_1"
+      }
+    },
+    "ess.hpcs_FltBusdiff": {
+      "values": {
+        "0": "ess.hpcs_FltBusdiff_val_0",
+        "1": "ess.hpcs_FltBusdiff_val_1"
+      }
+    },
+    "ess.hpcs_FltOvIdc": {
+      "values": {
+        "0": "ess.hpcs_FltOvIdc_val_0",
+        "1": "ess.hpcs_FltOvIdc_val_1"
+      }
+    },
+    "ess.hpcs_FltOvIa": {
+      "values": {
+        "0": "ess.hpcs_FltOvIa_val_0",
+        "1": "ess.hpcs_FltOvIa_val_1"
+      }
+    },
+    "ess.hpcs_FltOvIb": {
+      "values": {
+        "0": "ess.hpcs_FltOvIb_val_0",
+        "1": "ess.hpcs_FltOvIb_val_1"
+      }
+    },
+    "ess.hpcs_FltOvIc": {
+      "values": {
+        "0": "ess.hpcs_FltOvIc_val_0",
+        "1": "ess.hpcs_FltOvIc_val_1"
+      }
+    },
+    "ess.hpcs_FltOvIn": {
+      "values": {
+        "0": "ess.hpcs_FltOvIn_val_0",
+        "1": "ess.hpcs_FltOvIn_val_1"
+      }
+    },
+    "ess.hpcs_FltOvFreq": {
+      "values": {
+        "0": "ess.hpcs_FltOvFreq_val_0",
+        "1": "ess.hpcs_FltOvFreq_val_1"
+      }
+    },
+    "ess.hpcs_FltUndFreq": {
+      "values": {
+        "0": "ess.hpcs_FltUndFreq_val_0",
+        "1": "ess.hpcs_FltUndFreq_val_1"
+      }
+    },
+    "ess.hpcs_FltPha": {
+      "values": {
+        "0": "ess.hpcs_FltPha_val_0",
+        "1": "ess.hpcs_FltPha_val_1"
+      }
+    },
+    "ess.hpcs_FltPhaLack": {
+      "values": {
+        "0": "ess.hpcs_FltPhaLack_val_0",
+        "1": "ess.hpcs_FltPhaLack_val_1"
+      }
+    },
+    "ess.hpcs_FltRevDc": {
+      "values": {
+        "0": "ess.hpcs_FltRevDc_val_0",
+        "1": "ess.hpcs_FltRevDc_val_1"
+      }
+    },
+    "ess.hpcs_FltCan": {
+      "values": {
+        "0": "ess.hpcs_FltCan_val_0",
+        "1": "ess.hpcs_FltCan_val_1"
+      }
+    },
+    "ess.hpcs_FltBmsCom": {
+      "values": {
+        "0": "ess.hpcs_FltBmsCom_val_0",
+        "1": "ess.hpcs_FltBmsCom_val_1"
+      }
+    },
+    "ess.hpcs_FltEmsCom": {
+      "values": {
+        "0": "ess.hpcs_FltEmsCom_val_0",
+        "1": "ess.hpcs_FltEmsCom_val_1"
+      }
+    },
+    "ess.hpcs_FltOvTigbf": {
+      "values": {
+        "0": "ess.hpcs_FltOvTigbf_val_0",
+        "1": "ess.hpcs_FltOvTigbf_val_1"
+      }
+    },
+    "ess.hpcs_FltOvI": {
+      "values": {
+        "0": "ess.hpcs_FltOvI_val_0",
+        "1": "ess.hpcs_FltOvI_val_1"
+      }
+    },
+    "ess.hpcs_FltAcPreChga": {
+      "values": {
+        "0": "ess.hpcs_FltAcPreChga_val_0",
+        "1": "ess.hpcs_FltAcPreChga_val_1"
+      }
+    },
+    "ess.hpcs_FltAcPreChgb": {
+      "values": {
+        "0": "ess.hpcs_FltAcPreChgb_val_0",
+        "1": "ess.hpcs_FltAcPreChgb_val_1"
+      }
+    },
+    "ess.hpcs_FltAcPreChgc": {
+      "values": {
+        "0": "ess.hpcs_FltAcPreChgc_val_0",
+        "1": "ess.hpcs_FltAcPreChgc_val_1"
+      }
+    },
+    "ess.hpcs_FltOvUess": {
+      "values": {
+        "0": "ess.hpcs_FltOvUess_val_0",
+        "1": "ess.hpcs_FltOvUess_val_1"
+      }
+    },
+    "ess.hpcs_FltUndUess": {
+      "values": {
+        "0": "ess.hpcs_FltUndUess_val_0",
+        "1": "ess.hpcs_FltUndUess_val_1"
+      }
+    },
+    "ess.hpcs_FltEpo": {
+      "values": {
+        "0": "ess.hpcs_FltEpo_val_0",
+        "1": "ess.hpcs_FltEpo_val_1"
+      }
+    },
+    "ess.hpcs_FltLimIzb": {
+      "values": {
+        "0": "ess.hpcs_FltLimIzb_val_0",
+        "1": "ess.hpcs_FltLimIzb_val_1"
+      }
+    },
+    "ess.hpcs_FltOvIph": {
+      "values": {
+        "0": "ess.hpcs_FltOvIph_val_0",
+        "1": "ess.hpcs_FltOvIph_val_1"
+      }
+    },
+    "ess.hpcs_Flt24v": {
+      "values": {
+        "0": "ess.hpcs_Flt24v_val_0",
+        "1": "ess.hpcs_Flt24v_val_1"
+      }
+    },
+    "ess.hpcs_Flt15v": {
+      "values": {
+        "0": "ess.hpcs_Flt15v_val_0",
+        "1": "ess.hpcs_Flt15v_val_1"
+      }
+    },
+    "ess.hpcs_FltFan": {
+      "values": {
+        "0": "ess.hpcs_FltFan_val_0",
+        "1": "ess.hpcs_FltFan_val_1"
+      }
+    },
+    "ess.hpcs_FltConn": {
+      "values": {
+        "0": "ess.hpcs_FltConn_val_0",
+        "1": "ess.hpcs_FltConn_val_1"
+      }
+    },
+    "ess.hpcs_FltArrester": {
+      "values": {
+        "0": "ess.hpcs_FltArrester_val_0",
+        "1": "ess.hpcs_FltArrester_val_1"
+      }
+    },
+    "ess.hpcs_FltOvTph": {
+      "values": {
+        "0": "ess.hpcs_FltOvTph_val_0",
+        "1": "ess.hpcs_FltOvTph_val_1"
+      }
+    },
+    "ess.hpcs_FltFire": {
+      "values": {
+        "0": "ess.hpcs_FltFire_val_0",
+        "1": "ess.hpcs_FltFire_val_1"
+      }
+    },
+    "ess.hpcs_FltEssDry": {
+      "values": {
+        "0": "ess.hpcs_FltEssDry_val_0",
+        "1": "ess.hpcs_FltEssDry_val_1"
+      }
+    },
+    "ess.hpcs_FltOvLoad": {
+      "values": {
+        "0": "ess.hpcs_FltOvLoad_val_0",
+        "1": "ess.hpcs_FltOvLoad_val_1"
+      }
+    },
+    "ess.hpcs_FltUnbUac": {
+      "values": {
+        "0": "ess.hpcs_FltUnbUac_val_0",
+        "1": "ess.hpcs_FltUnbUac_val_1"
+      }
+    },
+    "ess.hpcs_FltUnbIac": {
+      "values": {
+        "0": "ess.hpcs_FltUnbIac_val_0",
+        "1": "ess.hpcs_FltUnbIac_val_1"
+      }
+    },
+    "ess.hpcs_FltPreOvBus": {
+      "values": {
+        "0": "ess.hpcs_FltPreOvBus_val_0",
+        "1": "ess.hpcs_FltPreOvBus_val_1"
+      }
+    },
+    "ess.hpcs_FltPreUndBus": {
+      "values": {
+        "0": "ess.hpcs_FltPreUndBus_val_0",
+        "1": "ess.hpcs_FltPreUndBus_val_1"
+      }
+    },
+    "ess.hpcs_FltOvUrect": {
+      "values": {
+        "0": "ess.hpcs_FltOvUrect_val_0",
+        "1": "ess.hpcs_FltOvUrect_val_1"
+      }
+    },
+    "ess.hpcs_FltUndUrect": {
+      "values": {
+        "0": "ess.hpcs_FltUndUrect_val_0",
+        "1": "ess.hpcs_FltUndUrect_val_1"
+      }
+    },
+    "ess.hpcs_FltOvUrbus": {
+      "values": {
+        "0": "ess.hpcs_FltOvUrbus_val_0",
+        "1": "ess.hpcs_FltOvUrbus_val_1"
+      }
+    },
+    "ess.hpcs_FltUndUrbus": {
+      "values": {
+        "0": "ess.hpcs_FltUndUrbus_val_0",
+        "1": "ess.hpcs_FltUndUrbus_val_1"
+      }
+    },
+    "ess.hpcs_FltUndUbus": {
+      "values": {
+        "0": "ess.hpcs_FltUndUbus_val_0",
+        "1": "ess.hpcs_FltUndUbus_val_1"
+      }
+    },
+    "ess.hpcs_FltOvIprechg": {
+      "values": {
+        "0": "ess.hpcs_FltOvIprechg_val_0",
+        "1": "ess.hpcs_FltOvIprechg_val_1"
+      }
+    },
+    "ess.hpcs_FltOvIphs": {
+      "values": {
+        "0": "ess.hpcs_FltOvIphs_val_0",
+        "1": "ess.hpcs_FltOvIphs_val_1"
+      }
+    },
+    "ess.hpcs_FltAd0": {
+      "values": {
+        "0": "ess.hpcs_FltAd0_val_0",
+        "1": "ess.hpcs_FltAd0_val_1"
+      }
+    },
+    "ess.hpcs_FltBms": {
+      "values": {
+        "0": "ess.hpcs_FltBms_val_0",
+        "1": "ess.hpcs_FltBms_val_1"
+      }
+    },
+    "ess.hpcs_FltSts": {
+      "values": {
+        "0": "ess.hpcs_FltSts_val_0",
+        "1": "ess.hpcs_FltSts_val_1"
+      }
+    },
+    "ess.hpcs_FltRelayOn": {
+      "values": {
+        "0": "ess.hpcs_FltRelayOn_val_0",
+        "1": "ess.hpcs_FltRelayOn_val_1"
+      }
+    },
+    "ess.hpcs_FltRelayOff": {
+      "values": {
+        "0": "ess.hpcs_FltRelayOff_val_0",
+        "1": "ess.hpcs_FltRelayOff_val_1"
+      }
+    },
+    "ess.hpcs_FltRelayOnSt": {
+      "values": {
+        "0": "ess.hpcs_FltRelayOnSt_val_0",
+        "1": "ess.hpcs_FltRelayOnSt_val_1"
+      }
+    },
+    "ess.hpcs_FltRelayOffSt": {
+      "values": {
+        "0": "ess.hpcs_FltRelayOffSt_val_0",
+        "1": "ess.hpcs_FltRelayOffSt_val_1"
+      }
+    },
+    "ess.hpcs_FltMainRelayOn": {
+      "values": {
+        "0": "ess.hpcs_FltMainRelayOn_val_0",
+        "1": "ess.hpcs_FltMainRelayOn_val_1"
+      }
+    },
+    "ess.hpcs_FltMainRelayOff": {
+      "values": {
+        "0": "ess.hpcs_FltMainRelayOff_val_0",
+        "1": "ess.hpcs_FltMainRelayOff_val_1"
+      }
+    },
+    "ess.hpcs_FltMainRelayOnSt": {
+      "values": {
+        "0": "ess.hpcs_FltMainRelayOnSt_val_0",
+        "1": "ess.hpcs_FltMainRelayOnSt_val_1"
+      }
+    },
+    "ess.hpcs_FltMainRelayOffSt": {
+      "values": {
+        "0": "ess.hpcs_FltMainRelayOffSt_val_0",
+        "1": "ess.hpcs_FltMainRelayOffSt_val_1"
+      }
+    },
+    "ess.hpcs_FltMainRelay": {
+      "values": {
+        "0": "ess.hpcs_FltMainRelay_val_0",
+        "1": "ess.hpcs_FltMainRelay_val_1"
+      }
+    },
+    "ess.hpcs_FltDcRelayOpen": {
+      "values": {
+        "0": "ess.hpcs_FltDcRelayOpen_val_0",
+        "1": "ess.hpcs_FltDcRelayOpen_val_1"
+      }
+    },
+    "ess.hpcs_FltIso": {
+      "values": {
+        "0": "ess.hpcs_FltIso_val_0",
+        "1": "ess.hpcs_FltIso_val_1"
+      }
+    },
+    "ess.hpcs_FltRes": {
+      "values": {
+        "0": "ess.hpcs_FltRes_val_0",
+        "1": "ess.hpcs_FltRes_val_1"
+      }
+    },
+    "ess.hpcs_FltHigtU": {
+      "values": {
+        "0": "ess.hpcs_FltHigtU_val_0",
+        "1": "ess.hpcs_FltHigtU_val_1"
+      }
+    },
+    "ess.hpcs_FltLowU": {
+      "values": {
+        "0": "ess.hpcs_FltLowU_val_0",
+        "1": "ess.hpcs_FltLowU_val_1"
+      }
+    },
+    "ess.hpcs_FltSync": {
+      "values": {
+        "0": "ess.hpcs_FltSync_val_0",
+        "1": "ess.hpcs_FltSync_val_1"
+      }
+    },
+    "ess.hpcs_FltShort": {
+      "values": {
+        "0": "ess.hpcs_FltShort_val_0",
+        "1": "ess.hpcs_FltShort_val_1"
+      }
+    },
+    "ess.hpcs_FltNoGrid": {
+        "values": {
+            "0": "ess.hpcs_FltNoGrid_val_0",
+            "1": "ess.hpcs_FltNoGrid_val_1"
+        }
+    },
+    "ess.hpcs_FltGridOverV": {
+        "values": {
+            "0": "ess.hpcs_FltGridOverV_val_0",
+            "1": "ess.hpcs_FltGridOverV_val_1"
+        }
+    },
+    "ess.hpcs_FltGridUnderV": {
+        "values": {
+            "0": "ess.hpcs_FltGridUnderV_val_0",
+            "1": "ess.hpcs_FltGridUnderV_val_1"
+        }
+    },
+    "ess.hpcs_FltGridOverF": {
+        "values": {
+            "0": "ess.hpcs_FltGridOverF_val_0",
+            "1": "ess.hpcs_FltGridOverF_val_1"
+        }
+    },
+    "ess.hpcs_FltGridUnderF": {
+        "values": {
+            "0": "ess.hpcs_FltGridUnderF_val_0",
+            "1": "ess.hpcs_FltGridUnderF_val_1"
+        }
+    },
+    "ess.hpcs_FltGridUnbal": {
+        "values": {
+            "0": "ess.hpcs_FltGridUnbal_val_0",
+            "1": "ess.hpcs_FltGridUnbal_val_1"
+        }
+    },
+    "ess.hpcs_FltGridFreqJit": {
+        "values": {
+            "0": "ess.hpcs_FltGridFreqJit_val_0",
+            "1": "ess.hpcs_FltGridFreqJit_val_1"
+        }
+    },
+    "ess.hpcs_FltGridBackFlow": {
+        "values": {
+            "0": "ess.hpcs_FltGridBackFlow_val_0",
+            "1": "ess.hpcs_FltGridBackFlow_val_1"
+        }
+    },
+    "ess.hpcs_FltGridCurrTrack": {
+        "values": {
+            "0": "ess.hpcs_FltGridCurrTrack_val_0",
+            "1": "ess.hpcs_FltGridCurrTrack_val_1"
+        }
+    },
+    "ess.hpcs_FltMeterCommFail": {
+        "values": {
+            "0": "ess.hpcs_FltMeterCommFail_val_0",
+            "1": "ess.hpcs_FltMeterCommFail_val_1"
+        }
+    },
+    "ess.hpcs_FltFailSafe": {
+        "values": {
+            "0": "ess.hpcs_FltFailSafe_val_0",
+            "1": "ess.hpcs_FltFailSafe_val_1"
+        }
+    },
+    "ess.hpcs_FltMeterSelErr": {
+        "values": {
+            "0": "ess.hpcs_FltMeterSelErr_val_0",
+            "1": "ess.hpcs_FltMeterSelErr_val_1"
+        }
+    },
+    "ess.hpcs_FltEPMHardLim": {
+        "values": {
+            "0": "ess.hpcs_FltEPMHardLim_val_0",
+            "1": "ess.hpcs_FltEPMHardLim_val_1"
+        }
+    },
+    "ess.hpcs_FltG100CurrLim": {
+        "values": {
+            "0": "ess.hpcs_FltG100CurrLim_val_0",
+            "1": "ess.hpcs_FltG100CurrLim_val_1"
+        }
+    },
+    "ess.hpcs_FltGridPhaseErr": {
+        "values": {
+            "0": "ess.hpcs_FltGridPhaseErr_val_0",
+            "1": "ess.hpcs_FltGridPhaseErr_val_1"
+        }
+    },
+    "ess.hpcs_FltBckpOverV": {
+        "values": {
+            "0": "ess.hpcs_FltBckpOverV_val_0",
+            "1": "ess.hpcs_FltBckpOverV_val_1"
+        }
+    },
+    "ess.hpcs_FltBckpOverLd": {
+        "values": {
+            "0": "ess.hpcs_FltBckpOverLd_val_0",
+            "1": "ess.hpcs_FltBckpOverLd_val_1"
+        }
+    },
+    "ess.hpcs_FltGridBckpOverLd": {
+        "values": {
+            "0": "ess.hpcs_FltGridBckpOverLd_val_0",
+            "1": "ess.hpcs_FltGridBckpOverLd_val_1"
+        }
+    },
+    "ess.hpcs_FltHiGridBckpUndV": {
+        "values": {
+            "0": "ess.hpcs_FltHiGridBckpUndV_val_0",
+            "1": "ess.hpcs_FltHiGridBckpUndV_val_1"
+        }
+    },
+    "ess.hpcs_FltBattNotConn": {
+        "values": {
+            "0": "ess.hpcs_FltBattNotConn_val_0",
+            "1": "ess.hpcs_FltBattNotConn_val_1"
+        }
+    },
+    "ess.hpcs_FltBattOverV": {
+        "values": {
+            "0": "ess.hpcs_FltBattOverV_val_0",
+            "1": "ess.hpcs_FltBattOverV_val_1"
+        }
+    },
+    "ess.hpcs_FltBattUnderV": {
+        "values": {
+            "0": "ess.hpcs_FltBattUnderV_val_0",
+            "1": "ess.hpcs_FltBattUnderV_val_1"
+        }
+    },
+    "ess.hpcs_FltBattBMSWarn": {
+        "values": {
+            "0": "ess.hpcs_FltBattBMSWarn_val_0",
+            "1": "ess.hpcs_FltBattBMSWarn_val_1"
+        }
+    },
+    "ess.hpcs_FltBattNameErr": {
+        "values": {
+            "0": "ess.hpcs_FltBattNameErr_val_0",
+            "1": "ess.hpcs_FltBattNameErr_val_1"
+        }
+    },
+    "ess.hpcs_FltPbBatLowTemp": {
+        "values": {
+            "0": "ess.hpcs_FltPbBatLowTemp_val_0",
+            "1": "ess.hpcs_FltPbBatLowTemp_val_1"
+        }
+    },
+    "ess.hpcs_FltPbBatHighTemp": {
+        "values": {
+            "0": "ess.hpcs_FltPbBatHighTemp_val_0",
+            "1": "ess.hpcs_FltPbBatHighTemp_val_1"
+        }
+    },
+    "ess.hpcs_FltDCOverV": {
+        "values": {
+            "0": "ess.hpcs_FltDCOverV_val_0",
+            "1": "ess.hpcs_FltDCOverV_val_1"
+        }
+    },
+    "ess.hpcs_FltDCMotherOverV": {
+        "values": {
+            "0": "ess.hpcs_FltDCMotherOverV_val_0",
+            "1": "ess.hpcs_FltDCMotherOverV_val_1"
+        }
+    },
+    "ess.hpcs_FltDCMotherUnbal": {
+        "values": {
+            "0": "ess.hpcs_FltDCMotherUnbal_val_0",
+            "1": "ess.hpcs_FltDCMotherUnbal_val_1"
+        }
+    },
+    "ess.hpcs_FltDCMotherUnderV": {
+        "values": {
+            "0": "ess.hpcs_FltDCMotherUnderV_val_0",
+            "1": "ess.hpcs_FltDCMotherUnderV_val_1"
+        }
+    },
+    "ess.hpcs_FltDCMotherUnbal2": {
+        "values": {
+            "0": "ess.hpcs_FltDCMotherUnbal2_val_0",
+            "1": "ess.hpcs_FltDCMotherUnbal2_val_1"
+        }
+    },
+    "ess.hpcs_FltDCAOverC": {
+        "values": {
+            "0": "ess.hpcs_FltDCAOverC_val_0",
+            "1": "ess.hpcs_FltDCAOverC_val_1"
+        }
+    },
+    "ess.hpcs_FltDCBOverC": {
+        "values": {
+            "0": "ess.hpcs_FltDCBOverC_val_0",
+            "1": "ess.hpcs_FltDCBOverC_val_1"
+        }
+    },
+    "ess.hpcs_FltDCInPerturb": {
+        "values": {
+            "0": "ess.hpcs_FltDCInPerturb_val_0",
+            "1": "ess.hpcs_FltDCInPerturb_val_1"
+        }
+    },
+    "ess.hpcs_FltGridOverC": {
+        "values": {
+            "0": "ess.hpcs_FltGridOverC_val_0",
+            "1": "ess.hpcs_FltGridOverC_val_1"
+        }
+    },
+    "ess.hpcs_FltIGBTOverC": {
+        "values": {
+            "0": "ess.hpcs_FltIGBTOverC_val_0",
+            "1": "ess.hpcs_FltIGBTOverC_val_1"
+        }
+    },
+    "ess.hpcs_FltGridPerturb02": {
+        "values": {
+            "0": "ess.hpcs_FltGridPerturb02_val_0",
+            "1": "ess.hpcs_FltGridPerturb02_val_1"
+        }
+    },
+    "ess.hpcs_FltArcSelfProt": {
+        "values": {
+            "0": "ess.hpcs_FltArcSelfProt_val_0",
+            "1": "ess.hpcs_FltArcSelfProt_val_1"
+        }
+    },
+    "ess.hpcs_FltGridFaultPred": {
+        "values": {
+            "0": "ess.hpcs_FltGridFaultPred_val_0",
+            "1": "ess.hpcs_FltGridFaultPred_val_1"
+        }
+    },
+    "ess.hpcs_FltGridCurrSample": {
+        "values": {
+            "0": "ess.hpcs_FltGridCurrSample_val_0",
+            "1": "ess.hpcs_FltGridCurrSample_val_1"
+        }
+    },
+    "ess.hpcs_FltDSPSelfCheck": {
+        "values": {
+            "0": "ess.hpcs_FltDSPSelfCheck_val_0",
+            "1": "ess.hpcs_FltDSPSelfCheck_val_1"
+        }
+    },
+    "ess.hpcs_FltBattDischOverC": {
+        "values": {
+            "0": "ess.hpcs_FltBattDischOverC_val_0",
+            "1": "ess.hpcs_FltBattDischOverC_val_1"
+        }
+    },
+    "ess.hpcs_FltGridPerturb": {
+        "values": {
+            "0": "ess.hpcs_FltGridPerturb_val_0",
+            "1": "ess.hpcs_FltGridPerturb_val_1"
+        }
+    },
+    "ess.hpcs_FltDCCompLarge": {
+        "values": {
+            "0": "ess.hpcs_FltDCCompLarge_val_0",
+            "1": "ess.hpcs_FltDCCompLarge_val_1"
+        }
+    },
+    "ess.hpcs_FltOverTempProt": {
+        "values": {
+            "0": "ess.hpcs_FltOverTempProt_val_0",
+            "1": "ess.hpcs_FltOverTempProt_val_1"
+        }
+    },
+    "ess.hpcs_FltRelayCheckProt": {
+        "values": {
+            "0": "ess.hpcs_FltRelayCheckProt_val_0",
+            "1": "ess.hpcs_FltRelayCheckProt_val_1"
+        }
+    },
+    "ess.hpcs_FltUnderTempProt": {
+        "values": {
+            "0": "ess.hpcs_FltUnderTempProt_val_0",
+            "1": "ess.hpcs_FltUnderTempProt_val_1"
+        }
+    },
+    "ess.hpcs_FltPVInsulFault": {
+        "values": {
+            "0": "ess.hpcs_FltPVInsulFault_val_0",
+            "1": "ess.hpcs_FltPVInsulFault_val_1"
+        }
+    },
+    "ess.hpcs_Flt12VUnderVP": {
+        "values": {
+            "0": "ess.hpcs_Flt12VUnderVP_val_0",
+            "1": "ess.hpcs_Flt12VUnderVP_val_1"
+        }
+    },
+    "ess.hpcs_FltLeakageCurProt": {
+        "values": {
+            "0": "ess.hpcs_FltLeakageCurProt_val_0",
+            "1": "ess.hpcs_FltLeakageCurProt_val_1"
+        }
+    },
+    "ess.hpcs_FltLeakageSelfProt": {
+        "values": {
+            "0": "ess.hpcs_FltLeakageSelfProt_val_0",
+            "1": "ess.hpcs_FltLeakageSelfProt_val_1"
+        }
+    },
+    "ess.hpcs_FltDSPInitProt": {
+        "values": {
+            "0": "ess.hpcs_FltDSPInitProt_val_0",
+            "1": "ess.hpcs_FltDSPInitProt_val_1"
+        }
+    },
+    "ess.hpcs_FltDSPBProt": {
+        "values": {
+            "0": "ess.hpcs_FltDSPBProt_val_0",
+            "1": "ess.hpcs_FltDSPBProt_val_1"
+        }
+    },
+    "ess.hpcs_FltBattOverVHW": {
+        "values": {
+            "0": "ess.hpcs_FltBattOverVHW_val_0",
+            "1": "ess.hpcs_FltBattOverVHW_val_1"
+        }
+    },
+    "ess.hpcs_FltLLCHWOverC": {
+        "values": {
+            "0": "ess.hpcs_FltLLCHWOverC_val_0",
+            "1": "ess.hpcs_FltLLCHWOverC_val_1"
+        }
+    },
+    "ess.hpcs_FltGridSideInstOverC": {
+        "values": {
+            "0": "ess.hpcs_FltGridSideInstOverC_val_0",
+            "1": "ess.hpcs_FltGridSideInstOverC_val_1"
+        }
+    },
+    "ess.hpcs_FltCANCommFail": {
+        "values": {
+            "0": "ess.hpcs_FltCANCommFail_val_0",
+            "1": "ess.hpcs_FltCANCommFail_val_1"
+        }
+    },
+    "ess.hpcs_FltDSPCommFail": {
+        "values": {
+            "0": "ess.hpcs_FltDSPCommFail_val_0",
+            "1": "ess.hpcs_FltDSPCommFail_val_1"
+        }
+    },
+    "ess.hpcs_UPSType": {
+        "values": {
+            "0": "ess.hpcs_UPSType_val_0",
+            "1": "ess.hpcs_UPSType_val_1"
+        }
+    },
+    "ess.hpcs_SelfUseMode": {
+        "values": {
+            "0": "ess.hpcs_SelfUseMode_val_0",
+            "1": "ess.hpcs_SelfUseMode_val_1"
+        }
+    },
+    "ess.hpcs_SelfUseTimed": {
+        "values": {
+            "0": "ess.hpcs_SelfUseTimed_val_0",
+            "1": "ess.hpcs_SelfUseTimed_val_1"
+        }
+    },
+    "ess.hpcs_GridFeedPrior": {
+        "values": {
+            "0": "ess.hpcs_GridFeedPrior_val_0",
+            "1": "ess.hpcs_GridFeedPrior_val_1"
+        }
+    },
+    "ess.hpcs_GridFeedTimed": {
+        "values": {
+            "0": "ess.hpcs_GridFeedTimed_val_0",
+            "1": "ess.hpcs_GridFeedTimed_val_1"
+        }
+    },
+    "ess.hpcs_BattHoldMode": {
+        "values": {
+            "0": "ess.hpcs_BattHoldMode_val_0",
+            "1": "ess.hpcs_BattHoldMode_val_1"
+        }
+    },
+    "ess.hpcs_OffGridMode": {
+        "values": {
+            "0": "ess.hpcs_OffGridMode_val_0",
+            "1": "ess.hpcs_OffGridMode_val_1"
+        }
+    },
+    "ess.hpcs_RemoteCtrlMode": {
+        "values": {
+            "0": "ess.hpcs_RemoteCtrlMode_val_0",
+            "1": "ess.hpcs_RemoteCtrlMode_val_1"
+        }
+    },
+    "ess.hpcs_PassiveMode": {
+        "values": {
+            "0": "ess.hpcs_PassiveMode_val_0",
+            "1": "ess.hpcs_PassiveMode_val_1"
+        }
+    },
+    "ess.hpcs_PeakShaveMode": {
+        "values": {
+            "0": "ess.hpcs_PeakShaveMode_val_0",
+            "1": "ess.hpcs_PeakShaveMode_val_1"
+        }
+    },
+    "ess.hpcs_PeakShaveTimed": {
+        "values": {
+            "0": "ess.hpcs_PeakShaveTimed_val_0",
+            "1": "ess.hpcs_PeakShaveTimed_val_1"
+        }
+    },
+	"ess.hpcs_FltGridLoss": {
+        "values": {
+            "0": "ess.hpcs_FltGridLoss_val_0",
+            "1": "ess.hpcs_FltGridLoss_val_1"
+        }
+    },
+    "ess.hpcs_FltGridVolt": {
+        "values": {
+            "0": "ess.hpcs_FltGridVolt_val_0",
+            "1": "ess.hpcs_FltGridVolt_val_1"
+        }
+    },
+    "ess.hpcs_FltGridFreq": {
+        "values": {
+            "0": "ess.hpcs_FltGridFreq_val_0",
+            "1": "ess.hpcs_FltGridFreq_val_1"
+        }
+    },
+    "ess.hpcs_FltDCCompEx": {
+        "values": {
+            "0": "ess.hpcs_FltDCCompEx_val_0",
+            "1": "ess.hpcs_FltDCCompEx_val_1"
+        }
+    },
+    "ess.hpcs_FltInsulResist": {
+        "values": {
+            "0": "ess.hpcs_FltInsulResist_val_0",
+            "1": "ess.hpcs_FltInsulResist_val_1"
+        }
+    },
+    "ess.hpcs_FltLeakCurr": {
+        "values": {
+            "0": "ess.hpcs_FltLeakCurr_val_0",
+            "1": "ess.hpcs_FltLeakCurr_val_1"
+        }
+    },
+    "ess.hpcs_FltInpVoltEx": {
+        "values": {
+            "0": "ess.hpcs_FltInpVoltEx_val_0",
+            "1": "ess.hpcs_FltInpVoltEx_val_1"
+        }
+    },
+    "ess.hpcs_FltBusVoltEx": {
+        "values": {
+            "0": "ess.hpcs_FltBusVoltEx_val_0",
+            "1": "ess.hpcs_FltBusVoltEx_val_1"
+        }
+    },
+    "ess.hpcs_FltDevTempEx": {
+        "values": {
+            "0": "ess.hpcs_FltDevTempEx_val_0",
+            "1": "ess.hpcs_FltDevTempEx_val_1"
+        }
+    },
+    "ess.hpcs_FltIntComm2": {
+        "values": {
+            "0": "ess.hpcs_FltIntComm2_val_0",
+            "1": "ess.hpcs_FltIntComm2_val_1"
+        }
+    },
+    "ess.hpcs_FltMemFault1": {
+        "values": {
+            "0": "ess.hpcs_FltMemFault1_val_0",
+            "1": "ess.hpcs_FltMemFault1_val_1"
+        }
+    },
+    "ess.hpcs_FltLeakSensor": {
+        "values": {
+            "0": "ess.hpcs_FltLeakSensor_val_0",
+            "1": "ess.hpcs_FltLeakSensor_val_1"
+        }
+    },
+    "ess.hpcs_FltOutSensor": {
+        "values": {
+            "0": "ess.hpcs_FltOutSensor_val_0",
+            "1": "ess.hpcs_FltOutSensor_val_1"
+        }
+    },
+    "ess.hpcs_FltRelayFault": {
+        "values": {
+            "0": "ess.hpcs_FltRelayFault_val_0",
+            "1": "ess.hpcs_FltRelayFault_val_1"
+        }
+    },
+    "ess.hpcs_FltFanIntF": {
+        "values": {
+            "0": "ess.hpcs_FltFanIntF_val_0",
+            "1": "ess.hpcs_FltFanIntF_val_1"
+        }
+    },
+    "ess.hpcs_FltFanExtF": {
+        "values": {
+            "0": "ess.hpcs_FltFanExtF_val_0",
+            "1": "ess.hpcs_FltFanExtF_val_1"
+        }
+    },
+    "ess.hpcs_FltBusHWFault": {
+        "values": {
+            "0": "ess.hpcs_FltBusHWFault_val_0",
+            "1": "ess.hpcs_FltBusHWFault_val_1"
+        }
+    },
+    "ess.hpcs_FltDCEnergyL": {
+        "values": {
+            "0": "ess.hpcs_FltDCEnergyL_val_0",
+            "1": "ess.hpcs_FltDCEnergyL_val_1"
+        }
+    },
+    "ess.hpcs_FltBattVoltF": {
+        "values": {
+            "0": "ess.hpcs_FltBattVoltF_val_0",
+            "1": "ess.hpcs_FltBattVoltF_val_1"
+        }
+    },
+    "ess.hpcs_FltStandbyAbn": {
+        "values": {
+            "0": "ess.hpcs_FltStandbyAbn_val_0",
+            "1": "ess.hpcs_FltStandbyAbn_val_1"
+        }
+    },
+    "ess.hpcs_FltBusVoltL": {
+        "values": {
+            "0": "ess.hpcs_FltBusVoltL_val_0",
+            "1": "ess.hpcs_FltBusVoltL_val_1"
+        }
+    },
+    "ess.hpcs_FltHWFault": {
+        "values": {
+            "0": "ess.hpcs_FltHWFault_val_0",
+            "1": "ess.hpcs_FltHWFault_val_1"
+        }
+    },
+    "ess.hpcs_FltLoadPwrEx": {
+        "values": {
+            "0": "ess.hpcs_FltLoadPwrEx_val_0",
+            "1": "ess.hpcs_FltLoadPwrEx_val_1"
+        }
+    },
+    "ess.hpcs_FltInvVoltEx": {
+        "values": {
+            "0": "ess.hpcs_FltInvVoltEx_val_0",
+            "1": "ess.hpcs_FltInvVoltEx_val_1"
+        }
+    },
+    "ess.hpcs_FltInvFreqEx": {
+        "values": {
+            "0": "ess.hpcs_FltInvFreqEx_val_0",
+            "1": "ess.hpcs_FltInvFreqEx_val_1"
+        }
+    },
+    "ess.hpcs_FltInvCurrEx": {
+        "values": {
+            "0": "ess.hpcs_FltInvCurrEx_val_0",
+            "1": "ess.hpcs_FltInvCurrEx_val_1"
+        }
+    },
+    "ess.hpcs_FltGridSeqA": {
+        "values": {
+            "0": "ess.hpcs_FltGridSeqA_val_0",
+            "1": "ess.hpcs_FltGridSeqA_val_1"
+        }
+    },
+    "ess.hpcs_FltIntComm1": {
+        "values": {
+            "0": "ess.hpcs_FltIntComm1_val_0",
+            "1": "ess.hpcs_FltIntComm1_val_1"
+        }
+    },
+    "ess.hpcs_FltMemFault2": {
+        "values": {
+            "0": "ess.hpcs_FltMemFault2_val_0",
+            "1": "ess.hpcs_FltMemFault2_val_1"
+        }
+    },
+    "ess.hpcs_FltMeterComm": {
+		"values": {
+		  "0": "ess.hpcs_FltMeterComm_val_0",
+		  "1": "ess.hpcs_FltMeterComm_val_1"
+		}
+	},
+    "ess.hpcs_Ua": {
+      "unit": "V"
+    },
+    "ess.hpcs_Ub": {
+      "unit": "V"
+    },
+    "ess.hpcs_Uc": {
+      "unit": "V"
+    },
+    "ess.hpcs_Ia": {
+      "unit": "A"
+    },
+    "ess.hpcs_Ib": {
+      "unit": "A"
+    },
+    "ess.hpcs_Ic": {
+      "unit": "A"
+    },
+    "ess.hpcs_Freq": {
+      "unit": "Hz"
+    },
+    "ess.hpcs_P": {
+      "unit": "kW"
+    },
+    "ess.hpcs_Q": {
+      "unit": "kVar"
+    },
+    "ess.hpcs_Pdc": {
+      "unit": "kW"
+    },
+    "ess.hpcs_Udc": {
+      "unit": "V"
+    },
+    "ess.hpcs_Idc": {
+      "unit": "A"
+    },
+    "ess.hpcs_PChgMax": {
+      "unit": "kW"
+    },
+    "ess.hpcs_PDchgMax": {
+      "unit": "kW"
+    },
+    "ess.hpcs_PsetFb": {
+      "unit": "kW"
+    },
+    "ess.hpcs_QsetFb": {
+      "unit": "kW"
+    },
+    "ess.hpcs_RunState": {
+      "values": {
+        "0": "ess.hpcs_RunState_val_0",
+        "1": "ess.hpcs_RunState_val_1",
+        "2": "ess.hpcs_RunState_val_2",
+        "3": "ess.hpcs_RunState_val_3",
+        "4": "ess.hpcs_RunState_val_4"
+      }
+    },
+    "ess.hpcs_Pset": {
+      "unit": "kW"
+    },
+    "ess.hpcs_QSet": {
+      "unit": "kW"
+    },
+    "ess.hpcs_OffGridVolSet": {
+      "unit": "V"
+    },
+    "ess.hpcs_OffGridFreqSet": {
+      "unit": "Hz"
+    },
+    "ess.hpcs_AmT": {
+      "unit": "℃"
+    },
+    "ess.hpcs_IgbtT": {
+      "unit": "℃"
+    },
+    "ess.bms_RatedKwh": {
+      "unit": "kWh"
+    },
+    "ess.bms_RatedDcVol": {
+      "unit": "V"
+    },
+    "ess.bms_Type": {
+      "values": {
+        "1": "ess.bms_Type_val_1",
+        "2": "ess.bms_Type_val_2",
+        "3": "ess.bms_Type_val_3",
+        "4": "ess.bms_Type_val_4"
+      }
+    },
+    "ess.bms_Alm": {
+      "values": {
+        "0": "ess.bms_Alm_val_0",
+        "1": "ess.bms_Alm_val_1"
+      }
+    },
+    "ess.bms_Flt": {
+      "values": {
+        "0": "ess.bms_Flt_val_0",
+        "1": "ess.bms_Flt_val_1"
+      }
+    },
+    "ess.bms_FltCommEms": {
+      "values": {
+        "0": "ess.bms_FltCommEms_val_0",
+        "1": "ess.bms_FltCommEms_val_1"
+      }
+    },
+    "ess.bms_FltCommPcs": {
+      "values": {
+        "0": "ess.bms_FltCommPcs_val_0",
+        "1": "ess.bms_FltCommPcs_val_1"
+      }
+    },
+    "ess.bms_FltCommBms3": {
+      "values": {
+        "0": "ess.bms_FltCommBms3_val_0",
+        "1": "ess.bms_FltCommBms3_val_1"
+      }
+    },
+    "ess.bms_FltBalance": {
+      "values": {
+        "0": "ess.bms_FltBalance_val_0",
+        "1": "ess.bms_FltBalance_val_1"
+      }
+    },
+    "ess.bms_FltExtreme": {
+      "values": {
+        "0": "ess.bms_FltExtreme_val_0",
+        "1": "ess.bms_FltExtreme_val_1"
+      }
+    },
+    "ess.bms_AlmUdifClu": {
+      "values": {
+        "0": "ess.bms_AlmUdifClu_val_0",
+        "1": "ess.bms_AlmUdifClu_val_1"
+      }
+    },
+    "ess.bms_AlmUsampCell": {
+      "values": {
+        "0": "ess.bms_AlmUsampCell_val_0",
+        "1": "ess.bms_AlmUsampCell_val_1"
+      }
+    },
+    "ess.bms_AlmTsampCell": {
+      "values": {
+        "0": "ess.bms_AlmTsampCell_val_0",
+        "1": "ess.bms_AlmTsampCell_val_1"
+      }
+    },
+    "ess.bms_AlmOvChgTcell1": {
+      "values": {
+        "0": "ess.bms_AlmOvChgTcell1_val_0",
+        "1": "ess.bms_AlmOvChgTcell1_val_1"
+      }
+    },
+    "ess.bms_FltOvChgTcell2": {
+      "values": {
+        "0": "ess.bms_FltOvChgTcell2_val_0",
+        "1": "ess.bms_FltOvChgTcell2_val_1"
+      }
+    },
+    "ess.bms_FltOvChgTcell3": {
+      "values": {
+        "0": "ess.bms_FltOvChgTcell3_val_0",
+        "1": "ess.bms_FltOvChgTcell3_val_1"
+      }
+    },
+    "ess.bms_AlmUndChgTcell1": {
+      "values": {
+        "0": "ess.bms_AlmUndChgTcell1_val_0",
+        "1": "ess.bms_AlmUndChgTcell1_val_1"
+      }
+    },
+    "ess.bms_FltUndChgTcell2": {
+      "values": {
+        "0": "ess.bms_FltUndChgTcell2_val_0",
+        "1": "ess.bms_FltUndChgTcell2_val_1"
+      }
+    },
+    "ess.bms_FltUndChgTcell3": {
+      "values": {
+        "0": "ess.bms_FltUndChgTcell3_val_0",
+        "1": "ess.bms_FltUndChgTcell3_val_1"
+      }
+    },
+    "ess.bms_AlmOvDchgTcell1": {
+      "values": {
+        "0": "ess.bms_AlmOvDchgTcell1_val_0",
+        "1": "ess.bms_AlmOvDchgTcell1_val_1"
+      }
+    },
+    "ess.bms_FltOvDchgTcell2": {
+      "values": {
+        "0": "ess.bms_FltOvDchgTcell2_val_0",
+        "1": "ess.bms_FltOvDchgTcell2_val_1"
+      }
+    },
+    "ess.bms_FltOvDchgTcell3": {
+      "values": {
+        "0": "ess.bms_FltOvDchgTcell3_val_0",
+        "1": "ess.bms_FltOvDchgTcell3_val_1"
+      }
+    },
+    "ess.bms_AlmUndDchgTcell1": {
+      "values": {
+        "0": "ess.bms_AlmUndDchgTcell1_val_0",
+        "1": "ess.bms_AlmUndDchgTcell1_val_1"
+      }
+    },
+    "ess.bms_FltUndDchgTcell2": {
+      "values": {
+        "0": "ess.bms_FltUndDchgTcell2_val_0",
+        "1": "ess.bms_FltUndDchgTcell2_val_1"
+      }
+    },
+    "ess.bms_FltUndDchgTcell3": {
+      "values": {
+        "0": "ess.bms_FltUndDchgTcell3_val_0",
+        "1": "ess.bms_FltUndDchgTcell3_val_1"
+      }
+    },
+    "ess.bms_AlmOvUCell1": {
+      "values": {
+        "0": "ess.bms_AlmOvUCell1_val_0",
+        "1": "ess.bms_AlmOvUCell1_val_1"
+      }
+    },
+    "ess.bms_FltOvUCell2": {
+      "values": {
+        "0": "ess.bms_FltOvUCell2_val_0",
+        "1": "ess.bms_FltOvUCell2_val_1"
+      }
+    },
+    "ess.bms_FltOvUCell3": {
+      "values": {
+        "0": "ess.bms_FltOvUCell3_val_0",
+        "1": "ess.bms_FltOvUCell3_val_1"
+      }
+    },
+    "ess.bms_AlmUndUCell1": {
+      "values": {
+        "0": "ess.bms_AlmUndUCell1_val_0",
+        "1": "ess.bms_AlmUndUCell1_val_1"
+      }
+    },
+    "ess.bms_FltUndUCell2": {
+      "values": {
+        "0": "ess.bms_FltUndUCell2_val_0",
+        "1": "ess.bms_FltUndUCell2_val_1"
+      }
+    },
+    "ess.bms_FltUndUCell3": {
+      "values": {
+        "0": "ess.bms_FltUndUCell3_val_0",
+        "1": "ess.bms_FltUndUCell3_val_1"
+      }
+    },
+    "ess.bms_AlmDiffUCell1": {
+      "values": {
+        "0": "ess.bms_AlmDiffUCell1_val_0",
+        "1": "ess.bms_AlmDiffUCell1_val_1"
+      }
+    },
+    "ess.bms_FltDiffUCell2": {
+      "values": {
+        "0": "ess.bms_FltDiffUCell2_val_0",
+        "1": "ess.bms_FltDiffUCell2_val_1"
+      }
+    },
+    "ess.bms_FltDiffUCell3": {
+      "values": {
+        "0": "ess.bms_FltDiffUCell3_val_0",
+        "1": "ess.bms_FltDiffUCell3_val_1"
+      }
+    },
+    "ess.bms_AlmDiffTcell1": {
+      "values": {
+        "0": "ess.bms_AlmDiffTcell1_val_0",
+        "1": "ess.bms_AlmDiffTcell1_val_1"
+      }
+    },
+    "ess.bms_FltDiffTcell2": {
+      "values": {
+        "0": "ess.bms_FltDiffTcell2_val_0",
+        "1": "ess.bms_FltDiffTcell2_val_1"
+      }
+    },
+    "ess.bms_FltDiffTcell3": {
+      "values": {
+        "0": "ess.bms_FltDiffTcell3_val_0",
+        "1": "ess.bms_FltDiffTcell3_val_1"
+      }
+    },
+    "ess.bms_AlmUndSocCell1": {
+      "values": {
+        "0": "ess.bms_AlmUndSocCell1_val_0",
+        "1": "ess.bms_AlmUndSocCell1_val_1"
+      }
+    },
+    "ess.bms_FltUndSocCell2": {
+      "values": {
+        "0": "ess.bms_FltUndSocCell2_val_0",
+        "1": "ess.bms_FltUndSocCell2_val_1"
+      }
+    },
+    "ess.bms_FltUndSocCell3": {
+      "values": {
+        "0": "ess.bms_FltUndSocCell3_val_0",
+        "1": "ess.bms_FltUndSocCell3_val_1"
+      }
+    },
+    "ess.bms_AlmOvSocCell1": {
+      "values": {
+        "0": "ess.bms_AlmOvSocCell1_val_0",
+        "1": "ess.bms_AlmOvSocCell1_val_1"
+      }
+    },
+    "ess.bms_FltOvSocCell2": {
+      "values": {
+        "0": "ess.bms_FltOvSocCell2_val_0",
+        "1": "ess.bms_FltOvSocCell2_val_1"
+      }
+    },
+    "ess.bms_FltOvSocCell3": {
+      "values": {
+        "0": "ess.bms_FltOvSocCell3_val_0",
+        "1": "ess.bms_FltOvSocCell3_val_1"
+      }
+    },
+    "ess.bms_AlmOvUpack1": {
+      "values": {
+        "0": "ess.bms_AlmOvUpack1_val_0",
+        "1": "ess.bms_AlmOvUpack1_val_1"
+      }
+    },
+    "ess.bms_FltOvUpack2": {
+      "values": {
+        "0": "ess.bms_FltOvUpack2_val_0",
+        "1": "ess.bms_FltOvUpack2_val_1"
+      }
+    },
+    "ess.bms_FltOvUpack3": {
+      "values": {
+        "0": "ess.bms_FltOvUpack3_val_0",
+        "1": "ess.bms_FltOvUpack3_val_1"
+      }
+    },
+    "ess.bms_AlmUndUpack1": {
+      "values": {
+        "0": "ess.bms_AlmUndUpack1_val_0",
+        "1": "ess.bms_AlmUndUpack1_val_1"
+      }
+    },
+    "ess.bms_FltUndUpack2": {
+      "values": {
+        "0": "ess.bms_FltUndUpack2_val_0",
+        "1": "ess.bms_FltUndUpack2_val_1"
+      }
+    },
+    "ess.bms_FltUndUpack3": {
+      "values": {
+        "0": "ess.bms_FltUndUpack3_val_0",
+        "1": "ess.bms_FltUndUpack3_val_1"
+      }
+    },
+    "ess.bms_Udc": {
+      "unit": "V"
+    },
+    "ess.bms_Idc": {
+      "unit": "A"
+    },
+    "ess.bms_RunState": {
+      "values": {
+        "1": "ess.bms_RunState_val_1",
+        "2": "ess.bms_RunState_val_2",
+        "3": "ess.bms_RunState_val_3",
+        "4": "ess.bms_RunState_val_4",
+        "5": "ess.bms_RunState_val_5",
+        "6": "ess.bms_RunState_val_6",
+        "7": "ess.bms_RunState_val_7",
+        "8": "ess.bms_RunState_val_8",
+        "9": "ess.bms_RunState_val_9",
+        "10": "ess.bms_RunState_val_10",
+        "11": "ess.bms_RunState_val_11",
+        "12": "ess.bms_RunState_val_12",
+        "13": "ess.bms_RunState_val_13"
+      }
+    },
+    "ess.bms_UAvgCell": {
+      "unit": "V"
+    },
+    "ess.bms_TAvgCell": {
+      "unit": "℃"
+    },
+    "ess.bms_ResAvgCell": {
+      "unit": "mΩ"
+    },
+    "ess.bms_TMaxCell": {
+      "unit": "℃"
+    },
+    "ess.bms_TMinCell": {
+      "unit": "℃"
+    },
+    "ess.bms_UMaxCell": {
+      "unit": "V"
+    },
+    "ess.bms_UMinCell": {
+      "unit": "V"
+    },
+    "ess.bms_ResMaxCell": {
+      "unit": "mΩ"
+    },
+    "ess.bms_ResMinCell": {
+      "unit": "mΩ"
+    },
+    "ess.bms_KwhChgTotal": {
+      "unit": "kWh"
+    },
+    "ess.bms_KwhDchgTotal": {
+      "unit": "kWh"
+    },
+    "ess.bms_KwhChgDaily": {
+      "unit": "kWh"
+    },
+    "ess.bms_KwhDchgDaily": {
+      "unit": "kWh"
+    },
+    "ess.bms_RinspP": {
+      "unit": "mΩ"
+    },
+	"ess.bms_RinspN": {
+      "unit": "mΩ"
+    },
+	"ess.bms_MaxVoltage": {
+      "unit": "V"
+    },
+	"ess.bms_MinVoltage": {
+      "unit": "V"
+    },
+	"ess.bms_ChargeEnergy": {
+      "unit": "kWh"
+    },
+	"ess.bms_DischargeEne": {
+      "unit": "kWh"
+    },
+	"ess.bms_LoadVoltage": {
+      "unit": "V"
+    },
+	"ess.bms_MaxChgCurr": {
+      "unit": "A"
+    },
+	"ess.bms_MaxDschCurr": {
+      "unit": "A"
+    },
+	"ess.bms_MaxChgPwr": {
+      "unit": "kW"
+    },
+	"ess.bms_MaxDschPwr": {
+      "unit": "kW"
+    },
+	"ess.bms_TempNTC1": {
+      "unit": "℃"
+    },
+	"ess.bms_TempNTC2": {
+      "unit": "℃"
+    },
+	"ess.bms_TempNTC3": {
+      "unit": "℃"
+    },
+	"ess.bms_TempNTC4": {
+      "unit": "℃"
+    },
+    "ess.ac_RunState": {
+      "values": {
+        "0": "ess.ac_RunState_val_0",
+        "1": "ess.ac_RunState_val_1"
+      }
+    },
+    "ess.ac_AlmOvT": {
+      "values": {
+        "0": "ess.ac_AlmOvT_val_0",
+        "1": "ess.ac_AlmOvT_val_1"
+      }
+    },
+    "ess.ac_AlmUndT": {
+      "values": {
+        "0": "ess.ac_AlmUndT_val_0",
+        "1": "ess.ac_AlmUndT_val_1"
+      }
+    },
+    "ess.ac_AlmOvHum": {
+      "values": {
+        "0": "ess.ac_AlmOvHum_val_0",
+        "1": "ess.ac_AlmOvHum_val_1"
+      }
+    },
+    "ess.ac_AlmUndHum": {
+      "values": {
+        "0": "ess.ac_AlmUndHum_val_0",
+        "1": "ess.ac_AlmUndHum_val_1"
+      }
+    },
+    "ess.ac_AlmCoiler": {
+      "values": {
+        "0": "ess.ac_AlmCoiler_val_0",
+        "1": "ess.ac_AlmCoiler_val_1"
+      }
+    },
+    "ess.ac_AlmCoilerT": {
+      "values": {
+        "0": "ess.ac_AlmCoilerT_val_0",
+        "1": "ess.ac_AlmCoilerT_val_1"
+      }
+    },
+    "ess.ac_AlmCondT": {
+      "values": {
+        "0": "ess.ac_AlmCondT_val_0",
+        "1": "ess.ac_AlmCondT_val_1"
+      }
+    },
+    "ess.ac_AlmInnerT": {
+      "values": {
+        "0": "ess.ac_AlmInnerT_val_0",
+        "1": "ess.ac_AlmInnerT_val_1"
+      }
+    },
+    "ess.ac_AlmHum": {
+      "values": {
+        "0": "ess.ac_AlmHum_val_0",
+        "1": "ess.ac_AlmHum_val_1"
+      }
+    },
+    "ess.ac_FltInFan": {
+      "values": {
+        "0": "ess.ac_FltInFan_val_0",
+        "1": "ess.ac_FltInFan_val_1"
+      }
+    },
+    "ess.ac_FltOutFan": {
+      "values": {
+        "0": "ess.ac_FltOutFan_val_0",
+        "1": "ess.ac_FltOutFan_val_1"
+      }
+    },
+    "ess.ac_FltComp": {
+      "values": {
+        "0": "ess.ac_FltComp_val_0",
+        "1": "ess.ac_FltComp_val_1"
+      }
+    },
+    "ess.ac_FltHeat": {
+      "values": {
+        "0": "ess.ac_FltHeat_val_0",
+        "1": "ess.ac_FltHeat_val_1"
+      }
+    },
+    "ess.ac_FltEmergFan": {
+      "values": {
+        "0": "ess.ac_FltEmergFan_val_0",
+        "1": "ess.ac_FltEmergFan_val_1"
+      }
+    },
+    "ess.ac_AlmOvU": {
+      "values": {
+        "0": "ess.ac_AlmOvU_val_0",
+        "1": "ess.ac_AlmOvU_val_1"
+      }
+    },
+    "ess.ac_FltOvUlock": {
+      "values": {
+        "0": "ess.ac_FltOvUlock_val_0",
+        "1": "ess.ac_FltOvUlock_val_1"
+      }
+    },
+    "ess.ac_CompressState": {
+      "values": {
+        "0": "ess.ac_CompressState_val_0",
+        "1": "ess.ac_CompressState_val_1"
+      }
+    },
+    "ess.ac_HeaterState": {
+      "values": {
+        "0": "ess.ac_HeaterState_val_0",
+        "1": "ess.ac_HeaterState_val_1"
+      }
+    },
+    "ess.ac_CoilT": {
+      "unit": "℃"
+    },
+    "ess.ac_CondT": {
+      "unit": "℃"
+    },
+    "ess.ac_IndoorT": {
+      "unit": "℃"
+    },
+    "ess.ac_Humidity": {
+      "unit": "%"
+    },
+	"ess.ac_AlmDeFrost": {
+      "values": {
+        "0": "ess.ac_AlmDeFrost_val_0",
+        "1": "ess.ac_AlmDeFrost_val_1"
+      }
+    },
+	"ess.ac_AlmOutletT": {
+      "values": {
+        "0": "ess.ac_AlmOutletT_val_0",
+        "1": "ess.ac_AlmOutletT_val_1"
+      }
+    },
+	"ess.ac_FltOvU": {
+      "values": {
+        "0": "ess.ac_FltOvU_val_0",
+        "1": "ess.ac_FltOvU_val_1"
+      }
+    },
+	"ess.ac_FltPhaSeq": {
+      "values": {
+        "0": "ess.ac_FltPhaSeq_val_0",
+        "1": "ess.ac_FltPhaSeq_val_1"
+      }
+    },
+	"ess.ac_FltUndU": {
+      "values": {
+        "0": "ess.ac_FltUndU_val_0",
+        "1": "ess.ac_FltUndU_val_1"
+      }
+    },
+	"ess.ac_FltOffLine": {
+      "values": {
+        "0": "ess.ac_FltOffLine_val_0",
+        "1": "ess.ac_FltOffLine_val_1"
+      }
+    },
+	"ess.ac_FltPackFan": {
+      "values": {
+        "0": "ess.ac_FltPackFan_val_0",
+        "1": "ess.ac_FltPackFan_val_1"
+      }
+    },
+	"ess.ac_InFanSpeed": {
+      "unit": "rpm"
+    },
+	"ess.ac_OutFanSpeed": {
+      "unit": "rpm"
+    },
+	"ess.ac_ReFrigCmd": {
+	  "values": {
+		"0": "ess.ac_ReFrigCmd_val_0",
+		"1": "ess.ac_ReFrigCmd_val_1"
+	  }
+	},
+	"ess.ac_AirSupCmd": {
+	  "values": {
+	    "0": "ess.ac_AirSupCmd_val_0",
+	    "1": "ess.ac_AirSupCmd_val_1"
+	  }
+	},
+	"ess.ac_StandByCmd": {
+	  "values": {
+		"0": "ess.ac_StandByCmd_val_0",
+		"1": "ess.ac_StandByCmd_val_1"
+	  }
+	},
+	"ess.ac_HeatCmd": {
+	  "values": {
+		"0": "ess.ac_HeatCmd_val_0",
+		"1": "ess.ac_HeatCmd_val_1"
+	  }
+	},
+	"ess.ac_Status": {
+	  "values": {
+		"0": "ess.ac_Status_val_0",
+		"1": "ess.ac_Status_val_1",
+		"2": "ess.ac_Status_val_2",
+		"3": "ess.ac_Status_val_3",
+		"4": "ess.ac_Status_val_4"
+	  }
+	},
+	"ess.ac_RunState": {
+	  "values": {
+		"0": "ess.ac_RunState_val_0",
+		"1": "ess.ac_RunState_val_1"
+	  }
+	},
+	"ess.ac_FltSensor": {
+	  "values": {
+		"0": "ess.ac_FltSensor_val_0",
+		"1": "ess.ac_FltSensor_val_1"
+	  }
+	},
+	"ess.ac_AlmVoltage": {
+	  "values": {
+		"0": "ess.ac_AlmVoltage_val_0",
+		"1": "ess.ac_AlmVoltage_val_1"
+	  }
+	},
+	"ess.ac_AlmTemp": {
+	  "values": {
+		"0": "ess.ac_AlmTemp_val_0",
+		"1": "ess.ac_AlmTemp_val_1"
+	  }
+	},
+	"ess.ac_AlmPres": {
+	  "values": {
+		"0": "ess.ac_AlmPres_val_0",
+		"1": "ess.ac_AlmPres_val_1"
+	  }
+	},
+	"ess.ac_AlmComp": {
+	  "values": {
+		"0": "ess.ac_AlmComp_val_0",
+		"1": "ess.ac_AlmComp_val_1"
+	  }
+	},
+	"ess.ac_AlmDoor": {
+	  "values": {
+		"0": "ess.ac_AlmDoor_val_0",
+		"1": "ess.ac_AlmDoor_val_1"
+	  }
+	},
+	"ess.ac_AlmHeater": {
+	  "values": {
+		"0": "ess.ac_AlmHeater_val_0",
+		"1": "ess.ac_AlmHeater_val_1"
+	  }
+	},
+	"ess.ac_AlmInFan": {
+	  "values": {
+		"0": "ess.ac_AlmInFan_val_0",
+		"1": "ess.ac_AlmInFan_val_1"
+	  }
+	},
+	"ess.ac_AlmOutFan": {
+	  "values": {
+		"0": "ess.ac_AlmOutFan_val_0",
+		"1": "ess.ac_AlmOutFan_val_1"
+	  }
+	},
+	"ess.ac_FltAll": {
+	  "values": {
+		"0": "ess.ac_FltAll_val_0",
+		"1": "ess.ac_FltAll_val_1"
+	  }
+	},
+	"ess.ac_AlmAll": {
+	  "values": {
+		"0": "ess.ac_AlmAll_val_0",
+		"1": "ess.ac_AlmAll_val_1"
+	  }
+	},
+    "ess.meter_Ua": {
+      "unit": "V"
+    },
+    "ess.meter_Ub": {
+      "unit": "V"
+    },
+    "ess.meter_Uc": {
+      "unit": "V"
+    },
+    "ess.meter_Uab": {
+      "unit": "V"
+    },
+    "ess.meter_Ubc": {
+      "unit": "V"
+    },
+    "ess.meter_Uca": {
+      "unit": "V"
+    },
+    "ess.meter_Ia": {
+      "unit": "A"
+    },
+    "ess.meter_Ib": {
+      "unit": "A"
+    },
+    "ess.meter_Ic": {
+      "unit": "A"
+    },
+    "ess.meter_Pa": {
+      "unit": "kW"
+    },
+    "ess.meter_Pb": {
+      "unit": "kW"
+    },
+    "ess.meter_Pc": {
+      "unit": "kW"
+    },
+    "ess.meter_P": {
+      "unit": "kW"
+    },
+    "ess.meter_Qa": {
+      "unit": "kVar"
+    },
+    "ess.meter_Qb": {
+      "unit": "kVar"
+    },
+    "ess.meter_Qc": {
+      "unit": "kVar"
+    },
+    "ess.meter_Q": {
+      "unit": "kVar"
+    },
+    "ess.meter_Sa": {
+      "unit": "kVA"
+    },
+    "ess.meter_Sb": {
+      "unit": "kVA"
+    },
+    "ess.meter_Sc": {
+      "unit": "kVA"
+    },
+    "ess.meter_S": {
+      "unit": "kVA"
+    },
+    "ess.meter_Freq": {
+      "unit": "Hz"
+    },
+    "ess.meter_EnerPosTot": {
+      "unit": "kWh"
+    },
+    "ess.meter_EnerPosPeak": {
+      "unit": "kWh"
+    },
+    "ess.meter_EnerPosTop": {
+      "unit": "kWh"
+    },
+    "ess.meter_EnerPosFlat": {
+      "unit": "kWh"
+    },
+    "ess.meter_EnerPosVally": {
+      "unit": "kWh"
+    },
+    "ess.meter_EnerPosRvally": {
+      "unit": "kWh"
+    },
+    "ess.meter_EnerPosSvally": {
+      "unit": "kWh"
+    },
+    "ess.meter_EnerRevTot": {
+      "unit": "kWh"
+    },
+    "ess.meter_EnerRevPeak": {
+      "unit": "kWh"
+    },
+    "ess.meter_EnerRevTop": {
+      "unit": "kWh"
+    },
+    "ess.meter_EnerRevFlat": {
+      "unit": "kWh"
+    },
+    "ess.meter_EnerRevVally": {
+      "unit": "kWh"
+    },
+    "ess.meter_EnerRevRvally": {
+      "unit": "kWh"
+    },
+    "ess.meter_EnerRevSvally": {
+      "unit": "kWh"
+    },
+    "ess.dem_Ua": {
+      "unit": "V"
+    },
+    "ess.dem_Ub": {
+      "unit": "V"
+    },
+    "ess.dem_Uc": {
+      "unit": "V"
+    },
+    "ess.dem_Uab": {
+      "unit": "V"
+    },
+    "ess.dem_Ubc": {
+      "unit": "V"
+    },
+    "ess.dem_Uca": {
+      "unit": "V"
+    },
+    "ess.dem_Ia": {
+      "unit": "A"
+    },
+    "ess.dem_Ib": {
+      "unit": "A"
+    },
+    "ess.dem_Ic": {
+      "unit": "A"
+    },
+    "ess.dem_In": {
+      "unit": "A"
+    },
+    "ess.dem_Pa": {
+      "unit": "kW"
+    },
+    "ess.dem_Pb": {
+      "unit": "kW"
+    },
+    "ess.dem_Pc": {
+      "unit": "kW"
+    },
+    "ess.dem_P": {
+      "unit": "kW"
+    },
+    "ess.dem_Qa": {
+      "unit": "kVar"
+    },
+    "ess.dem_Qb": {
+      "unit": "kVar"
+    },
+    "ess.dem_Qc": {
+      "unit": "kVar"
+    },
+    "ess.dem_Q": {
+      "unit": "kVar"
+    },
+    "ess.dem_Sa": {
+      "unit": "kVA"
+    },
+    "ess.dem_Sb": {
+      "unit": "kVA"
+    },
+    "ess.dem_Sc": {
+      "unit": "kVA"
+    },
+    "ess.dem_S": {
+      "unit": "kVA"
+    },
+    "ess.dem_Freq": {
+      "unit": "Hz"
+    },
+    "ess.dem_EnerPos": {
+      "unit": "kWh"
+    },
+    "ess.dem_EnerRev": {
+      "unit": "kWh"
+    },
+    "ess.dem_EnerRePos": {
+      "unit": "kVarh"
+    },
+    "ess.dem_EnerReRev": {
+      "unit": "kVarh"
+    },
+    "ess.dem_MonthMaxDem": {
+      "unit": "kW"
+    },
+    "ess.dem_MaxDem": {
+      "unit": "kW"
+    },
+    "ess.smoke_Fault": {
+      "values": {
+        "0": "ess.smoke_Fault_val_0",
+        "1": "ess.smoke_Fault_val_1"
+      }
+    },
+    "ess.temp_Fault": {
+      "values": {
+        "0": "ess.temp_Fault_val_0",
+        "1": "ess.temp_Fault_val_1"
+      }
+    },
+    "ess.water_Fault": {
+      "values": {
+        "0": "ess.water_Fault_val_0",
+        "1": "ess.water_Fault_val_1"
+      }
+    },
+    "ess.ind_LampRun": {
+      "values": {
+        "0": "ess.ind_LampRun_val_0",
+        "1": "ess.ind_LampRun_val_1"
+      }
+    },
+    "ess.ind_LampFault": {
+      "values": {
+        "0": "ess.ind_LampFault_val_0",
+        "1": "ess.ind_LampFault_val_1"
+      }
+    },
+    "ess.door_DoorOpen": {
+      "values": {
+        "0": "ess.door_DoorOpen_val_0",
+        "1": "ess.door_DoorOpen_val_1"
+      }
+    },
+    "ess.fire_Fault": {
+      "values": {
+        "0": "ess.fire_Fault_val_0",
+        "1": "ess.fire_Fault_val_1"
+      }
+    },
+    "pvc.device_OnOff": {
+      "values": {
+        "0": "pvc.device_OnOff_val_0",
+        "1": "pvc.device_OnOff_val_1"
+      }
+    },
+    "pvc.device_Flt": {
+      "values": {
+        "0": "pvc.device_Flt_val_0",
+        "1": "pvc.device_Flt_val_1"
+      }
+    },
+    "pvc.device_Alm": {
+      "values": {
+        "0": "pvc.device_Alm_val_0",
+        "1": "pvc.device_Alm_val_1"
+      }
+    },
+    "pvc.device_FltOff": {
+      "values": {
+        "0": "pvc.device_FltOff_val_0",
+        "1": "pvc.device_FltOff_val_1"
+      }
+    },
+    "pvc.device_FltUndU": {
+      "values": {
+        "0": "pvc.device_FltUndU_val_0",
+        "1": "pvc.device_FltUndU_val_1"
+      }
+    },
+    "pvc.device_FltOvU": {
+      "values": {
+        "0": "pvc.device_FltOvU_val_0",
+        "1": "pvc.device_FltOvU_val_1"
+      }
+    },
+    "pvc.device_FltUnb": {
+      "values": {
+        "0": "pvc.device_FltUnb_val_0",
+        "1": "pvc.device_FltUnb_val_1"
+      }
+    },
+    "pvc.device_FltOvFreq": {
+      "values": {
+        "0": "pvc.device_FltOvFreq_val_0",
+        "1": "pvc.device_FltOvFreq_val_1"
+      }
+    },
+    "pvc.device_FltUndFreq": {
+      "values": {
+        "0": "pvc.device_FltUndFreq_val_0",
+        "1": "pvc.device_FltUndFreq_val_1"
+      }
+    },
+    "pvc.device_FltRevU": {
+      "values": {
+        "0": "pvc.device_FltRevU_val_0",
+        "1": "pvc.device_FltRevU_val_1"
+      }
+    },
+    "pvc.device_FltRevI": {
+      "values": {
+        "0": "pvc.device_FltRevI_val_0",
+        "1": "pvc.device_FltRevI_val_1"
+      }
+    },
+    "pvc.device_FltUndRes": {
+      "values": {
+        "0": "pvc.device_FltUndRes_val_0",
+        "1": "pvc.device_FltUndRes_val_1"
+      }
+    },
+    "pvc.device_FltOvTemp": {
+      "values": {
+        "0": "pvc.device_FltOvTemp_val_0",
+        "1": "pvc.device_FltOvTemp_val_1"
+      }
+    },
+    "pvc.device_Uab": {
+      "unit": "V"
+    },
+    "pvc.device_Ubc": {
+      "unit": "V"
+    },
+    "pvc.device_Uca": {
+      "unit": "V"
+    },
+    "pvc.device_Ia": {
+      "unit": "A"
+    },
+    "pvc.device_Ib": {
+      "unit": "A"
+    },
+    "pvc.device_Ic": {
+      "unit": "A"
+    },
+    "pvc.device_Freq": {
+      "unit": "Hz"
+    },
+    "pvc.device_P": {
+      "unit": "kW"
+    },
+    "pvc.device_Q": {
+      "unit": "kVar"
+    },
+    "pvc.device_Pdc": {
+      "unit": "kW"
+    },
+    "pvc.device_GenDaily": {
+      "unit": "kWh"
+    },
+    "pvc.device_GenTotal": {
+      "unit": "kWh"
+    },
+    "pvc.device_Qmode": {
+      "values": {
+        "0": "pvc.device_Qmode_val_0",
+        "1": "pvc.device_Qmode_val_1",
+        "2": "pvc.device_Qmode_val_2",
+        "3": "pvc.device_Qmode_val_3"
+      }
+    },
+    "pvc.device_RunState": {
+      "values": {
+        "0": "pvc.device_RunState_val_0",
+        "1": "pvc.device_RunState_val_1",
+        "2": "pvc.device_RunState_val_2",
+        "3": "pvc.device_RunState_val_3",
+        "4": "pvc.device_RunState_val_4"
+      }
+    },
+    "pvc.device_PVV-1": {
+      "unit": "V"
+    },
+    "pvc.device_PVI-1": {
+      "unit": "A"
+    },
+    "pvc.device_PVV-2": {
+      "unit": "V"
+    },
+    "pvc.device_PVI-2": {
+      "unit": "A"
+    },
+    "pvc.device_PVV-3": {
+      "unit": "V"
+    },
+    "pvc.device_PVI-3": {
+      "unit": "A"
+    },
+    "pvc.device_PVV-4": {
+      "unit": "V"
+    },
+    "pvc.device_PVI-4": {
+      "unit": "A"
+    },
+    "ess.busbrk_BusBreaker": {
+      "values": {
+        "0": "ess.busbrk_BusBreaker_val_0",
+        "1": "ess.busbrk_BusBreaker_val_1"
+      }
+    },
+    "ess.cabbrk_CabBreaker": {
+      "values": {
+        "0": "ess.cabbrk_CabBreaker_val_0",
+        "1": "ess.cabbrk_CabBreaker_val_1"
+      }
+    },
+    "ess.bms_AlmOvUstack1": {
+      "values": {
+        "0": "ess.bms_AlmOvUstack1_val_0",
+        "1": "ess.bms_AlmOvUstack1_val_1"
+      }
+    },
+    "ess.bms_FltOvUstack2": {
+      "values": {
+        "0": "ess.bms_FltOvUstack2_val_0",
+        "1": "ess.bms_FltOvUstack2_val_1"
+      }
+    },
+    "ess.bms_FltOvUstack3": {
+      "values": {
+        "0": "ess.bms_FltOvUstack3_val_0",
+        "1": "ess.bms_FltOvUstack3_val_1"
+      }
+    },
+    "ess.bms_AlmUndUstack1": {
+      "values": {
+        "0": "ess.bms_AlmUndUstack1_val_0",
+        "1": "ess.bms_AlmUndUstack1_val_1"
+      }
+    },
+    "ess.bms_FltUndUstack2": {
+      "values": {
+        "0": "ess.bms_FltUndUstack2_val_0",
+        "1": "ess.bms_FltUndUstack2_val_1"
+      }
+    },
+    "ess.bms_FltUndUstack3": {
+      "values": {
+        "0": "ess.bms_FltUndUstack3_val_0",
+        "1": "ess.bms_FltUndUstack3_val_1"
+      }
+    },
+    "ess.bms_AlmOvDchgIstack1": {
+      "values": {
+        "0": "ess.bms_AlmOvDchgIstack1_val_0",
+        "1": "ess.bms_AlmOvDchgIstack1_val_1"
+      }
+    },
+    "ess.bms_FltOvDchgIstack2": {
+      "values": {
+        "0": "ess.bms_FltOvDchgIstack2_val_0",
+        "1": "ess.bms_FltOvDchgIstack2_val_1"
+      }
+    },
+    "ess.bms_FltOvDchgIstack3": {
+      "values": {
+        "0": "ess.bms_FltOvDchgIstack3_val_0",
+        "1": "ess.bms_FltOvDchgIstack3_val_1"
+      }
+    },
+    "ess.bms_AlmOvChgIstack1": {
+      "values": {
+        "0": "ess.bms_AlmOvChgIstack1_val_0",
+        "1": "ess.bms_AlmOvChgIstack1_val_1"
+      }
+    },
+    "ess.bms_FltOvChgIstack2": {
+      "values": {
+        "0": "ess.bms_FltOvChgIstack2_val_0",
+        "1": "ess.bms_FltOvChgIstack2_val_1"
+      }
+    },
+    "ess.bms_FltOvChgIstack3": {
+      "values": {
+        "0": "ess.bms_FltOvChgIstack3_val_0",
+        "1": "ess.bms_FltOvChgIstack3_val_1"
+      }
+    },
+    "ess.bms_AlmInsstack1": {
+      "values": {
+        "0": "ess.bms_AlmInsstack1_val_0",
+        "1": "ess.bms_AlmInsstack1_val_1"
+      }
+    },
+    "ess.bms_FltInsstack2": {
+      "values": {
+        "0": "ess.bms_FltInsstack2_val_0",
+        "1": "ess.bms_FltInsstack2_val_1"
+      }
+    },
+    "ess.bms_FltInsstack3": {
+      "values": {
+        "0": "ess.bms_FltInsstack3_val_0",
+        "1": "ess.bms_FltInsstack3_val_1"
+      }
+    },
+    "ess.bms_AlmOvTpower1": {
+      "values": {
+        "0": "ess.bms_AlmOvTpower1_val_0",
+        "1": "ess.bms_AlmOvTpower1_val_1"
+      }
+    },
+    "ess.bms_FltOvTpower2": {
+      "values": {
+        "0": "ess.bms_FltOvTpower2_val_0",
+        "1": "ess.bms_FltOvTpower2_val_1"
+      }
+    },
+    "ess.bms_FltOvTpower3": {
+      "values": {
+        "0": "ess.bms_FltOvTpower3_val_0",
+        "1": "ess.bms_FltOvTpower3_val_1"
+      }
+    },
+    "ess.bms_FltDI1": {
+      "values": {
+        "0": "ess.bms_FltDI1_val_0",
+        "1": "ess.bms_FltDI1_val_1"
+      }
+    },
+    "ess.bms_FltDI2": {
+      "values": {
+        "0": "ess.bms_FltDI2_val_0",
+        "1": "ess.bms_FltDI2_val_1"
+      }
+    },
+    "ess.bms_FltDI3": {
+      "values": {
+        "0": "ess.bms_FltDI3_val_0",
+        "1": "ess.bms_FltDI3_val_1"
+      }
+    },
+    "ess.bms_FltDI4": {
+      "values": {
+        "0": "ess.bms_FltDI4_val_0",
+        "1": "ess.bms_FltDI4_val_1"
+      }
+    },
+    "ess.bms_FltDI5": {
+      "values": {
+        "0": "ess.bms_FltDI5_val_0",
+        "1": "ess.bms_FltDI5_val_1"
+      }
+    },
+    "ess.bms_FltDI6": {
+      "values": {
+        "0": "ess.bms_FltDI6_val_0",
+        "1": "ess.bms_FltDI6_val_1"
+      }
+    },
+    "ess.bms_FltDI7": {
+      "values": {
+        "0": "ess.bms_FltDI7_val_0",
+        "1": "ess.bms_FltDI7_val_1"
+      }
+    },
+    "ess.bms_FltDI8": {
+      "values": {
+        "0": "ess.bms_FltDI8_val_0",
+        "1": "ess.bms_FltDI8_val_1"
+      }
+    },
+    "ess.bms_FltCommINT": {
+      "values": {
+        "0": "ess.bms_FltCommINT_val_0",
+        "1": "ess.bms_FltCommINT_val_1"
+      }
+    },
+    "ess.bms_FltDAC": {
+      "values": {
+        "0": "ess.bms_FltDAC_val_0",
+        "1": "ess.bms_FltDAC_val_1"
+      }
+    },
+    "ess.bms_FltTrip": {
+      "values": {
+        "0": "ess.bms_FltTrip_val_0",
+        "1": "ess.bms_FltTrip_val_1"
+      }
+    },
+    "ess.bms_FltDiffVers": {
+      "values": {
+        "0": "ess.bms_FltDiffVers_val_0",
+        "1": "ess.bms_FltDiffVers_val_1"
+      }
+    },
+    "ess.bms_FltCan": {
+      "values": {
+        "0": "ess.bms_FltCan_val_0",
+        "1": "ess.bms_FltCan_val_1"
+      }
+    },
+    "ess.bms_FltCommCan": {
+      "values": {
+        "0": "ess.bms_FltCommCan_val_0",
+        "1": "ess.bms_FltCommCan_val_1"
+      }
+    },
+    "ess.bms_FltSelfTest": {
+      "values": {
+        "0": "ess.bms_FltSelfTest_val_0",
+        "1": "ess.bms_FltSelfTest_val_1"
+      }
+    },
+    "ess.bms_FltPencil": {
+      "values": {
+        "0": "ess.bms_FltPencil_val_0",
+        "1": "ess.bms_FltPencil_val_1"
+      }
+    },
+    "ess.bms_AlmFastUpT1": {
+      "values": {
+        "0": "ess.bms_AlmFastUpT1_val_0",
+        "1": "ess.bms_AlmFastUpT1_val_1"
+      }
+    },
+    "ess.bms_AlmFastUpT2": {
+      "values": {
+        "0": "ess.bms_AlmFastUpT2_val_0",
+        "1": "ess.bms_AlmFastUpT2_val_1"
+      }
+    },
+    "ess.bms_AlmFastUpT3": {
+      "values": {
+        "0": "ess.bms_AlmFastUpT3_val_0",
+        "1": "ess.bms_AlmFastUpT3_val_1"
+      }
+    },
+    "ess.bms_AlmBanChg": {
+      "values": {
+        "0": "ess.bms_AlmBanChg_val_0",
+        "1": "ess.bms_AlmBanChg_val_1"
+      }
+    },
+    "ess.bms_AlmBanDchg": {
+      "values": {
+        "0": "ess.bms_AlmBanDchg_val_0",
+        "1": "ess.bms_AlmBanDchg_val_1"
+      }
+    },
+    "ess.jt_EmStop": {
+      "values": {
+        "0": "ess.jt_EmStop_val_0",
+        "1": "ess.jt_EmStop_val_1"
+      }
+    },
+    "ess.temphum_CabTemp": {
+      "unit": "℃"
+    },
+    "ess.temphum_CabHum": {
+      "unit": "%"
+    },
+    "ess.firehost_FireSysFault": {
+      "values": {
+        "0": "ess.firehost_FireSysFault_val_0",
+        "1": "ess.firehost_FireSysFault_val_1"
+      }
+    },
+    "ess.firehost_FireAlarm": {
+      "values": {
+        "0": "ess.firehost_FireAlarm_val_0",
+        "1": "ess.firehost_FireAlarm_val_1"
+      }
+    },
+    "ess.firehost_FireSpray": {
+      "values": {
+        "0": "ess.firehost_FireSpray_val_0",
+        "1": "ess.firehost_FireSpray_val_1"
+      }
+    },
+    "ess.firehost_MainPower": {
+      "values": {
+        "0": "ess.firehost_MainPower_val_0",
+        "1": "ess.firehost_MainPower_val_1"
+      }
+    },
+    "ess.firehost_StandPower": {
+      "values": {
+        "0": "ess.firehost_StandPower_val_0",
+        "1": "ess.firehost_StandPower_val_1"
+      }
+    },
+    "ess.firehost_ChargeState": {
+      "values": {
+        "0": "ess.firehost_ChargeState_val_0",
+        "1": "ess.firehost_ChargeState_val_1"
+      }
+    },
+    "ess.firehost_FltPower": {
+      "values": {
+        "0": "ess.firehost_FltPower_val_0",
+        "1": "ess.firehost_FltPower_val_1"
+      }
+    },
+    "ess.firehost_AlmState": {
+      "values": {
+        "0": "ess.firehost_AlmState_val_0",
+        "1": "ess.firehost_AlmState_val_1"
+      }
+    },
+    "ess.firehost_FltState": {
+      "values": {
+        "0": "ess.firehost_FltState_val_0",
+        "1": "ess.firehost_FltState_val_1"
+      }
+    },
+    "ess.firehost_FltSys": {
+      "values": {
+        "0": "ess.firehost_FltSys_val_0",
+        "1": "ess.firehost_FltSys_val_1"
+      }
+    },
+    "ess.firehost_AlmPres": {
+      "values": {
+        "0": "ess.firehost_AlmPres_val_0",
+        "1": "ess.firehost_AlmPres_val_1"
+      }
+    },
+    "ess.firehost_AlmLowPower": {
+      "values": {
+        "0": "ess.firehost_AlmLowPower_val_0",
+        "1": "ess.firehost_AlmLowPower_val_1"
+      }
+    },
+    "ess.firehost_StandState": {
+      "values": {
+        "0": "ess.firehost_StandState_val_0",
+        "1": "ess.firehost_StandState_val_1"
+      }
+    },
+    "ess.firehost_ContSignal": {
+      "values": {
+        "0": "ess.firehost_ContSignal_val_0",
+        "1": "ess.firehost_ContSignal_val_1"
+      }
+    },
+    "ess.firehost_DelaySignal": {
+      "values": {
+        "0": "ess.firehost_DelaySignal_val_0",
+        "1": "ess.firehost_DelaySignal_val_1"
+      }
+    },
+    "ess.firehost_RunSignal": {
+      "values": {
+        "0": "ess.firehost_RunSignal_val_0",
+        "1": "ess.firehost_RunSignal_val_1"
+      }
+    },
+    "ess.firehost_SpraySignal": {
+      "values": {
+        "0": "ess.firehost_SpraySignal_val_0",
+        "1": "ess.firehost_SpraySignal_val_1"
+      }
+    },
+    "ess.firehost_AlmNoFeedSignal": {
+      "values": {
+        "0": "ess.firehost_AlmNoFeedSignal_val_0",
+        "1": "ess.firehost_AlmNoFeedSignal_val_1"
+      }
+    },
+    "ess.wac_OnOff": {
+      "values": {
+        "0": "ess.wac_OnOff_val_0",
+        "1": "ess.wac_OnOff_val_1"
+      }
+    },
+    "ess.wac_ModeSet": {
+      "values": {
+        "0": "ess.wac_ModeSet_val_0",
+        "1": "ess.wac_ModeSet_val_1",
+        "2": "ess.wac_ModeSet_val_2",
+        "3": "ess.wac_ModeSet_val_3",
+        "4": "ess.wac_ModeSet_val_4"
+      }
+    },
+    "ess.wac_TempSet": {
+      "values": {
+        "0": "ess.wac_TempSet_val_0",
+        "1": "ess.wac_TempSet_val_1",
+        "2": "ess.wac_TempSet_val_2",
+        "3": "ess.wac_TempSet_val_3"
+      }
+    },
+    "ess.wac_TempMax": {
+      "unit": "℃"
+    },
+    "ess.wac_TempMin": {
+      "unit": "℃"
+    },
+    "ess.wac_TempAve": {
+      "unit": "℃"
+    },
+    "ess.wac_Runstate": {
+      "values": {
+        "0": "ess.wac_Runstate_val_0",
+        "1": "ess.wac_Runstate_val_1"
+      }
+    },
+    "ess.wac_OutTemp": {
+      "unit": "℃"
+    },
+    "ess.wac_InTemp": {
+      "unit": "℃"
+    },
+    "ess.wac_ExhTemp": {
+      "unit": "℃"
+    },
+    "ess.wac_EnvTemp": {
+      "unit": "℃"
+    },
+    "ess.wac_InPres": {
+      "unit": "Bar"
+    },
+    "ess.wac_OutPres": {
+      "unit": "Bar"
+    },
+    "ess.wac_PumpSpeed": {
+      "unit": "%"
+    },
+    "ess.wac_PumpState": {
+      "values": {
+        "0": "ess.wac_PumpState_val_0",
+        "1": "ess.wac_PumpState_val_1"
+      }
+    },
+    "ess.wac_SysMode": {
+      "values": {
+        "0": "ess.wac_SysMode_val_0",
+        "1": "ess.wac_SysMode_val_1",
+        "2": "ess.wac_SysMode_val_2",
+        "3": "ess.wac_SysMode_val_3",
+        "4": "ess.wac_SysMode_val_4"
+      }
+    },
+    "ess.wac_FltTot": {
+      "values": {
+        "0": "ess.wac_FltTot_val_0",
+        "1": "ess.wac_FltTot_val_1"
+      }
+    },
+    "ess.wac_AlmOutTempHigh": {
+      "values": {
+        "0": "ess.wac_AlmOutTempHigh_val_0",
+        "1": "ess.wac_AlmOutTempHigh_val_1"
+      }
+    },
+    "ess.wac_AlmOutTempLow": {
+      "values": {
+        "0": "ess.wac_AlmOutTempLow_val_0",
+        "1": "ess.wac_AlmOutTempLow_val_1"
+      }
+    },
+    "ess.wac_FltOutTemp": {
+      "values": {
+        "0": "ess.wac_FltOutTemp_val_0",
+        "1": "ess.wac_FltOutTemp_val_1"
+      }
+    },
+    "ess.wac_FltInTempF": {
+      "values": {
+        "0": "ess.wac_FltInTempF_val_0",
+        "1": "ess.wac_FltInTempF_val_1"
+      }
+    },
+    "ess.wac_FltLackWater": {
+      "values": {
+        "0": "ess.wac_FltLackWater_val_0",
+        "1": "ess.wac_FltLackWater_val_1"
+      }
+    },
+    "ess.wac_AlmSysPresHigh": {
+      "values": {
+        "0": "ess.wac_AlmSysPresHigh_val_0",
+        "1": "ess.wac_AlmSysPresHigh_val_1"
+      }
+    },
+    "ess.wac_AlmOutPresHigh": {
+      "values": {
+        "0": "ess.wac_AlmOutPresHigh_val_0",
+        "1": "ess.wac_AlmOutPresHigh_val_1"
+      }
+    },
+    "ess.dcdc_PBusRated": {
+      "unit": "kW"
+    },
+    "ess.dcdc_PBatRated": {
+      "unit": "kW"
+    },
+    "ess.dcdc_UBus": {
+      "unit": "V"
+    },
+    "ess.dcdc_IBus": {
+      "unit": "A"
+    },
+    "ess.dcdc_UBat": {
+      "unit": "V"
+    },
+    "ess.dcdc_IBat": {
+      "unit": "A"
+    },
+    "ess.dcdc_PCurrent": {
+      "unit": "kW"
+    },
+    "ess.dcdc_PAllow": {
+      "unit": "kW"
+    },
+    "ess.dcdc_ModeT": {
+      "unit": "℃"
+    },
+    "ess.dcdc_IMaxChgSet": {
+      "unit": "A"
+    },
+    "ess.dcdc_IMaxDchgSet": {
+      "unit": "A"
+    },
+    "ess.dcdc_UBusSet": {
+      "unit": "V"
+    },
+    "ess.dcdc_IBusSet": {
+      "unit": "A"
+    },
+     "ess.dcdc_UBatSet": {
+      "unit": "V"
+    },
+    "ess.dcdc_PMaxSet": {
+      "unit": "kW"
+    },
+    "ess.dcdc_FltCode": {
+      "values": {
+        "0": "ess.dcdc_FltCode_val_0",
+        "1": "ess.dcdc_FltCode_val_1"
+      }
+    },
+    "ess.dcdc_WorkMode": {
+      "values": {
+        "1": "ess.dcdc_WorkMode_val_1",
+        "2": "ess.dcdc_WorkMode_val_2",
+        "3": "ess.dcdc_WorkMode_val_3",
+        "4": "ess.dcdc_WorkMode_val_4",
+        "5": "ess.dcdc_WorkMode_val_5"
+      }
+    },
+    "ess.dcdc_WorkModeSet": {
+      "values": {
+        "1": "ess.dcdc_WorkModeSet_val_1",
+        "2": "ess.dcdc_WorkModeSet_val_2",
+        "3": "ess.dcdc_WorkModeSet_val_3",
+        "4": "ess.dcdc_WorkModeSet_val_4",
+        "5": "ess.dcdc_WorkModeSet_val_5"
+      }
+    },
+    "ess.dcdc_OnOff": {
+      "values": {
+        "1": "ess.dcdc_OnOff_val_1",
+        "2": "ess.dcdc_OnOff_val_2",
+        "3": "ess.dcdc_OnOff_val_3"
+      }
+    }
+  }
+}

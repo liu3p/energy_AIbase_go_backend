@@ -1,0 +1,121 @@
+{
+	"DEFAULT": {
+		"ess.pcs": {
+			"yc":["PChgMax", "RunState", "P", "PDchgMax", "Udc", "Pdc", "Idc"],
+			"yx":["Flt", "Alm"],
+			"prop":["PRated"]
+		},
+		"ess.hpcs": {
+			"yc":["PChgMax", "RunState", "P", "PDchgMax", "Udc", "Pdc", "Idc"],
+			"yx":["Flt", "Alm"],
+			"prop":["PRated"]
+		},
+		"ess.bms":{
+			"yc": ["RunState", "Soc", "Udc", "Idc", "KwhChgDaily", "KwhDchgDaily", "KwhChgTotal", "KwhDchgTotal"],
+			"yx":["Flt", "Alm"]
+		},
+		"ess.ind":{
+			"yx":["LampRun", "LampFault"]
+		},
+		"ess.jt":{
+			"yx":["EmStop"]
+		},
+		"ess.fire":{
+			"yx":["Fault"]
+		},
+		"ess.door":{
+			"yx":["DoorOpen"]
+		},
+		"ess.smoke":{
+			"yx":["Fault"]
+		},
+		"ess.water":{
+			"yx":["Fault"]
+		},
+		"ess.temp":{
+			"yx":["Fault"]
+		},
+		"ess.ac":{
+			"yx":["RunState"]
+		},
+		"ess.firehost":{
+			"yx":["FireSysFault", "MainPower", "StandPower", "FireSpray", "FltSys", "FltPower"]
+		},
+		"ess.wac":{
+			"yc":["OnOff", "SysMode", "OutTemp", "InTemp", "ExhTemp", "InPres", "OutPres", "PumpSpeed"]
+		}
+	},
+	"ECO-E215WS": {
+		"ess.pcs": {
+			"yc":["PChgMax", "RunState", "P", "PDchgMax", "Udc", "Pdc", "Idc"],
+			"yx":["Flt", "Alm"],
+			"prop":["PRated"]
+		},
+		"ess.bms":{
+			"yc": ["RunState", "Soc", "Udc", "Idc", "KwhChgDaily", "KwhDchgDaily", "KwhChgTotal", "KwhDchgTotal"],
+			"yx":["Flt", "Alm"]
+		},
+		"ess.ac":{
+			"yx":["RunState"]
+		},
+		"ess.ind":{
+			"yx":["LampRun", "LampFault"]
+		},
+		"ess.fire":{
+			"yx":["Fault"]
+		},
+		"ess.door":{
+			"yx":["DoorOpen"]		
+		},
+		"ess.smoke":{
+			"yx":["Fault"]		
+		},
+		"ess.water":{
+			"yx":["Fault"]		
+		},
+		"ess.temp":{
+			"yx":["Fault"]
+		},
+		"ess.jt":{
+			"yx":["EmStop"]
+		}
+	},
+	"ECO-E233LS-G01-EN":{
+		"ess.pcs": {
+			"yc":["PChgMax", "RunState", "P", "PDchgMax", "Udc", "Pdc", "Idc"],
+			"yx":["Flt", "Alm"],
+			"prop":["PRated"]
+		},
+		"ess.bms":{
+			"yc": ["RunState", "Soc", "Udc", "Idc", "KwhChgDaily", "KwhDchgDaily", "KwhChgTotal", "KwhDchgTotal"],
+			"yx":["Flt", "Alm"]
+		},
+		"ess.ind":{
+			"yx":["LampRun", "LampFault"]
+		},
+		"ess.jt":{
+			"yx":["EmStop"]
+		},
+		"ess.fire":{
+			"yx":["Fault"]
+		}, 
+		"ess.door":{
+			"yx":["DoorOpen"]		
+		},
+		"ess.smoke":{
+			"yx":["Fault"]		
+		},
+		"ess.water":{
+			"yx":["Fault"]		
+		},
+		"ess.temp":{
+			"yx":["Fault"]
+		},
+		"ess.firehost":{
+			"yx":["FireSysFault", "MainPower", "StandPower", "FireSpray", "FltSys", "FltPower"]
+		},
+		"ess.wac":{
+			"yc":["OnOff", "SysMode", "OutTemp", "InTemp", "ExhTemp", "InPres", "OutPres", "PumpSpeed"]
+		}
+	}
+}
