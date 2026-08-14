@@ -223,12 +223,12 @@ func (mgr *Manager) RunPushMsg() {
 				return true
 			}
 			// TODO do some message trans
-			log.Info("PUSH message to user:", key)
+			//log.Info("PUSH message to user:", key)
 			err = conn.WriteMessage(websocket.TextMessage, msg)
 			if err != nil {
 				log.Error("WriteMessage resp failed:", err.Error())
 			}
-			log.Info("PUSH message OVER:", key)
+			//log.Info("PUSH message OVER:", key)
 			return true
 		})
 	}

@@ -27,9 +27,10 @@ type ConfigItem struct {
 
 // HomepageConfig 首页配置完整结构
 type HomepageConfig struct {
-	Topology  []ConfigItem `json:"topology"`
-	Realtime  []ConfigItem `json:"realtime"`
-	BasicInfo []ConfigItem `json:"basic_info"`
+	Topology   []ConfigItem `json:"topology"`
+	Realtime   []ConfigItem `json:"realtime"`
+	BasicInfo  []ConfigItem `json:"basic_info"`
+	PowerLevel []ConfigItem `json:"power_level"`
 }
 
 // ConfigManager 首页配置管理器（单例）
@@ -134,6 +135,7 @@ func (cm *ConfigManager) enrichAll() {
 	cm.enrichItems(cm.config.Topology)
 	cm.enrichItems(cm.config.Realtime)
 	cm.enrichItems(cm.config.BasicInfo)
+	cm.enrichItems(cm.config.PowerLevel)
 }
 
 // enrichItems 为一批 ConfigItem 补充 name/unit
@@ -276,6 +278,8 @@ func (cm *ConfigManager) UpdateSection(section string, items []ConfigItem) error
 		cm.config.Realtime = items
 	case "basic_info":
 		cm.config.BasicInfo = items
+	case "power_level":
+		cm.config.PowerLevel = items
 	default:
 		return fmt.Errorf("unknown section: %s", section)
 	}

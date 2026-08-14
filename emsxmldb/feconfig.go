@@ -670,6 +670,102 @@ func (m *FeConfigXMLManager) GetChannelsByRtuID(rtuID string) (ChannelGroup, err
 	return ChannelGroup{}, fmt.Errorf("RTU ID %s not exist", rtuID)
 }
 
+// CreateChannelGroupWithChannel 自动创建通道组+通道（1:1），返回 (channelGroupID, channelID, error)
+// STATION_BASE_ID 和 PossibleOwner.ID 由调用方决定，此处留空由外部设置
+func (m *FeConfigXMLManager) CreateChannelGroupWithChannel(cgParam ChannelGroupParam, chParam ChannelParam) (int, int, error) {
+	m.mutex.Lock()
+	defer m.mutex.Unlock()
+
+	// 1. 生成 ChannelGroupID
+	newCGID := 0
+	for _, cg := range m.feDefine.ChannelGroups {
+		if cg.ID >= newCGID {
+			newCGID = cg.ID + 1
+		}
+	}
+
+	// 2. 创建 ChannelGroup（含 Model）
+	if cgParam.ModelID == 0 {
+		cgParam.ModelID = 20000
+	}
+	model := Model{
+		ID: cgParam.ModelID,
+		Parameters: []Parameter{
+			{Name: "FOR_TRANSFER", Value: cgParam.ForTransfer},
+			{Name: "STATION_BASE_ID", Value: cgParam.StationBaseID},
+		},
+	}
+	newCG := ChannelGroup{
+		Comment:        cgParam.Comment,
+		WorkOnDutyNode: cgParam.WorkOnDutyNode,
+		ID:             newCGID,
+		Name:           cgParam.Name,
+		UpdateTime:     cgParam.UpdateTime,
+		Model:          model,
+		Channels:       []Channel{},
+	}
+
+	// 3. 在 ChannelGroup 下创建唯一 Channel
+	newChID := 0
+	if chParam.PossibleOwnerID == 0 {
+		chParam.PossibleOwnerID = m.feDefine.Host.ID
+	}
+	newChannel := Channel{
+		Comment:        chParam.Comment,
+		WorkOnDutyNode: chParam.WorkOnDutyNode,
+		ID:             newChID,
+		ServerGroupID:  newCGID + 1,
+		Name:           chParam.Name,
+		Plugins:        []Plugin{},
+		PossibleOwner: PossibleOwner{
+			ID: chParam.PossibleOwnerID,
+		},
+	}
+	newCG.Channels = append(newCG.Channels, newChannel)
+
+	// 4. 添加到 ChannelGroups
+	m.feDefine.ChannelGroups = append(m.feDefine.ChannelGroups, newCG)
+
+	// 5. 保存
+	if err := m.saveXML(); err != nil {
+		return 0, 0, err
+	}
+
+	return newCGID, newChID, nil
+}
+
+// DeleteChannelGroupByStationID 按 STATION_BASE_ID 删除 ChannelGroup + Channel
+func (m *FeConfigXMLManager) DeleteChannelGroupByStationID(rtuID string) error {
+	m.mutex.Lock()
+	defer m.mutex.Unlock()
+
+	for i, cg := range m.feDefine.ChannelGroups {
+		for _, p := range cg.Model.Parameters {
+			if p.Name == "STATION_BASE_ID" && p.Value == rtuID {
+				m.feDefine.ChannelGroups = append(m.feDefine.ChannelGroups[:i], m.feDefine.ChannelGroups[i+1:]...)
+				return m.saveXML()
+			}
+		}
+	}
+	// 未找到不报错（可能是无通道 RTU）
+	return nil
+}
+
+// GetChannelGroupByStationID 按 STATION_BASE_ID 查询 ChannelGroup
+func (m *FeConfigXMLManager) GetChannelGroupByStationID(rtuID string) (*ChannelGroup, error) {
+	m.mutex.RLock()
+	defer m.mutex.RUnlock()
+
+	for i := range m.feDefine.ChannelGroups {
+		for _, p := range m.feDefine.ChannelGroups[i].Model.Parameters {
+			if p.Name == "STATION_BASE_ID" && p.Value == rtuID {
+				return &m.feDefine.ChannelGroups[i], nil
+			}
+		}
+	}
+	return nil, fmt.Errorf("RTU ID %s not found in any channel group", rtuID)
+}
+
 // ///////////////////////////// plugin ///////////////////////////////////
 type PluginDefine struct {
 	XMLName   xml.Name     `xml:"PLUGIN_DEFINE"`

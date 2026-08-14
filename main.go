@@ -12,6 +12,7 @@ import (
 
 	//"localweb/db"
 	"webserver-arm/emsclient"
+	"webserver-arm/emsxmldb"
 	"webserver-arm/handlers"
 	"webserver-arm/homepage"
 	"webserver-arm/log"
@@ -199,6 +200,14 @@ func main() {
 	homepage.GetHomepageManager(func(topic string, data interface{}) {
 		handlers.ClientMgr.PushMsg(&emsclient.PushResp{Topic: topic, Content: data})
 	})
+
+	// 建立 RTU ↔ Channel 内存关联
+	dbcfg, err := emsxmldb.GetDbConfigManager()
+	if err != nil {
+		log.Error("GetDbConfigManager failed:", err)
+	} else if err := dbcfg.LoadRTUChannelRelation(); err != nil {
+		log.Error("LoadRTUChannelRelation failed:", err)
+	}
 
 	r := gin.Default()
 	//pprof.Register(r)

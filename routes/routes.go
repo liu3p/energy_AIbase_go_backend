@@ -115,7 +115,10 @@ func LoadRoutes(r *gin.Engine) {
 	agcGroup.PUT("/device/:device_name", handlers.PutAgcDevice)       // 修改设备信息
 	agcGroup.DELETE("/device/:device_name", handlers.DeleteAgcDevice) // 删除设备
 
-	agcGroup.POST("/rtu_points", handlers.GetAgcRtuPoints) // 获取agc rtu可添加的测点信息
+	agcGroup.POST("/rtu_points", handlers.GetAgcRtuPoints)  // 获取agc rtu可添加的测点信息
+	agcGroup.GET("/agc_data", handlers.GetAgcData(3))       // 获取ml模型数据
+	agcGroup.GET("/station_model", handlers.GetAgcData(1))  // 获取ml模型数据
+	agcGroup.GET("/strategy_model", handlers.GetAgcData(2)) // 获取ml模型数据
 
 	// db config
 	dbcfgGroup := loginedGroup.Group("/dbcfg")
@@ -174,6 +177,7 @@ func LoadRoutes(r *gin.Engine) {
 	influxDBGroup := loginedGroup.Group("/influxdb")
 	influxDBGroup.POST("/his", handlers.ExportInfluxDBData)
 	influxDBGroup.POST("/his/query", handlers.QueryInfluxDBData)
+	influxDBGroup.POST("/his/home", handlers.QueryHomeHistory)
 
 	// homepage config
 	homepageGroup := loginedGroup.Group("/homepage")
@@ -181,4 +185,5 @@ func LoadRoutes(r *gin.Engine) {
 	homepageGroup.POST("/config/topology", handlers.UpdateHomepageTopology)
 	homepageGroup.POST("/config/realtime", handlers.UpdateHomepageRealtime)
 	homepageGroup.POST("/config/basic_info", handlers.UpdateHomepageBasicInfo)
+	homepageGroup.POST("/config/power_level", handlers.UpdateHomepagePowerLevel)
 }

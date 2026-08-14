@@ -1,9 +1,12 @@
 package agcconfig
 
 import (
+	"bytes"
 	"encoding/json"
 	"errors"
 	"fmt"
+	"io"
+	"net/http"
 	"os"
 	"path/filepath"
 	"reflect"
@@ -57,11 +60,16 @@ func (d Device) MarshalJSON() ([]byte, error) {
 	result["name"] = d.Name
 	result["type"] = d.Type
 	result["dyn_para"] = d.DynPara
-	para := make([]Para, 0)
-	for i := range d.Para {
-		if isAllowedType(d.Para[i].Type) {
-			para = append(para, d.Para[i])
-		}
+	// 20260814 slh 移除对模型静态参数类型的限制
+	//para := make([]Para, 0)
+	//for i := range d.Para {
+	//	if isAllowedType(d.Para[i].Type) {
+	//		para = append(para, d.Para[i])
+	//	}
+	//}
+	para := d.Para
+	if para == nil {
+		para = []Para{}
 	}
 	result["para"] = para
 
@@ -190,6 +198,7 @@ func (d *Device) addSubDevice(dev *Device) error {
 		return fmt.Errorf("设备名称[%s]已存在，不允许重复", dev.Name)
 	}
 	dev.Path = d.Path + "/" + dev.Name
+	dev.setSubDevicePaths() // 递归设置所有子设备及参数的Path
 	d.SubDevices = append(d.SubDevices, dev)
 	return nil
 }
@@ -292,14 +301,14 @@ func GetModelInstance() (*AgcModelManager, error) {
 
 		// 3. 加载模型文件
 		if err := m.loadModel(); err != nil {
-			modelInitErr = fmt.Errorf("failed to Load model file: %w", err)
+			modelInitErr = fmt.Errorf("failed to Load model file: %v", err)
 			return
 		}
 
 		// 4. 加载静态参数
 		parasMap, err := cgolibparse.GetDeviceStaticParas()
 		if err != nil {
-			modelInitErr = fmt.Errorf("failed to Load template files: %w", err)
+			modelInitErr = fmt.Errorf("failed to Load template files: %v", err)
 			return
 		}
 
@@ -307,7 +316,7 @@ func GetModelInstance() (*AgcModelManager, error) {
 		for key, value := range parasMap {
 			var para []Para
 			if err := json.Unmarshal([]byte(value), &para); err != nil {
-				modelInitErr = fmt.Errorf("Failed to unmarshal static paras : %s, err : %w", &value, err)
+				modelInitErr = fmt.Errorf("failed to unmarshal static paras : %s, err : %v", &value, err)
 				return
 			}
 			m.templateCache[key] = para
@@ -519,6 +528,52 @@ func (m *AgcModelManager) loadModel() error {
 	return nil
 }
 
+// HttpPost 发送通用 POST 请求，返回响应体
+// url     - 请求地址
+// body    - 请求体（会自动 json.Marshal）
+// timeout - 超时时间，传 0 则使用默认 10s
+func HttpPost(url string, body interface{}, timeout time.Duration) ([]byte, error) {
+	var reqBody *bytes.Buffer
+
+	if body == nil {
+		reqBody = bytes.NewBuffer(nil)
+	} else {
+		reqData, err := json.Marshal(body)
+		if err != nil {
+			return nil, fmt.Errorf("HttpPost marshal failed: %w", err)
+		}
+		reqBody = bytes.NewBuffer(reqData)
+	}
+
+	if timeout == 0 {
+		timeout = 10 * time.Second
+	}
+
+	req, err := http.NewRequest("POST", url, reqBody)
+	if err != nil {
+		return nil, fmt.Errorf("HttpPost create request failed: %w", err)
+	}
+	req.Header.Set("Content-Type", "application/json")
+
+	client := &http.Client{Timeout: timeout}
+	resp, err := client.Do(req)
+	if err != nil {
+		return nil, fmt.Errorf("HttpPost request failed: %w", err)
+	}
+	defer resp.Body.Close()
+
+	respBody, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return nil, fmt.Errorf("HttpPost read response failed: %w", err)
+	}
+
+	if resp.StatusCode != http.StatusOK {
+		return respBody, fmt.Errorf("HttpPost failed: status=%d, body=%s", resp.StatusCode, string(respBody))
+	}
+
+	return respBody, nil
+}
+
 // saveModel Save model to file
 func (m *AgcModelManager) saveModel() error {
 	m.isSelfWriting = true
@@ -533,6 +588,13 @@ func (m *AgcModelManager) saveModel() error {
 		return fmt.Errorf("failed to write model file: %w", err)
 	}
 
+	//发送更新请求值agc
+	respBody, err := HttpPost("http://127.0.0.1:8500/update_station_model", "", 0)
+	if err != nil {
+		log.Errorf("HttpPost failed: %v, resp: %s", err, string(respBody))
+		return nil
+	}
+	log.Info("update_station_model success!")
 	return nil
 }
 
@@ -876,46 +938,83 @@ func (m *AgcModelManager) UpdateAgcDevice(deviceName string, jsonStr string) (De
 		return Device{}, fmt.Errorf("UpdateAgcStation : device '%s' not found", deviceName)
 	}
 
+	// 防御性检查：如果设备Path为空，重新设置Path
+	if device.Path == "" {
+		m.station.setSubDevicePaths()
+	}
+
 	// 把json字符串转成更新map
 	var updateMap map[string]interface{}
 	if err := json.Unmarshal([]byte(jsonStr), &updateMap); err != nil {
-		return Device{}, fmt.Errorf("UpdateAgcDevice: parse update data failed: %w", err)
+		return Device{}, fmt.Errorf("UpdateAgcDevice: parse update data failed: %v", err)
 	}
 
 	// 从前端参数中获取静态参数列表
-	newPara := make(map[string]string)
-	if updatePara, ok := updateMap["para"]; ok {
-		// 转成数组
-		if paraSlice, ok := updatePara.([]interface{}); ok {
-			// 遍历数组
-			for i := range paraSlice {
-				// 从数组中获取一组静态参数
-				if pMap, ok := paraSlice[i].(map[string]interface{}); ok {
-					var name, newVal = pMap["name"].(string), pMap["value"].(string)
-					newPara[name] = newVal
+	{
+		newPara := make(map[string]string)
+		if updatePara, ok := updateMap["para"]; ok {
+			// 转成数组
+			if paraSlice, ok := updatePara.([]interface{}); ok {
+				// 遍历数组
+				for i := range paraSlice {
+					// 从数组中获取一组静态参数
+					if pMap, ok := paraSlice[i].(map[string]interface{}); ok {
+						var nameT, newVal = pMap["name"].(string) + pMap["type"].(string), pMap["value"].(string)
+						newPara[nameT] = newVal
+					}
+				}
+			}
+		}
+		for i := range device.Para {
+			// 判断值是否更新
+			if newVal, has := newPara[device.Para[i].Name+device.Para[i].Type]; has {
+				if device.Para[i].Value != newVal {
+					device.Para[i].Value = newVal
+					// 调用http接口更新配置参数
+					paraPath := device.Path[8:] + "/para/" + device.Para[i].Name //忽略path前面的"/station"
+					if err := SetStrategySettingParams("station_para", paraPath, newVal, device.Para[i].Type); err != nil {
+						log.Errorf("SetStrategyParams SetStrategySettingParams failed: %v", err)
+					}
 				}
 			}
 		}
 	}
 
-	for i := range device.Para {
-		// 判断值是否更新
-		if newVal, has := newPara[device.Para[i].Name]; has {
-			if device.Para[i].Value != newVal {
-				device.Para[i].Value = newVal
-				// 调用http接口更新配置参数
-				paraPath := device.Path[8:] + "/para/" + device.Para[i].Name //忽略path前面的"/station"
-				if err := SetStrategySettingParams("station_para", paraPath, newVal, device.Para[i].Type); err != nil {
-					log.Errorf("SetStrategyParams SetStrategySettingParams failed: %v", err)
+	// 处理动态参数
+	{
+		newDyPara := make(map[string]string)
+		if updatePara, ok := updateMap["dyn_para"]; ok {
+			// 转成数组
+			if paraSlice, ok := updatePara.([]interface{}); ok {
+				// 遍历数组
+				for i := range paraSlice {
+					// 从数组中获取一组动态参数
+					if pMap, ok := paraSlice[i].(map[string]interface{}); ok {
+						var nameT, newVal = pMap["name"].(string) + pMap["type"].(string), pMap["database_id"].(string)
+						newDyPara[nameT] = newVal
+					}
+				}
+			}
+		}
+
+		for i := range device.DynPara {
+			// 判断值是否更新
+			if newVal, has := newDyPara[device.DynPara[i].Name+device.DynPara[i].Type]; has {
+				if device.DynPara[i].DatabaseID != newVal {
+					device.DynPara[i].DatabaseID = newVal
+					// 调用http接口更新配置参数
+					paraPath := device.Path[8:] + "/" + device.DynPara[i].Type + "/" + device.DynPara[i].Name //忽略path前面的"/station"
+					if err := SetStrategySettingParams("station_dyn_para", paraPath, newVal, device.DynPara[i].Type); err != nil {
+						log.Errorf("SetStrategyParams SetStrategySettingParams failed: %v", err)
+					}
 				}
 			}
 		}
 	}
-
 	// // 对结构体进行增量更新
-	// if err := m.updateDevice(device, updateMap); err != nil {
-	// 	return Device{}, fmt.Errorf("UpdateAgcDevice: update failed: %w", err)
-	// }
+	//if err := m.updateDevice(device, updateMap); err != nil {
+	//	return Device{}, fmt.Errorf("UpdateAgcDevice: update failed: %w", err)
+	//}
 
 	dev := *device
 	dev.SubDevices = nil
