@@ -15,6 +15,16 @@ add_compile_options(-fpermissive)
 add_compile_options(-w)
 add_compile_options(-fPIC)
 
+include_directories(
+    $ENV{ARM_SF}/src/util/include
+    $ENV{ARM_SF}/src/fe/fe_ems_extend/include
+    $ENV{ARM_SF}/src/fe/fe_kernel/include
+    $ENV{ARM_SF}/src/translation/include
+    $ENV{POCO_ROOT}/include
+    $ENV{ACE_ROOT}
+)
+
+
 # 源文件列表
 set(SOURCES
   cgo_pluginparse.cpp

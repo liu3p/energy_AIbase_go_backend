@@ -3,7 +3,10 @@ package handlers
 import (
 	"encoding/json"
 	"io"
+	"math"
 	"net/http"
+	"strconv"
+	"strings"
 	"time"
 	"webserver-arm/agcconfig"
 	"webserver-arm/cgolibparse"
@@ -602,6 +605,91 @@ func GetAgcRtuPoints(c *gin.Context) {
 		c.JSON(http.StatusInternalServerError, "selectType参数错误")
 	}
 }
+
+// valueFormatKeys 需要格式化 value 字段的 key 集合
+var valueFormatKeys = map[string]bool{
+	"para":     true,
+	"dyn_para": true,
+}
+
+// formatStationModelParaValues 递归遍历 station_model JSON 树，
+// 对所有 para[].value 和 dyn_para[].value 为数字形式的值保留至多三位小数。
+// 返回格式化后的新结构，不修改原始数据。
+func formatStationModelParaValues(data interface{}) interface{} {
+	switch v := data.(type) {
+	case map[string]interface{}:
+		cp := make(map[string]interface{}, len(v))
+		for key, val := range v {
+			if valueFormatKeys[key] {
+				cp[key] = formatValueArray(val)
+			} else {
+				cp[key] = formatStationModelParaValues(val)
+			}
+		}
+		return cp
+	case []interface{}:
+		cp := make([]interface{}, len(v))
+		for i, item := range v {
+			cp[i] = formatStationModelParaValues(item)
+		}
+		return cp
+	default:
+		return v
+	}
+}
+
+// formatValueArray 处理 para/dyn_para 数组，对每个元素的 value 字段做三位小数格式化
+func formatValueArray(arr interface{}) interface{} {
+	items, ok := arr.([]interface{})
+	if !ok {
+		return arr
+	}
+	cp := make([]interface{}, len(items))
+	for i, item := range items {
+		m, ok := item.(map[string]interface{})
+		if !ok {
+			cp[i] = item
+			continue
+		}
+		cm := make(map[string]interface{}, len(m))
+		for k, v := range m {
+			cm[k] = v
+		}
+		if val, exists := cm["value"]; exists && val != nil {
+			cm["value"] = formatNumericValue(val)
+		}
+		cp[i] = cm
+	}
+	return cp
+}
+
+// formatNumericValue 对 value 做三位小数格式化，支持 string 和 float64 类型
+// string 返回 string，float64 返回 float64，保持原类型不变
+func formatNumericValue(val interface{}) interface{} {
+	switch v := val.(type) {
+	case string:
+		return roundToAtMost3Decimal(v)
+	case float64:
+		return math.Round(v*1000) / 1000
+	default:
+		return val
+	}
+}
+
+// roundToAtMost3Decimal 数字字符串保留至多三位小数（去尾零），非数字原样返回
+func roundToAtMost3Decimal(s string) string {
+	f, err := strconv.ParseFloat(s, 64)
+	if err != nil {
+		return s
+	}
+	formatted := strconv.FormatFloat(f, 'f', 3, 64)
+	if dot := strings.Index(formatted, "."); dot != -1 {
+		formatted = strings.TrimRight(formatted, "0")
+		formatted = strings.TrimRight(formatted, ".")
+	}
+	return formatted
+}
+
 func GetAgcData(t int) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		log.Info("GetAgcData in ...")
@@ -634,11 +722,11 @@ func GetAgcData(t int) gin.HandlerFunc {
 
 		switch t {
 		case 1:
-			result["station_model"] = fetchModel("station_model")
+			result["station_model"] = formatStationModelParaValues(fetchModel("station_model"))
 		case 2:
 			result["strategy_model"] = fetchModel("strategy_model")
 		case 3:
-			result["station_model"] = fetchModel("station_model")
+			result["station_model"] = formatStationModelParaValues(fetchModel("station_model"))
 			result["strategy_model"] = fetchModel("strategy_model")
 		default:
 			c.JSON(http.StatusBadRequest, gin.H{"error": "invalid type, expected 1, 2 or 3"})

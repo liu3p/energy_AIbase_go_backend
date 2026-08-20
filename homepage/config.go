@@ -13,22 +13,24 @@ import (
 
 // ConfigItem 首页配置项（统一结构体，适用于 topology/realtime/basic_info 三个区块）
 type ConfigItem struct {
-	No        int               `json:"no"`
-	ShowName  string            `json:"show_name"`
-	Used      int               `json:"used"`
-	OID       string            `json:"oid"`
-	Type      int               `json:"type"`
-	ShowUnit  string            `json:"show_unit"`
-	Table     map[string]string `json:"table"`
-	ShowValue string            `json:"show_value"`
-	Name      string            `json:"name"`
-	Unit      string            `json:"unit"`
+	No         int               `json:"no"`
+	ShowName   string            `json:"show_name"`
+	ShowNameEn string            `json:"show_name_en"`
+	Used       int               `json:"used"`
+	OID        string            `json:"oid"`
+	Type       int               `json:"type"`
+	ShowUnit   string            `json:"show_unit"`
+	Table      map[string]string `json:"table"`
+	ShowValue  string            `json:"show_value"`
+	Name       string            `json:"name"`
+	Unit       string            `json:"unit"`
 }
 
 // HomepageConfig 首页配置完整结构
 type HomepageConfig struct {
 	Topology   []ConfigItem `json:"topology"`
 	Realtime   []ConfigItem `json:"realtime"`
+	RealPower  []ConfigItem `json:"real_power"`
 	BasicInfo  []ConfigItem `json:"basic_info"`
 	PowerLevel []ConfigItem `json:"power_level"`
 }
@@ -136,6 +138,7 @@ func (cm *ConfigManager) enrichAll() {
 	cm.enrichItems(cm.config.Realtime)
 	cm.enrichItems(cm.config.BasicInfo)
 	cm.enrichItems(cm.config.PowerLevel)
+	cm.enrichItems(cm.config.RealPower)
 }
 
 // enrichItems 为一批 ConfigItem 补充 name/unit
@@ -280,6 +283,8 @@ func (cm *ConfigManager) UpdateSection(section string, items []ConfigItem) error
 		cm.config.BasicInfo = items
 	case "power_level":
 		cm.config.PowerLevel = items
+	case "real_power":
+		cm.config.RealPower = items
 	default:
 		return fmt.Errorf("unknown section: %s", section)
 	}

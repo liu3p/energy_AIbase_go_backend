@@ -80,19 +80,27 @@ type FeChannelStatus struct {
 
 type FeChannelLog struct {
 	FeChannelID uint32 `json:"channelid"`
+	PluginID    uint32 `json:"pluginid"`
 	LogInfo     string `json:"loginfo"`
+}
+
+// clientSubscription 记录每个客户端订阅的通道和插件信息
+type clientSubscription struct {
+	ch       chan<- FeChannelLog
+	pluginID uint32
 }
 
 var (
 	feParseInstance    *FeParseManager
 	feParseManagerOnce sync.Once
 	feParseInitErr     error
+	reloadResultChan   = make(chan uint32, 1) // reload结果通道，缓冲1防止阻塞
 )
 
 type FeParseManager struct {
 	allChannelStatus map[uint16]FeChannelStatus // 通道组id -> 通道状态
 	statusMapMutex   sync.RWMutex
-	allClientChannel map[uint32]map[string]chan<- FeChannelLog
+	allClientChannel map[uint32]map[string]clientSubscription
 	channelMapMutex  sync.RWMutex
 }
 
@@ -101,7 +109,7 @@ func GetFeParseManagerInstance() (*FeParseManager, error) {
 		m := &FeParseManager{
 			allChannelStatus: make(map[uint16]FeChannelStatus),
 			statusMapMutex:   sync.RWMutex{},
-			allClientChannel: make(map[uint32]map[string]chan<- FeChannelLog),
+			allClientChannel: make(map[uint32]map[string]clientSubscription),
 			channelMapMutex:  sync.RWMutex{},
 		}
 
@@ -159,6 +167,16 @@ func (m *FeParseManager) startFeRecvMsg() {
 			m.dispatchFeStatusMsg(jsonStr)
 		case 11011: // FES::MT_RELOAD_RESULT
 			log.Info("fe reload result:", string(jsonStr))
+			var result struct {
+				Result uint32 `json:"result"`
+			}
+			if err := json.Unmarshal([]byte(jsonStr), &result); err == nil {
+				select {
+				case reloadResultChan <- result.Result:
+				default:
+					log.Warn("reloadResultChan full, drop result")
+				}
+			}
 		default:
 			log.Errorf("unknown fe message type: %d, data:%s", cRet, string(jsonStr))
 		}
@@ -206,12 +224,16 @@ func (m *FeParseManager) dispatchFeLogMsg(data string) {
 		return
 	}
 
-	for _, ch := range channels {
+	for _, sub := range channels {
+		// 按 pluginID 过滤，只发送给订阅了对应插件的客户端
+		if sub.pluginID != logMsg.PluginID {
+			continue
+		}
 		// 使用非阻塞发送或带超时的发送，避免阻塞
 		select {
-		case ch <- logMsg:
+		case sub.ch <- logMsg:
 		default:
-			log.Warnf("client channel full, drop message for feChannelID %d", logMsg.FeChannelID)
+			log.Warnf("client channel full, drop message for feChannelID %d, pluginID %d", logMsg.FeChannelID, logMsg.PluginID)
 		}
 	}
 }
@@ -243,11 +265,11 @@ func (m *FeParseManager) GetFeChannelLogs(groupID, channelID uint16, pluginID ui
 
 	feChannelID := getFeChannelID(groupID, channelID)
 	if _, has := m.allClientChannel[feChannelID]; !has {
-		m.allClientChannel[feChannelID] = make(map[string]chan<- FeChannelLog)
+		m.allClientChannel[feChannelID] = make(map[string]clientSubscription)
 	}
 	clientID := time.Now().Format("20060102_150405")
 	msgChan := make(chan FeChannelLog, 100)
-	m.allClientChannel[feChannelID][clientID] = msgChan
+	m.allClientChannel[feChannelID][clientID] = clientSubscription{ch: msgChan, pluginID: pluginID}
 
 	// 初次订阅
 	cRet := C.subscribeFeChannelLogs(C.uint32_t(feChannelID), C.uint32_t(pluginID))
@@ -298,10 +320,34 @@ func (m *FeParseManager) GetFeChannelLogs(groupID, channelID uint16, pluginID ui
 	return msgChan, cleanup, nil
 }
 
-func NotifyFeServerReload() error {
-	cRet := C.notifyFeChannelReload()
-	if cRet != 0 {
-		return fmt.Errorf("call C notifyFeChannelReload failed: %d", cRet)
+// waitForReloadResult 等待reload结果，60秒超时
+func waitForReloadResult() (uint32, error) {
+	timeout := time.After(60 * time.Second)
+	for {
+		select {
+		case result := <-reloadResultChan:
+			return result, nil
+		case <-timeout:
+			return 0, fmt.Errorf("wait reload result timeout(60s)")
+		}
 	}
+}
+
+func NotifyFeServerReload() error {
+	// 确保消息接收goroutine已启动
+	if _, err := GetFeParseManagerInstance(); err != nil {
+		return fmt.Errorf("get FeParseManager failed: %w", err)
+	}
+	// 发送reload消息（不再内部等待结果）
+	cRet := C.notifyFeServerReload(nil, C.int(0))
+	if cRet != 0 {
+		return fmt.Errorf("call C notifyFeServerReload failed: %d", cRet)
+	}
+	// 通过统一的消息接收通道等待reload结果
+	result, err := waitForReloadResult()
+	if err != nil {
+		return err
+	}
+	log.Infof("NotifyFeServerReload result: %d", result)
 	return nil
 }

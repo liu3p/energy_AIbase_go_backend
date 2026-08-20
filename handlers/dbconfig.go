@@ -12,6 +12,17 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// ChannelVO 通道视图对象（扁平化，含所属 RTU 信息）
+type ChannelVO struct {
+	ID               int               `json:"id"`
+	Name             string            `json:"name"`
+	Plugins          []emsxmldb.Plugin `json:"plugins"`
+	RTUID            string            `json:"rtuid"`
+	RTUName          string            `json:"rtuname"`
+	ChannelGroupID   int               `json:"channelgroupid"`
+	ChannelGroupName string            `json:"channelgroupname"`
+}
+
 var validAlphaNumUnderscoreRegex = regexp.MustCompile(`^[0-9a-zA-Z_]+$`) // 仅允许 字母/数字/下划线
 var validOnlyDigitsRegex = regexp.MustCompile(`^[0-9]+$`)                // 仅允许 纯数字
 
@@ -68,7 +79,13 @@ func GetRTUs(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, rtus)
+	// 拷贝 RTU 列表并排序 Parameters，不修改原始数据
+	result := make([]emsxmldb.RTU, len(rtus))
+	for i, rtu := range rtus {
+		result[i] = *rtu
+		result[i].Channel = sortChannelParameters(rtu.Channel)
+	}
+	c.JSON(http.StatusOK, result)
 }
 
 // 获取所有RTU和Device的名字
@@ -98,6 +115,10 @@ func GetRTUsExceptPoints(c *gin.Context) {
 		return
 	}
 
+	// 排序 Parameters，不修改原始数据（rtus 已是浅拷贝切片）
+	for i := range rtus {
+		rtus[i].Channel = sortChannelParameters(rtus[i].Channel)
+	}
 	c.JSON(http.StatusOK, rtus)
 }
 
@@ -167,7 +188,7 @@ func AddRTU(c *gin.Context) {
 
 	// 2. 创建通道组+通道（STATION_BASE_ID 和 PossibleOwner.ID 使用已知的 rtuID）
 	cgName := channelGroupName(rtu)
-	chName := rtu.Name + "的通道"
+	chName := rtu.Name + "_CG"
 	rtuIDInt := rtuIDToInt(rtuID)
 
 	forTransfer := "0"
@@ -239,10 +260,10 @@ func rtuHasChannel(rtuType int) bool {
 
 // channelGroupName 根据 RTU 类型生成通道组名称
 func channelGroupName(rtu emsxmldb.RTU) string {
-	if rtu.Type == emsxmldb.RtuTypeTrans {
-		return rtu.Name + "的转发通道"
-	}
-	return rtu.Name + "的通道组"
+	//if rtu.Type == emsxmldb.RtuTypeTrans {
+	//	return rtu.Name + "的转发通道"
+	//}
+	return rtu.Name + "_CG"
 }
 
 // rtuIDToInt 将 RTU ID 字符串转为 int，失败返回 0
@@ -309,12 +330,14 @@ func UpdateRTU(c *gin.Context) {
 			return
 		}
 
-		// 从请求的 Channel.Plugins 中拆分 AppPlugin
+		// 从请求的 Channel.Plugins 中拆分 AppPlugin 和 LinkPlugin
 		var appPlugin *emsxmldb.Plugin
+		var linkPlugin *emsxmldb.Plugin
 		for _, p := range rtu.Channel.Plugins {
 			if p.Type == "APP" {
 				appPlugin = &p
-				break
+			} else if p.Type == "LINK" {
+				linkPlugin = &p
 			}
 		}
 
@@ -337,6 +360,7 @@ func UpdateRTU(c *gin.Context) {
 			Comment:         rtu.Channel.Comment,
 			PossibleOwnerID: rtu.Channel.PossibleOwner.ID,
 			AppPlugin:       appPlugin,
+			LinkPlugin:      linkPlugin,
 		}
 		if err := fecfg.UpdateChannel(rtu.ChannelGroupID, chParam); err != nil {
 			log.Errorf("UpdateRTU: UpdateChannel failed: %w", err)
@@ -1090,4 +1114,67 @@ func ImportPointsFromExcel(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, models.CommonResp{Code: http.StatusOK, Message: "ImportPointsFromExcel success"})
+}
+
+// @Summary		查询全部通道信息
+// @Description	查询全部通道信息（扁平化，含所属 RTU 信息）
+// @ID				get-all-channels
+// @Tags			dbcfg
+// @Produce		json
+// @Param			Authorization	header		string				true	"JWT Token"	default(<token>)
+// @Success		200				{object}	[]ChannelVO	"查询成功"
+// @Failure		401				{object}	models.CommonResp	"认证失败 {\"code\": 401, \"msg\": \"\"}"
+// @Failure		500				{object}	models.CommonResp	"服务内部错误 {\"code\": 500, \"msg\": \"\"}"
+// @Router			/api/v1/log/dbcfg/channels [get]
+func GetAllChannels(c *gin.Context) {
+	log.Info("GetAllChannels in ...")
+
+	// 1. 获取 dbconfig，构建 ChannelGroupID → RTU 的映射
+	dbcfg, err := emsxmldb.GetDbConfigManager()
+	if err != nil {
+		log.Errorf("GetAllChannels: GetDbConfigManager failed: %v", err)
+		c.JSON(http.StatusInternalServerError, models.CommonResp{Code: http.StatusInternalServerError, Message: err.Error()})
+		return
+	}
+	rtus := dbcfg.GetAllRTUs()
+
+	cgToRTU := make(map[int]*emsxmldb.RTU)
+	for _, rtu := range rtus {
+		if rtu.ChannelGroupID >= 0 {
+			cgToRTU[rtu.ChannelGroupID] = rtu
+		}
+	}
+
+	// 2. 获取 feconfig，遍历所有通道组和通道
+	fecfg, err := emsxmldb.GetFeConfigXMLManager()
+	if err != nil {
+		log.Errorf("GetAllChannels: GetFeConfigXMLManager failed: %v", err)
+		c.JSON(http.StatusInternalServerError, models.CommonResp{Code: http.StatusInternalServerError, Message: err.Error()})
+		return
+	}
+	cgs := fecfg.ListAllChannelGroups()
+
+	// 3. 扁平化组装
+	result := make([]ChannelVO, 0) // 初始化为空数组，避免返回 null
+	for _, cg := range cgs {
+		rtu := cgToRTU[cg.ID]
+		rtuid, rtuname := "", ""
+		if rtu != nil {
+			rtuid = rtu.ID
+			rtuname = rtu.Name
+		}
+		for _, ch := range cg.Channels {
+			result = append(result, ChannelVO{
+				ID:               ch.ID,
+				Name:             ch.Name,
+				Plugins:          sortChannelPlugins(ch.Plugins), // 拷贝+排序，不修改原始数据
+				RTUID:            rtuid,
+				RTUName:          rtuname,
+				ChannelGroupID:   cg.ID,
+				ChannelGroupName: cg.Name,
+			})
+		}
+	}
+
+	c.JSON(http.StatusOK, result)
 }

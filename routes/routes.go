@@ -50,6 +50,7 @@ func LoadRoutes(r *gin.Engine) {
 	systemGroup.GET("/network/config", handlers.GetNetworkConfig)
 	systemGroup.POST("/network/config", handlers.SetNetworkConfig)
 	systemGroup.POST("/reboot", handlers.SystemReboot)
+	systemGroup.POST("/para_enable", handlers.ParaEnable)
 
 	systemGroup.GET("/ws/sysinfo", handlers.WsGetSystemInfo)
 	systemGroup.GET("/ws/process", handlers.WsGetProcessInfo)
@@ -124,6 +125,7 @@ func LoadRoutes(r *gin.Engine) {
 	dbcfgGroup := loginedGroup.Group("/dbcfg")
 	dbcfgGroup.GET("/rtus", handlers.GetRTUs)                                          //  获取所有RTU
 	dbcfgGroup.GET("/rtus/except_points", handlers.GetRTUsExceptPoints)                //  获取所有RTU，不包含测点信息
+	dbcfgGroup.GET("/channels", handlers.GetAllChannels)                               //  获取所有通道（扁平列表，含部分RTU信息）
 	dbcfgGroup.POST("/rtu", handlers.AddRTU)                                           //  添加RTU
 	dbcfgGroup.PUT("/rtu/:rid", handlers.UpdateRTU)                                    //  修改RTU
 	dbcfgGroup.DELETE("/rtu/:rid", handlers.DeleteRTU)                                 //  删除RTU
@@ -163,6 +165,7 @@ func LoadRoutes(r *gin.Engine) {
 	// 获取通道的协议插件
 	fecfgGroup.GET("/plugins", handlers.GetChannelPlugins)
 	fecfgGroup.POST("/notifyreload", handlers.NotifyFeConfigReload)
+	fecfgGroup.POST("/channels/restart", handlers.RestartChannels) // 重启指定通道
 
 	// data monitor
 	datamonitorGroup := loginedGroup.Group("/datamonitor")
@@ -186,4 +189,5 @@ func LoadRoutes(r *gin.Engine) {
 	homepageGroup.POST("/config/realtime", handlers.UpdateHomepageRealtime)
 	homepageGroup.POST("/config/basic_info", handlers.UpdateHomepageBasicInfo)
 	homepageGroup.POST("/config/power_level", handlers.UpdateHomepagePowerLevel)
+	homepageGroup.POST("/config/real_power", handlers.UpdateHomepageRealPower)
 }

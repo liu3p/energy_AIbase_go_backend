@@ -1,8 +1,11 @@
 package handlers
 
 import (
+	"fmt"
 	"net/http"
+	"os/exec"
 	"strconv"
+	"strings"
 	"webserver-arm/cgolibparse"
 	"webserver-arm/emsxmldb"
 	"webserver-arm/log"
@@ -339,7 +342,7 @@ func GetChannelPlugins(c *gin.Context) {
 		return
 	}
 	log.Info("GetChannelPlugins success:", appPlugins, linkPlugins)
-	result := ChannelPlugin{AppPlugins: appPlugins, LinkPlugins: linkPlugins}
+	result := ChannelPlugin{AppPlugins: sortChannelPlugins(appPlugins), LinkPlugins: sortChannelPlugins(linkPlugins)}
 	c.JSON(http.StatusOK, result)
 }
 
@@ -362,4 +365,154 @@ func NotifyFeConfigReload(c *gin.Context) {
 	}
 	log.Info("NotifyFeConfigReload success")
 	c.JSON(http.StatusOK, models.CommonResp{Code: http.StatusOK, Message: "NotifyFeServerReload success"})
+}
+
+// ChannelRestartItem 通道组维度的重启请求/结果
+type ChannelRestartItem struct {
+	ChannelGroupID int   `json:"channel_group_id"` // 通道组 ID
+	ChannelIDs     []int `json:"channel_ids"`      // 该通道组下的通道 ID 列表
+}
+
+// RestartChannelsResponse 重启响应
+type RestartChannelsResponse struct {
+	Success []ChannelRestartItem `json:"success"`
+	Fail    []ChannelRestartItem `json:"fail"`
+}
+
+// execCommandOutput 执行命令并返回输出
+func execCommandOutput(cmd string) (string, error) {
+	command := exec.Command("sh", "-c", cmd)
+	output, err := command.CombinedOutput()
+	if err != nil {
+		return "", fmt.Errorf("error: %w, output: %s", err, string(output))
+	}
+	return string(output), nil
+}
+
+// findFeChannelPID 通过 server_id 查找 fe_channel 进程的 PID
+// 进程名格式: fe_channel <fedb_id> <server_id>
+func findFeChannelPID(serverID string) (string, error) {
+	cmd := fmt.Sprintf("ps aux | grep 'fe_channel' | grep ' %s$' | grep -v grep | awk '{print $2}'", serverID)
+	output, err := execCommandOutput(cmd)
+	if err != nil {
+		return "", fmt.Errorf("ps command failed: %w", err)
+	}
+	pid := strings.TrimSpace(output)
+	if pid == "" {
+		return "", fmt.Errorf("fe_channel process with server_id %s not found", serverID)
+	}
+	return pid, nil
+}
+
+// killProcess 强制杀死指定 PID 的进程
+func killProcess(pid string) error {
+	return execCommand(fmt.Sprintf("kill -9 %s", pid))
+}
+
+// @Summary		重启指定通道（通过杀死 fe_channel 进程）
+// @Description	重启指定通道，杀死 fe_channel 进程后由看门狗自动重启
+// @ID				restart-channels
+// @Tags			fecfg
+// @Param			Authorization	header		string					true	"JWT Token"	default(<token>)
+// @Param			data			body		[]ChannelRestartItem		true	"重启请求"
+// @Success		200				{object}	RestartChannelsResponse	"重启完成"
+// @Failure		400				{object}	models.CommonResp		"请求体格式错误 {\"code\": 400, \"msg\": \"\"}"
+// @Failure		401				{object}	models.CommonResp		"认证失败 {\"code\": 401, \"msg\": \"\"}"
+// @Failure		500				{object}	models.CommonResp		"服务内部错误 {\"code\": 500, \"msg\": \"\"}"
+// @Router			/api/v1/log/fecfg/channels/restart [post]
+func RestartChannels(c *gin.Context) {
+	var req []ChannelRestartItem
+	if err := c.ShouldBindJSON(&req); err != nil {
+		log.Errorf("RestartChannels: ShouldBindJSON failed: %v", err)
+		c.JSON(http.StatusBadRequest, models.CommonResp{Code: http.StatusBadRequest, Message: err.Error()})
+		return
+	}
+
+	if len(req) == 0 {
+		c.JSON(http.StatusBadRequest, models.CommonResp{Code: http.StatusBadRequest, Message: "request body is required"})
+		return
+	}
+
+	// 校验每个通道组的参数
+	for i, item := range req {
+		if item.ChannelGroupID < 0 {
+			log.Errorf("RestartChannels: item[%d].channel_group_id is invalid: %d", i, item.ChannelGroupID)
+			c.JSON(http.StatusBadRequest, models.CommonResp{Code: http.StatusBadRequest, Message: fmt.Sprintf("item[%d].channel_group_id must be >= 0", i)})
+			return
+		}
+		if len(item.ChannelIDs) == 0 {
+			log.Errorf("RestartChannels: item[%d].channel_ids is empty", i)
+			c.JSON(http.StatusBadRequest, models.CommonResp{Code: http.StatusBadRequest, Message: fmt.Sprintf("item[%d].channel_ids is required and cannot be empty", i)})
+			return
+		}
+		for j, chID := range item.ChannelIDs {
+			if chID < 0 {
+				log.Errorf("RestartChannels: item[%d].channel_ids[%d] is invalid: %d", i, j, chID)
+				c.JSON(http.StatusBadRequest, models.CommonResp{Code: http.StatusBadRequest, Message: fmt.Sprintf("item[%d].channel_ids[%d] must be >= 0, got %d", i, j, chID)})
+				return
+			}
+		}
+	}
+
+	// 获取 feconfig，用于根据 channel_group_id + channel_id 查找 SERVER_GROUP_ID
+	fecfg, err := emsxmldb.GetFeConfigXMLManager()
+	if err != nil {
+		log.Errorf("RestartChannels: GetFeConfigXMLManager failed: %v", err)
+		c.JSON(http.StatusInternalServerError, models.CommonResp{Code: http.StatusInternalServerError, Message: err.Error()})
+		return
+	}
+
+	// 按通道组维度收集成功和失败的通道
+	resp := RestartChannelsResponse{
+		Success: make([]ChannelRestartItem, 0),
+		Fail:    make([]ChannelRestartItem, 0),
+	}
+	successMap := make(map[int][]int)
+	failMap := make(map[int][]int)
+
+	for _, item := range req {
+		for _, chID := range item.ChannelIDs {
+			// 通过 channel_group_id + channel_id 查找通道的 SERVER_GROUP_ID（即 server_id）
+			ch, err := fecfg.GetChannelByID(item.ChannelGroupID, chID)
+			if err != nil {
+				log.Errorf("RestartChannels: GetChannelByID(%d, %d) failed: %v", item.ChannelGroupID, chID, err)
+				failMap[item.ChannelGroupID] = append(failMap[item.ChannelGroupID], chID)
+				continue
+			}
+			serverID := strconv.Itoa(ch.ServerGroupID)
+
+			// 查找 fe_channel 进程 PID
+			pid, err := findFeChannelPID(serverID)
+			if err != nil {
+				log.Errorf("RestartChannels: findFeChannelPID(%s) failed: %v", serverID, err)
+				failMap[item.ChannelGroupID] = append(failMap[item.ChannelGroupID], chID)
+				continue
+			}
+
+			// kill -9 强制杀死进程，c_fe_channel_manage 看门狗会自动重启
+			log.Infof("RestartChannels killing fe_channel process: pid=%s, server_id=%s", pid, serverID)
+			if err := killProcess(pid); err != nil {
+				log.Errorf("RestartChannels kill process %s failed: %v", pid, err)
+				failMap[item.ChannelGroupID] = append(failMap[item.ChannelGroupID], chID)
+				continue
+			}
+
+			successMap[item.ChannelGroupID] = append(successMap[item.ChannelGroupID], chID)
+			log.Infof("RestartChannels group %d channel %d killed (server %s, pid %s), watchdog will restart", item.ChannelGroupID, chID, serverID, pid)
+		}
+	}
+
+	// 将 map 转换为数组
+	for cgID, chIDs := range successMap {
+		resp.Success = append(resp.Success, ChannelRestartItem{ChannelGroupID: cgID, ChannelIDs: chIDs})
+	}
+	for cgID, chIDs := range failMap {
+		resp.Fail = append(resp.Fail, ChannelRestartItem{ChannelGroupID: cgID, ChannelIDs: chIDs})
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"code":    http.StatusOK,
+		"message": "restart channels completed",
+		"data":    resp,
+	})
 }

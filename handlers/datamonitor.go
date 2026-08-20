@@ -91,7 +91,7 @@ func GetRtuChannels(c *gin.Context) {
 		return
 	}
 	log.Info("GetRtuChannels success, channelGroup:", channelGroup)
-	c.JSON(http.StatusOK, channelGroup)
+	c.JSON(http.StatusOK, sortChannelGroupPlugins(&channelGroup)) // 拷贝+排序，不修改原始数据
 }
 
 // @Summary		[websocket]获取指定通道的状态
@@ -359,6 +359,21 @@ type CMD struct {
 	Total    int    `json:"total"`
 }
 
+// lastOIDSegment 提取 OID 字符串最后一段的数字值
+// OID 格式: "rtuID-deviceID-tableNo-gin"，如 "0-0-0-1"
+// 返回 gin 的数值，用于排序；解析失败返回 0
+func lastOIDSegment(oid string) uint64 {
+	idx := strings.LastIndex(oid, "-")
+	if idx == -1 || idx == len(oid)-1 {
+		return 0
+	}
+	val, err := strconv.ParseUint(oid[idx+1:], 10, 64)
+	if err != nil {
+		return 0
+	}
+	return val
+}
+
 // getPointsAndDBMsg 获取所有测点
 func getPointsAndDBMsg(rid, did, ptype string) (map[string]string, []string, *cgolibparse.DBMsgManager, error) {
 	// 获取所有测点id和name
@@ -374,7 +389,10 @@ func getPointsAndDBMsg(rid, did, ptype string) (map[string]string, []string, *cg
 	for id := range idNameMap {
 		ids = append(ids, id)
 	}
-	sort.Strings(ids)
+	// 按 OID 最后一段数字（gin）排序
+	sort.Slice(ids, func(i, j int) bool {
+		return lastOIDSegment(ids[i]) < lastOIDSegment(ids[j])
+	})
 
 	// 获取前置数据管理类
 	dbMsg, err := cgolibparse.GetDBMsgManagerInstance()
@@ -427,6 +445,28 @@ func getRegisterPointsID(idNameMap map[string]string, ids, registerIDs []string,
 // @Failure		401				{object}	models.CommonResp	"认证失败 {\"code\": 401, \"msg\": \"\"}"
 // @Failure		500				{object}	models.CommonResp	"服务内部错误 {\"code\": 500, \"msg\": \"\"}"
 // @Router			/api/v1/log/datamonitor/rtu/{rid}/device/{did}/points/{ptype} [get]
+
+// formatAnalogValues 对 analog 类型的 PointValue 副本中 rawvalue/currvalue 保留三位小数
+// 返回格式化后的新切片，不修改原始数据
+func formatAnalogValues(values []cgolibparse.PointValue) []cgolibparse.PointValue {
+	result := make([]cgolibparse.PointValue, len(values))
+	copy(result, values)
+	for i := range result {
+		result[i].RawValue = roundToDecimal(result[i].RawValue, 3)
+		result[i].CurrentValue = roundToDecimal(result[i].CurrentValue, 3)
+	}
+	return result
+}
+
+// roundToDecimal 将数值字符串保留 n 位小数，解析失败则原样返回
+func roundToDecimal(s string, n int) string {
+	f, err := strconv.ParseFloat(s, 64)
+	if err != nil {
+		return s
+	}
+	return fmt.Sprintf("%."+strconv.Itoa(n)+"f", f)
+}
+
 func GetPointsData(c *gin.Context) {
 	rid := c.Param("rid")
 	did := c.Param("did")
@@ -518,6 +558,12 @@ func GetPointsData(c *gin.Context) {
 					continue
 				}
 				pointValues := getValue()
+
+				// analog 类型：rawvalue/currvalue 保留三位小数（拷贝后格式化，不修改原始数据）
+				if ptype == "analog" {
+					pointValues = formatAnalogValues(pointValues)
+				}
+
 				if err := conn.WriteJSON(pointValues); err != nil {
 					log.Error("WS write error:", err)
 					cancel() // 通知其他 goroutine 退出

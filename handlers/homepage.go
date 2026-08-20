@@ -9,6 +9,31 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// formatHomepageConfigShowValue 拷贝 HomepageConfig，对 type==1 且 show_value 为数字的值保留至多三位小数
+func formatHomepageConfigShowValue(cfg homepage.HomepageConfig) homepage.HomepageConfig {
+	cfg.Topology = formatConfigItems(cfg.Topology)
+	cfg.Realtime = formatConfigItems(cfg.Realtime)
+	cfg.BasicInfo = formatConfigItems(cfg.BasicInfo)
+	cfg.PowerLevel = formatConfigItems(cfg.PowerLevel)
+	cfg.RealPower = formatConfigItems(cfg.RealPower)
+	return cfg
+}
+
+// formatConfigItems 拷贝 ConfigItem 切片，对 type==1 的 show_value 做三位小数格式化
+func formatConfigItems(items []homepage.ConfigItem) []homepage.ConfigItem {
+	if len(items) == 0 {
+		return items
+	}
+	cp := make([]homepage.ConfigItem, len(items))
+	copy(cp, items)
+	for i := range cp {
+		if cp[i].Type == 1 && cp[i].ShowValue != "" {
+			cp[i].ShowValue = roundToAtMost3Decimal(cp[i].ShowValue)
+		}
+	}
+	return cp
+}
+
 // GetHomepageConfig 查询首页配置
 // @Summary     查询首页配置
 // @Description 返回完整首页配置，有 OID 的条目已补充 XML 中的 name 和 unit
@@ -30,6 +55,7 @@ func GetHomepageConfig(c *gin.Context) {
 	}
 
 	config := mgr.GetConfig()
+	config = formatHomepageConfigShowValue(config)
 	c.JSON(http.StatusOK, gin.H{
 		"code": 200,
 		"data": config,
@@ -87,6 +113,19 @@ func UpdateHomepageBasicInfo(c *gin.Context) {
 // @Router      /api/v1/log/homepage/config/power_level [post]
 func UpdateHomepagePowerLevel(c *gin.Context) {
 	updateHomepageSection(c, "power_level")
+}
+
+// UpdateHomepageRealPower 修改实时功率配置
+// @Summary     修改实时功率配置
+// @Tags        homepage
+// @Accept      json
+// @Produce     json
+// @Param       Authorization header string true "JWT Token"
+// @Param       items body []homepage.ConfigItem true "real_power 配置数组"
+// @Success     200 {object} models.CommonResp
+// @Router      /api/v1/log/homepage/config/real_power [post]
+func UpdateHomepageRealPower(c *gin.Context) {
+	updateHomepageSection(c, "real_power")
 }
 
 // updateHomepageSection 通用的 section 更新逻辑

@@ -596,13 +596,14 @@ type HomeHistoryReq struct {
 type HomeHistoryResp struct {
 	Topology   emsdb.QueryHistoryResp `json:"topology"`
 	PowerLevel emsdb.QueryHistoryResp `json:"power_level"`
+	RealPower  emsdb.QueryHistoryResp `json:"real_power"`
 }
 
 // HomeHistoryResult 接口返回包装
 type HomeHistoryResult struct {
-	Code int            `json:"code"`
+	Code int             `json:"code"`
 	Data HomeHistoryResp `json:"data"`
-	Msg  string         `json:"msg"`
+	Msg  string          `json:"msg"`
 }
 
 // oidTypeFromThirdSegment 从 OID 第三段识别 InfluxDB 类型
@@ -707,7 +708,7 @@ func mergeResults(groups map[string][]string, results map[string]emsdb.QueryHist
 }
 
 // @Summary     查询首页历史数据
-// @Description 自动从 HomepageConfig 获取 Topology 和 PowerLevel 的 OID，按类型批量查询历史数据
+// @Description 自动从 HomepageConfig 获取 Topology、PowerLevel 和 RealPower 的 OID，按类型批量查询历史数据
 // @ID          influxdb-query-home-history
 // @Tags        influxdb
 // @Param       Authorization header string true "JWT Token"
@@ -755,9 +756,10 @@ func QueryHomeHistory(c *gin.Context) {
 	}
 	cfg := cm.GetConfig()
 
-	// 2. 分别收集 Topology 和 PowerLevel 的 OID，按类型分组
+	// 2. 分别收集 Topology、PowerLevel 和 RealPower 的 OID，按类型分组
 	topologyGroups := groupOidsByType(cfg.Topology)
 	powerLevelGroups := groupOidsByType(cfg.PowerLevel)
+	realPowerGroups := groupOidsByType(cfg.RealPower)
 
 	// 3. 合并所有需要查询的类型（去重）
 	allTypes := make(map[string][]string)
@@ -765,6 +767,9 @@ func QueryHomeHistory(c *gin.Context) {
 		allTypes[typ] = append(allTypes[typ], ids...)
 	}
 	for typ, ids := range powerLevelGroups {
+		allTypes[typ] = append(allTypes[typ], ids...)
+	}
+	for typ, ids := range realPowerGroups {
 		allTypes[typ] = append(allTypes[typ], ids...)
 	}
 	log.Infof("QueryHomeHistory: allTypes=%v", allTypes)
@@ -790,15 +795,17 @@ func QueryHomeHistory(c *gin.Context) {
 		queryResults[typ] = resp
 	}
 
-	// 5. 按 Topology 和 PowerLevel 维度组装响应
+	// 5. 按 Topology、PowerLevel 和 RealPower 维度组装响应
 	topologyResp := mergeResults(topologyGroups, queryResults)
 	powerLevelResp := mergeResults(powerLevelGroups, queryResults)
+	realPowerResp := mergeResults(realPowerGroups, queryResults)
 
 	c.JSON(http.StatusOK, HomeHistoryResult{
 		Code: 200,
 		Data: HomeHistoryResp{
 			Topology:   topologyResp,
 			PowerLevel: powerLevelResp,
+			RealPower:  realPowerResp,
 		},
 		Msg: "查询成功",
 	})

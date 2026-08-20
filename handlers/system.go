@@ -16,6 +16,7 @@ import (
 	"strconv"
 	"strings"
 	"time"
+	"webserver-arm/cgolibparse"
 	"webserver-arm/emsdb"
 	"webserver-arm/emsxmldb"
 	"webserver-arm/log"
@@ -1015,6 +1016,87 @@ func SystemReboot(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, models.CommonResp{Code: http.StatusOK, Message: ""})
+}
+
+// @Summary      EMS热加载
+// @Description  通知前端重载配置后，依次停止并重启EMS相关进程，需密码校验
+// @Tags         system
+// @Accept       json
+// @Produce      json
+// @Param        body body   RebootReq true  "密码校验"
+// @Success      200  {object}  models.CommonResp  "热加载成功"
+// @Failure      400  {object}  models.CommonResp  "请求参数错误"
+// @Failure      401  {object}  models.CommonResp  "认证失败"
+// @Failure      403  {object}  models.CommonResp  "密码校验失败"
+// @Failure      500  {object}  models.CommonResp  "服务内部错误"
+// @Router       /api/v1/log/system/para_enable [post]
+func ParaEnable(c *gin.Context) {
+	log.Info("ParaEnable in ...")
+
+	// 1. 密码校验
+	req := &RebootReq{}
+	if err := c.ShouldBindJSON(&req); err != nil {
+		log.Error("ParaEnable ShouldBindJSON err:", err.Error())
+		c.JSON(http.StatusBadRequest, models.CommonResp{Code: http.StatusBadRequest, Message: "Bad Request"})
+		return
+	}
+
+	uName := c.GetString(middleware.UNameKey)
+	if data, ok := OnlineUsers.Load(uName); ok {
+		online, match := data.(*OnlineUser)
+		if !match || req.CheckPwd != online.Pwd {
+			log.Error("ParaEnable pwd check failed")
+			c.JSON(http.StatusForbidden, models.CommonResp{Code: http.StatusForbidden, Message: "pwd invalid"})
+			return
+		}
+	}
+
+	// 2. 通知前端服务重载配置
+	if err := cgolibparse.NotifyFeServerReload(); err != nil {
+		log.Errorf("ParaEnable NotifyFeServerReload error: %v", err)
+		c.JSON(http.StatusInternalServerError, models.CommonResp{
+			Code: http.StatusInternalServerError, Message: "NotifyFeServerReload failed",
+		})
+		return
+	}
+	log.Info("ParaEnable NotifyFeServerReload success")
+
+	// 3. 获取 ARM_SF/bin 路径
+	armSF := os.Getenv("ARM_SF")
+	if armSF == "" {
+		log.Error("ParaEnable ARM_SF env not set")
+		c.JSON(http.StatusInternalServerError, models.CommonResp{
+			Code: http.StatusInternalServerError, Message: "ARM_SF env not set",
+		})
+		return
+	}
+	binDir := filepath.Join(armSF, "bin")
+
+	// 4. 按序执行 stop 和 restart 命令
+	commands := []struct {
+		action string
+		id     string
+	}{
+		{"stop", "6"}, {"stop", "2"}, {"stop", "1"},
+		{"restart", "1"}, {"restart", "2"}, {"restart", "6"},
+	}
+
+	for _, cmd := range commands {
+		fullCmd := fmt.Sprintf("cd %s && ./arm_ems %s %s", binDir, cmd.action, cmd.id)
+		log.Infof("ParaEnable exec: %s", fullCmd)
+		if err := execCommand(fullCmd); err != nil {
+			log.Errorf("ParaEnable exec '%s' failed: %v", fullCmd, err)
+			c.JSON(http.StatusInternalServerError, models.CommonResp{
+				Code:    http.StatusInternalServerError,
+				Message: fmt.Sprintf("exec '%s %s' failed: %v", cmd.action, cmd.id, err),
+			})
+			return
+		}
+		log.Infof("ParaEnable '%s %s' success", cmd.action, cmd.id)
+	}
+
+	log.Info("ParaEnable all success")
+	c.JSON(http.StatusOK, models.CommonResp{Code: http.StatusOK, Message: "ParaEnable success"})
 }
 
 type HostNameInfo struct {
