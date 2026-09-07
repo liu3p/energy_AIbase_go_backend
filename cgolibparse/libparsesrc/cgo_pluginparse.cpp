@@ -145,29 +145,81 @@ int subscribeFeChannelLogs(uint32_t fechannelID, uint32_t pluginID) {
     }
     return 0;
 }
+//
+// int notifyFeChannelReload() {
+//     if (!m_sp_mail_slot.valid()) {
+//         printf("notifyFeChannelReload m_sp_mail_slot is invalid\n");
+//         return -2;
+//     }
+//     c_mail msg;
+// 	msg.m_ui4_recv_office = m_sp_mail_slot->cr_post_office_id;
+//     msg.m_ui4_recv_slot = POST_OFFICE_MAIL_SLOT;
+//     msg.m_ui4_send_office = m_sp_mail_slot->cr_post_office_id;
+//     msg.m_ui4_send_slot = m_sp_mail_slot->cr_mail_slot_id;
+//     msg.m_ui4_type = FES::MT_RELOAD;
+//     msg.m_ui4_qualify = 0 ;
+//     c_memory_iostream ios ;
+//     ios.out((UI4)-1) ;
+//     msg.m_data = ios.flash_to_memory() ;
+//
+// 	int ret = m_sp_mail_slot->send(&msg,1);
+//     if (ret != 1) {
+//         printf("notifyFeChannelReload send failed, ret:%d\n", ret);
+//         return -1;
+//     }
+//     return 0;
+// }
+int notifyFeServerReload(uint32_t channel_ids[],int size,int wait_result)
+{
+    if (!m_sp_mail_slot.valid())
+        return 1 ;
 
-int notifyFeChannelReload() {
-    if (!m_sp_mail_slot.valid()) {
-        printf("notifyFeChannelReload m_sp_mail_slot is invalid\n");
-        return -2;
-    }
-    c_mail msg;
-	msg.m_ui4_recv_office = m_sp_mail_slot->cr_post_office_id;
-    msg.m_ui4_recv_slot = POST_OFFICE_MAIL_SLOT;
-    msg.m_ui4_send_office = m_sp_mail_slot->cr_post_office_id;
-    msg.m_ui4_send_slot = m_sp_mail_slot->cr_mail_slot_id;
-    msg.m_ui4_type = FES::MT_RELOAD;
-    msg.m_ui4_qualify = 0 ;
+    c_mail msg ;
+    msg.m_ui4_recv_office = m_sp_mail_slot->cr_post_office_id ;
+    msg.m_ui4_recv_slot   = POST_OFFICE_MAIL_SLOT ;
+    msg.m_ui4_send_office = m_sp_mail_slot->cr_post_office_id ;
+    msg.m_ui4_send_slot   = m_sp_mail_slot->cr_mail_slot_id ;
+    msg.m_ui4_type        = FES::MT_RELOAD ;
+    msg.m_ui4_qualify     = 0 ;
+
     c_memory_iostream ios ;
-    ios.out((UI4)-1) ;
+    if (size == 0)
+    {
+        ios.out((UI4)-1) ; // 0xffffffff 表示全部通道重载
+    }
+    else
+    {
+        for (size_t i = 0 ; i < size ; i ++)
+            ios.out(channel_ids[i]) ;
+    }
     msg.m_data = ios.flash_to_memory() ;
 
-	int ret = m_sp_mail_slot->send(&msg,1);
-    if (ret != 1) {
-        printf("notifyFeChannelReload send failed, ret:%d\n", ret);
-        return -1;
+    if (m_sp_mail_slot->send(&msg,1) != 1)
+        return 1 ;
+
+    if (wait_result == 0)
+        return 0 ;
+
+    UI4 ret = (UI4)-1 ;
+    I8 begin = c_system::current_time() ;
+    while (!c_system::must_exit_process())
+    {
+        c_mail m ;
+        if (m_sp_mail_slot->recv(&m,1) > 0)
+        {
+            if (m.m_ui4_type == FES::MT_RELOAD_RESULT)
+            {
+                c_memory_iostream ris((UI1 *)m.m_data->cr_point,m.m_data->cr_size) ;
+                if (!ris.in(ret))
+                    return 1 ;
+                break ;
+            }
+        }
+        if (begin + 60 * 1000 < c_system::current_time())
+            return 1 ;
+        c_system::sleep(100) ;
     }
-    return 0;
+    return ret;
 }
 
 namespace {
@@ -196,10 +248,11 @@ namespace {
 
         Poco::JSON::Object::Ptr root = new Poco::JSON::Object();
         root->set("channelid", static_cast<UI4>(mail.m_ui4_send_slot));
+        root->set("pluginid", static_cast<UI4>(rkey.m_ui2_class_id));
         root->set("loginfo", s);
 
-        // printf("recvFeChannelMsg DISPLAY_CODE classid:%ld, channelid:%ld, msg:%s\n",
-        //        rkey.m_ui2_class_id, mail.m_ui4_send_slot, s.c_str());
+//         printf("recvFeChannelMsg DISPLAY_CODE classid:%ld，m_ui2_instance_id：%ld, channelid:%ld, msg:%s\n",
+//                rkey.m_ui2_class_id, rkey.m_ui2_instance_id, mail.m_ui4_send_slot, s.c_str());
 
         return root;
     }

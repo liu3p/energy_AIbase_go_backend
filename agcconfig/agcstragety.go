@@ -118,12 +118,15 @@ func SetStrategySettingParams(paraType, path, value, valueType string) error {
 	// 序列化请求体
 	reqData, err := json.Marshal(reqBody)
 	if err != nil {
-		return fmt.Errorf("SetStrategySettingParams marshal failed: %w", err)
+		return fmt.Errorf("SetStrategySettingParams marshal failed: %v", err)
 	}
 
 	// 创建HTTP客户端
 	client := &http.Client{Timeout: 10 * time.Second}
 	req, err := http.NewRequest("POST", "http://127.0.0.1:8500/", bytes.NewBuffer(reqData))
+
+	log.Infof(" reqData is %s ", reqData)
+
 	if err != nil {
 		return fmt.Errorf("create request failed: %w", err)
 	}

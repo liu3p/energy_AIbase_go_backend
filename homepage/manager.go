@@ -210,6 +210,7 @@ func collectOids(cfg HomepageConfig) ([]string, map[string]string) {
 	addItems(cfg.Topology)
 	addItems(cfg.Realtime)
 	addItems(cfg.BasicInfo)
+	addItems(cfg.PowerLevel)
 	return oids, idNameMap
 }
 

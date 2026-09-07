@@ -3,8 +3,11 @@ package handlers
 import (
 	"fmt"
 	"net/http"
+	"sort"
 	"strings"
+	"time"
 	"webserver-arm/emsdb"
+	"webserver-arm/homepage"
 	"webserver-arm/log"
 	"webserver-arm/models"
 
@@ -579,5 +582,224 @@ func QueryInfluxDBData(c *gin.Context) {
 		Code: 200,
 		Data: historyData,
 		Msg:  "查询成功",
+	})
+}
+
+// HomeHistoryReq 首页历史数据查询请求
+type HomeHistoryReq struct {
+	StartTime time.Time `json:"start_time"`
+	EndTime   time.Time `json:"end_time"`
+	Interval  int       `json:"interval"`
+}
+
+// HomeHistoryResp 首页历史数据查询响应
+type HomeHistoryResp struct {
+	Topology   emsdb.QueryHistoryResp `json:"topology"`
+	PowerLevel emsdb.QueryHistoryResp `json:"power_level"`
+}
+
+// HomeHistoryResult 接口返回包装
+type HomeHistoryResult struct {
+	Code int            `json:"code"`
+	Data HomeHistoryResp `json:"data"`
+	Msg  string         `json:"msg"`
+}
+
+// oidTypeFromThirdSegment 从 OID 第三段识别 InfluxDB 类型
+// OID 格式: xxx-xxxxx-xxx-xxx，第三段 101=digital, 102=analog, 105=pulse
+func oidTypeFromThirdSegment(oid string) (string, bool) {
+	parts := strings.Split(oid, "-")
+	if len(parts) < 3 {
+		log.Warnf("oidTypeFromThirdSegment: OID %s has less than 3 parts", oid)
+		return "", false
+	}
+	log.Infof("oidTypeFromThirdSegment: OID=%s, parts=%v, third=%s", oid, parts, parts[2])
+	switch parts[2] {
+	case "101":
+		return "digital", true
+	case "102":
+		return "analog", true
+	case "105":
+		return "pulse", true
+	default:
+		log.Warnf("oidTypeFromThirdSegment: OID %s third part %s is not 101/102/105", oid, parts[2])
+		return "", false
+	}
+}
+
+// groupOidsByType 将 ConfigItem 列表按 OID 类型分组
+// 返回 map[类型字符串][]OID
+func groupOidsByType(items []homepage.ConfigItem) map[string][]string {
+	result := make(map[string][]string)
+	for _, item := range items {
+		if item.OID == "" {
+			continue
+		}
+		typ, ok := oidTypeFromThirdSegment(item.OID)
+		if !ok {
+			continue
+		}
+		result[typ] = append(result[typ], item.OID)
+	}
+	return result
+}
+
+// dedupOIDs 对 OID 列表去重
+func dedupOIDs(oids []string) []string {
+	seen := make(map[string]struct{})
+	var result []string
+	for _, oid := range oids {
+		if _, ok := seen[oid]; ok {
+			continue
+		}
+		seen[oid] = struct{}{}
+		result = append(result, oid)
+	}
+	return result
+}
+
+// mergeResults 将按类型查询的结果合并为按 OID 过滤的时间序列
+// groups: map[类型][]OID — 该维度下需要的 OID
+// results: map[类型]QueryHistoryResp — 按类型查询的结果
+func mergeResults(groups map[string][]string, results map[string]emsdb.QueryHistoryResp) emsdb.QueryHistoryResp {
+	// 收集该维度下所有 OID
+	oidSet := make(map[string]struct{})
+	for _, ids := range groups {
+		for _, id := range ids {
+			oidSet[id] = struct{}{}
+		}
+	}
+	if len(oidSet) == 0 {
+		return emsdb.QueryHistoryResp{}
+	}
+
+	// 按时间点合并，只保留该维度下的 OID
+	timeMap := make(map[time.Time]map[string]interface{})
+	for _, resp := range results {
+		for _, item := range resp {
+			data := make(map[string]interface{})
+			for k, v := range item.Data {
+				if _, ok := oidSet[k]; ok {
+					data[k] = v
+				}
+			}
+			if len(data) > 0 {
+				if _, exists := timeMap[item.Time]; !exists {
+					timeMap[item.Time] = make(map[string]interface{})
+				}
+				for k, v := range data {
+					timeMap[item.Time][k] = v
+				}
+			}
+		}
+	}
+
+	// 转为有序数组
+	resp := make(emsdb.QueryHistoryResp, 0, len(timeMap))
+	for t, data := range timeMap {
+		resp = append(resp, emsdb.QueryHistoryDataItem{Time: t, Data: data})
+	}
+	// 按时间升序
+	sort.Slice(resp, func(i, j int) bool {
+		return resp[i].Time.Before(resp[j].Time)
+	})
+	return resp
+}
+
+// @Summary     查询首页历史数据
+// @Description 自动从 HomepageConfig 获取 Topology 和 PowerLevel 的 OID，按类型批量查询历史数据
+// @ID          influxdb-query-home-history
+// @Tags        influxdb
+// @Param       Authorization header string true "JWT Token"
+// @Param       body body handlers.HomeHistoryReq true "查询参数"
+// @Success     200 {object} handlers.HomeHistoryResult "查询成功"
+// @Failure     400 {object} models.CommonResp "参数错误"
+// @Failure     500 {object} models.CommonResp "服务内部错误"
+// @Router      /api/v1/log/influxdb/his/home [post]
+func QueryHomeHistory(c *gin.Context) {
+	req := HomeHistoryReq{}
+	if err := c.ShouldBindJSON(&req); err != nil {
+		c.JSON(http.StatusBadRequest, models.CommonResp{
+			Code:    http.StatusBadRequest,
+			Message: "参数错误: " + err.Error(),
+		})
+		return
+	}
+
+	if req.StartTime.IsZero() || req.EndTime.IsZero() {
+		c.JSON(http.StatusBadRequest, models.CommonResp{
+			Code:    http.StatusBadRequest,
+			Message: "参数 start_time 和 end_time 必填",
+		})
+		return
+	}
+	if !req.StartTime.Before(req.EndTime) {
+		c.JSON(http.StatusBadRequest, models.CommonResp{
+			Code:    http.StatusBadRequest,
+			Message: "start_time 必须早于 end_time",
+		})
+		return
+	}
+	if req.Interval < 300 {
+		req.Interval = 300
+	}
+
+	// 1. 获取 HomepageConfig
+	cm, err := homepage.GetConfigManager()
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, models.CommonResp{
+			Code:    http.StatusInternalServerError,
+			Message: "获取首页配置失败: " + err.Error(),
+		})
+		return
+	}
+	cfg := cm.GetConfig()
+
+	// 2. 分别收集 Topology 和 PowerLevel 的 OID，按类型分组
+	topologyGroups := groupOidsByType(cfg.Topology)
+	powerLevelGroups := groupOidsByType(cfg.PowerLevel)
+
+	// 3. 合并所有需要查询的类型（去重）
+	allTypes := make(map[string][]string)
+	for typ, ids := range topologyGroups {
+		allTypes[typ] = append(allTypes[typ], ids...)
+	}
+	for typ, ids := range powerLevelGroups {
+		allTypes[typ] = append(allTypes[typ], ids...)
+	}
+	log.Infof("QueryHomeHistory: allTypes=%v", allTypes)
+
+	// 4. 对每种类型调用 QueryHistoryData
+	queryResults := make(map[string]emsdb.QueryHistoryResp)
+	for typ, ids := range allTypes {
+		ids = dedupOIDs(ids)
+		log.Infof("QueryHomeHistory: query type=%s, ids=%v", typ, ids)
+		queryReq := &emsdb.QueryHistoryReq{
+			Type:      typ,
+			IDs:       ids,
+			StartTime: req.StartTime,
+			EndTime:   req.EndTime,
+			Interval:  req.Interval,
+		}
+		resp, err := emsdb.QueryHistoryData(queryReq)
+		if err != nil {
+			log.Errorf("QueryHomeHistory: query type=%s failed: %v", typ, err)
+			// 单类型查询失败不阻塞其他类型
+			continue
+		}
+		queryResults[typ] = resp
+	}
+
+	// 5. 按 Topology 和 PowerLevel 维度组装响应
+	topologyResp := mergeResults(topologyGroups, queryResults)
+	powerLevelResp := mergeResults(powerLevelGroups, queryResults)
+
+	c.JSON(http.StatusOK, HomeHistoryResult{
+		Code: 200,
+		Data: HomeHistoryResp{
+			Topology:   topologyResp,
+			PowerLevel: powerLevelResp,
+		},
+		Msg: "查询成功",
 	})
 }

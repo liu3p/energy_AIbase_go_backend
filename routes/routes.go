@@ -50,6 +50,7 @@ func LoadRoutes(r *gin.Engine) {
 	systemGroup.GET("/network/config", handlers.GetNetworkConfig)
 	systemGroup.POST("/network/config", handlers.SetNetworkConfig)
 	systemGroup.POST("/reboot", handlers.SystemReboot)
+	systemGroup.POST("/para_enable", handlers.ParaEnable)
 
 	systemGroup.GET("/ws/sysinfo", handlers.WsGetSystemInfo)
 	systemGroup.GET("/ws/process", handlers.WsGetProcessInfo)
@@ -115,12 +116,16 @@ func LoadRoutes(r *gin.Engine) {
 	agcGroup.PUT("/device/:device_name", handlers.PutAgcDevice)       // 修改设备信息
 	agcGroup.DELETE("/device/:device_name", handlers.DeleteAgcDevice) // 删除设备
 
-	agcGroup.POST("/rtu_points", handlers.GetAgcRtuPoints) // 获取agc rtu可添加的测点信息
+	agcGroup.POST("/rtu_points", handlers.GetAgcRtuPoints)  // 获取agc rtu可添加的测点信息
+	agcGroup.GET("/agc_data", handlers.GetAgcData(3))       // 获取ml模型数据
+	agcGroup.GET("/station_model", handlers.GetAgcData(1))  // 获取ml模型数据
+	agcGroup.GET("/strategy_model", handlers.GetAgcData(2)) // 获取ml模型数据
 
 	// db config
 	dbcfgGroup := loginedGroup.Group("/dbcfg")
 	dbcfgGroup.GET("/rtus", handlers.GetRTUs)                                          //  获取所有RTU
 	dbcfgGroup.GET("/rtus/except_points", handlers.GetRTUsExceptPoints)                //  获取所有RTU，不包含测点信息
+	dbcfgGroup.GET("/channels", handlers.GetAllChannels)                               //  获取所有通道（扁平列表，含部分RTU信息）
 	dbcfgGroup.POST("/rtu", handlers.AddRTU)                                           //  添加RTU
 	dbcfgGroup.PUT("/rtu/:rid", handlers.UpdateRTU)                                    //  修改RTU
 	dbcfgGroup.DELETE("/rtu/:rid", handlers.DeleteRTU)                                 //  删除RTU
@@ -160,6 +165,7 @@ func LoadRoutes(r *gin.Engine) {
 	// 获取通道的协议插件
 	fecfgGroup.GET("/plugins", handlers.GetChannelPlugins)
 	fecfgGroup.POST("/notifyreload", handlers.NotifyFeConfigReload)
+	fecfgGroup.POST("/channels/restart", handlers.RestartChannels) // 重启指定通道
 
 	// data monitor
 	datamonitorGroup := loginedGroup.Group("/datamonitor")
@@ -174,6 +180,7 @@ func LoadRoutes(r *gin.Engine) {
 	influxDBGroup := loginedGroup.Group("/influxdb")
 	influxDBGroup.POST("/his", handlers.ExportInfluxDBData)
 	influxDBGroup.POST("/his/query", handlers.QueryInfluxDBData)
+	influxDBGroup.POST("/his/home", handlers.QueryHomeHistory)
 
 	// homepage config
 	homepageGroup := loginedGroup.Group("/homepage")
@@ -181,4 +188,5 @@ func LoadRoutes(r *gin.Engine) {
 	homepageGroup.POST("/config/topology", handlers.UpdateHomepageTopology)
 	homepageGroup.POST("/config/realtime", handlers.UpdateHomepageRealtime)
 	homepageGroup.POST("/config/basic_info", handlers.UpdateHomepageBasicInfo)
+	homepageGroup.POST("/config/power_level", handlers.UpdateHomepagePowerLevel)
 }

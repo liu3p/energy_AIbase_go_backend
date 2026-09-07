@@ -69,13 +69,20 @@ func (b *BaseInfo) GetName() string {
 // RTU RTU结构体（包含属性）
 type RTU struct {
 	BaseInfo
-	XMLName      xml.Name  `xml:"RTU" json:"-"`
-	Type         int       `xml:"Type,attr" json:"type"`
-	RtuAddr      string    `xml:"RtuAddr,attr" json:"rtuaddr"`
-	MemOfCabinet string    `xml:"MemOfCabinet,attr" json:"memofcabinet"`
-	InService    string    `xml:"InService,attr" json:"inservice"`
-	IsConnected  string    `xml:"IsConnected,attr" json:"isconnected"`
-	Devices      []*Device `xml:"Device" json:"device"` // RTU下的多个Device
+	XMLName        xml.Name  `xml:"RTU" json:"-"`
+	Type           int       `xml:"Type,attr" json:"type"`
+	RtuAddr        string    `xml:"RtuAddr,attr" json:"rtuaddr"`
+	MemOfCabinet   string    `xml:"MemOfCabinet,attr" json:"memofcabinet"`
+	InService      string    `xml:"InService,attr" json:"inservice"`
+	IsConnected    string    `xml:"IsConnected,attr" json:"isconnected"`
+	ChannelGroupID int       `xml:"ChannelGroupID,attr" json:"channelgroupid"` // 绑定的通道组 ID，-1 表示无通道
+	ChannelID      int       `xml:"ChannelID,attr" json:"channelid"`           // 绑定的通道 ID，-1 表示无通道
+	Devices        []*Device `xml:"Device" json:"device"`                      // RTU下的多个Device
+
+	// 内存字段（不写入 XML，启动时填充）
+	Channel          *Channel `xml:"-" json:"channel,omitempty"`
+	ChannelGroupName string   `xml:"-" json:"channelgroupname,omitempty"` // 通道组名称
+	ForTransfer      string   `xml:"-" json:"for_transfer,omitempty"`     // 通道组 FOR_TRANSFER 参数
 }
 
 // Device 装置结构体
@@ -1225,11 +1232,12 @@ func (m *DbConfigXMLManager) load() error {
 				return err
 			}
 			// 默认添加系统监视RTU和监视RTU下的特殊设备
-			m.addRTU(&RTU{BaseInfo: BaseInfo{ID: "800", Name: "系统监视"}, Type: RtuTypeMonit, RtuAddr: "800"})
+			monitorRTU := &RTU{BaseInfo: BaseInfo{ID: "800", Name: "系统监视"}, Type: RtuTypeMonit, RtuAddr: "800", ChannelGroupID: -1, ChannelID: -1}
+			m.addRTU(monitorRTU, false)
 			m.addDeviceToRTU("800", &Device{BaseInfo: BaseInfo{ID: "60001", Name: "RTU状态"}, DeviceAddr: "1"})
 			m.addDeviceToRTU("800", &Device{BaseInfo: BaseInfo{ID: "60002", Name: "通道状态"}, DeviceAddr: "2"})
 			m.addDeviceToRTU("800", &Device{BaseInfo: BaseInfo{ID: "60003", Name: "程序状态"}, DeviceAddr: "3"})
-			return nil
+			return m.save()
 		}
 		return err
 	} else if data == nil || len(data) == 0 {
@@ -1359,7 +1367,36 @@ func (m *DbConfigXMLManager) generateRTUID(rtuType int) (string, error) {
 	}
 }
 
-func (m *DbConfigXMLManager) addRTU(rtu *RTU) error {
+// GenerateRTUID 公开方法：预生成 RTU ID（加锁），用于创建通道前先确定 RTU ID
+func (m *DbConfigXMLManager) GenerateRTUID(rtuType int) (string, error) {
+	m.mu.Lock()
+	defer m.mu.Unlock()
+	return m.generateRTUID(rtuType)
+}
+
+// UseRTUID 将已预生成的 ID 注册到 rtuID map 中（ID 已在 GenerateRTUID 中注册，此处无需操作）
+// 仅用于 addRTU 跳过重复生成
+
+func (m *DbConfigXMLManager) addRTUWithPreAssignedID(rtu *RTU, autoSave bool) error {
+	rtus, err := m.getSingleTable("rtu")
+	if err != nil {
+		return err
+	}
+
+	rtu.RtuAddr = rtu.ID
+	// 层次表
+	m.db.Hierarchy.RTUs = append(m.db.Hierarchy.RTUs, rtu)
+	// 单边添加拷贝
+	copyRtu := *rtu
+	rtus.RTUs = append(rtus.RTUs, &copyRtu)
+
+	if autoSave {
+		return m.save()
+	}
+	return nil
+}
+
+func (m *DbConfigXMLManager) addRTU(rtu *RTU, autoSave bool) error {
 	rtus, err := m.getSingleTable("rtu")
 	if err != nil {
 		return err
@@ -1376,7 +1413,10 @@ func (m *DbConfigXMLManager) addRTU(rtu *RTU) error {
 	copyRtu := *rtu
 	rtus.RTUs = append(rtus.RTUs, &copyRtu)
 
-	return m.save()
+	if autoSave {
+		return m.save()
+	}
+	return nil
 }
 
 // AddHierarchyRTU 添加Hierarchy中的RTU
@@ -1387,16 +1427,51 @@ func (m *DbConfigXMLManager) AddRTU(rtu *RTU) error {
 	defer m.mu.Unlock()
 
 	// 保存到文件
-	return m.addRTU(rtu)
+	return m.addRTU(rtu, true)
 }
 
-// DeleteHierarchyRTU 删除Hierarchy中的RTU
-// 参数：rtuID RTU的ID
-// 返回：错误信息
-func (m *DbConfigXMLManager) DeleteRTU(rtuID string) error {
+// setRTUChannelInternal 设置 RTU 绑定的通道组号和通道号（不 save，需在锁内调用）
+func (m *DbConfigXMLManager) setRTUChannelInternal(rtuID string, channelGroupID, channelID int) error {
+	rtu, err := m.getRTUFromHierarchy(rtuID)
+	if err != nil {
+		return err
+	}
+	rtu.ChannelGroupID = channelGroupID
+	rtu.ChannelID = channelID
+
+	// 同步更新单表
+	sRtu, err := m.getRTUFromSingle(rtuID)
+	if err != nil {
+		return err
+	}
+	sRtu.ChannelGroupID = channelGroupID
+	sRtu.ChannelID = channelID
+
+	return nil
+}
+
+// AddRTUWithChannel 创建 RTU 并绑定通道，统一加锁，一次 save
+// 要求 rtu.ID 已通过 GenerateRTUID 预分配
+func (m *DbConfigXMLManager) AddRTUWithChannel(rtu *RTU, channelGroupID, channelID int) error {
 	m.mu.Lock()
 	defer m.mu.Unlock()
 
+	// 1. 创建 RTU（使用预分配的 ID，不 save）
+	if err := m.addRTUWithPreAssignedID(rtu, false); err != nil {
+		return err
+	}
+
+	// 2. 设置绑定关系（不 save）
+	if err := m.setRTUChannelInternal(rtu.ID, channelGroupID, channelID); err != nil {
+		return err
+	}
+
+	// 3. 统一 save 一次
+	return m.save()
+}
+
+// deleteRTU 内部无锁版本，autoSave=true 时立即写文件
+func (m *DbConfigXMLManager) deleteRTU(rtuID string, autoSave bool) error {
 	// 在层次结构和单表结构中查询rtu
 	rtu, err := m.getRTUFromHierarchy(rtuID)
 	if err != nil {
@@ -1431,7 +1506,38 @@ func (m *DbConfigXMLManager) DeleteRTU(rtuID string) error {
 		delete(m.rtuID, rtuIDInt)
 	}
 
-	// 保存到文件
+	if autoSave {
+		return m.save()
+	}
+	return nil
+}
+
+// DeleteHierarchyRTU 删除Hierarchy中的RTU
+// 参数：rtuID RTU的ID
+// 返回：错误信息
+func (m *DbConfigXMLManager) DeleteRTU(rtuID string) error {
+	m.mu.Lock()
+	defer m.mu.Unlock()
+
+	return m.deleteRTU(rtuID, true)
+}
+
+// DeleteRTUWithChannel 删除 RTU 并同步删除通道组+通道，统一加锁，一次 save
+func (m *DbConfigXMLManager) DeleteRTUWithChannel(rtuID string, deleteCGFunc func(rtuID string) error) error {
+	m.mu.Lock()
+	defer m.mu.Unlock()
+
+	// 1. 删除通道组+通道（由 feConfig 管理，独立 save）
+	if err := deleteCGFunc(rtuID); err != nil {
+		log.Warnf("DeleteRTUWithChannel: delete channel group failed: %v", err)
+	}
+
+	// 2. 删除 RTU（不 save，最后统一 save）
+	if err := m.deleteRTU(rtuID, false); err != nil {
+		return err
+	}
+
+	// 3. 统一 save
 	return m.save()
 }
 
@@ -1481,6 +1587,39 @@ func (m *DbConfigXMLManager) GetAllRTUs() []*RTU {
 	defer m.mu.Unlock()
 
 	return m.db.Hierarchy.RTUs
+}
+
+// LoadRTUChannelRelation 启动时调用，遍历 RTU 填充 Channel 内存指针
+func (m *DbConfigXMLManager) LoadRTUChannelRelation() error {
+	fecfg, err := GetFeConfigXMLManager()
+	if err != nil {
+		return err
+	}
+
+	for _, rtu := range m.db.Hierarchy.RTUs {
+		if rtu.ChannelGroupID < 0 {
+			continue
+		}
+		cg, err := fecfg.GetChannelGroupByID(rtu.ChannelGroupID)
+		if err != nil {
+			log.Warnf("LoadRTUChannelRelation: RTU %s channel group %d not found: %v", rtu.ID, rtu.ChannelGroupID, err)
+			continue
+		}
+		rtu.ChannelGroupName = cg.Name
+		// 填充 FOR_TRANSFER
+		for _, p := range cg.Model.Parameters {
+			if p.Name == "FOR_TRANSFER" {
+				rtu.ForTransfer = p.Value
+				break
+			}
+		}
+		if len(cg.Channels) == 0 {
+			log.Warnf("LoadRTUChannelRelation: RTU %s channel group %d has no channel", rtu.ID, rtu.ChannelGroupID)
+			continue
+		}
+		rtu.Channel = &cg.Channels[0]
+	}
+	return nil
 }
 
 // GetDB 返回DB指针（用于只读遍历层级结构）

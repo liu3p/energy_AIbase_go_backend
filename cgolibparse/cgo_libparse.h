@@ -23,7 +23,8 @@ const char* getPluginLibInfo();
 
 int subscribeFeChannelStatus();
 int subscribeFeChannelLogs(uint32_t fechannelID, uint32_t pluginID);
-int notifyFeChannelReload();
+// int notifyFeChannelReload();
+int notifyFeServerReload(uint32_t channel_ids[],int number,int wait_result);
 int recvFeChannelMsg(char** outputJson);
 
 

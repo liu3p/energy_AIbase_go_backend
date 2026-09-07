@@ -12,6 +12,17 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// ChannelVO 通道视图对象（扁平化，含所属 RTU 信息）
+type ChannelVO struct {
+	ID               int               `json:"id"`
+	Name             string            `json:"name"`
+	Plugins          []emsxmldb.Plugin `json:"plugins"`
+	RTUID            string            `json:"rtuid"`
+	RTUName          string            `json:"rtuname"`
+	ChannelGroupID   int               `json:"channelgroupid"`
+	ChannelGroupName string            `json:"channelgroupname"`
+}
+
 var validAlphaNumUnderscoreRegex = regexp.MustCompile(`^[0-9a-zA-Z_]+$`) // 仅允许 字母/数字/下划线
 var validOnlyDigitsRegex = regexp.MustCompile(`^[0-9]+$`)                // 仅允许 纯数字
 
@@ -35,6 +46,7 @@ func validateOnlyDigits(input string) bool {
 // @Tags			dbcfg
 // @Produce		json
 // @Param			Authorization	header		string				true	"JWT Token"	default(<token>)
+// @Param			include_channel	query		bool				false	"是否返回channel字段"	default(true)
 // @Success		200				{object}	[]emsxmldb.RTU	"查询成功 "
 // @Failure		401				{object}	models.CommonResp	"认证失败 {\"code\": 401, \"msg\": \"\"}"
 // @Failure		403				{object}	models.CommonResp	"拒绝访问 {\"code\": 403, \"msg\": \"\"}"
@@ -44,11 +56,28 @@ func GetRTUs(c *gin.Context) {
 	log.Info("GetRTUs in ...")
 	dbcfg, err := emsxmldb.GetDbConfigManager()
 	if err != nil {
-		log.Errorf("GetRTUs: GetDbConfigManager failed: %w", err)
+		log.Errorf("GetRTUs: GetDbConfigManager failed: %v", err)
 		c.JSON(http.StatusInternalServerError, models.CommonResp{Code: http.StatusInternalServerError, Message: err.Error()})
 		return
 	}
 	rtus := dbcfg.GetAllRTUs()
+
+	// 默认返回 channel，前端传 include_channel=false 可省略
+	includeChannel := true
+	if v := c.Query("include_channel"); v == "false" || v == "0" {
+		includeChannel = false
+	}
+
+	if !includeChannel {
+		// 创建不含 Channel 的副本，避免修改内存数据，保留 ChannelGroupName
+		result := make([]emsxmldb.RTU, len(rtus))
+		for i, rtu := range rtus {
+			result[i] = *rtu
+			result[i].Channel = nil
+		}
+		c.JSON(http.StatusOK, result)
+		return
+	}
 
 	c.JSON(http.StatusOK, rtus)
 }
@@ -58,17 +87,33 @@ func GetRTUsExceptPoints(c *gin.Context) {
 	log.Info("GetRTUs in ...")
 	dbcfg, err := emsxmldb.GetDbConfigManager()
 	if err != nil {
-		log.Errorf("GetRTUs: GetDbConfigManager failed: %w", err)
+		log.Errorf("GetRTUs: GetDbConfigManager failed: %v", err)
 		c.JSON(http.StatusInternalServerError, models.CommonResp{Code: http.StatusInternalServerError, Message: err.Error()})
 		return
 	}
 	rtus := dbcfg.GetAllRTUsExceptPoints()
 
+	includeChannel := true
+	if v := c.Query("include_channel"); v == "false" || v == "0" {
+		includeChannel = false
+	}
+
+	if !includeChannel {
+		// 创建不含 Channel 的副本，避免修改内存数据，保留 ChannelGroupName
+		result := make([]emsxmldb.RTU, len(rtus))
+		for i := range rtus {
+			result[i] = rtus[i]
+			result[i].Channel = nil
+		}
+		c.JSON(http.StatusOK, result)
+		return
+	}
+
 	c.JSON(http.StatusOK, rtus)
 }
 
 // @Summary		添加rtu信息
-// @Description	添加rtu信息
+// @Description	添加rtu信息，有通道的RTU类型自动创建通道组+通道
 // @ID				add-rtu
 // @Tags			dbcfg
 // @Accept		json
@@ -99,13 +144,125 @@ func AddRTU(c *gin.Context) {
 		c.JSON(http.StatusInternalServerError, models.CommonResp{Code: http.StatusInternalServerError, Message: err.Error()})
 		return
 	}
-	err = dbcfg.AddRTU(&rtu)
+
+	// 无通道的 RTU 类型：直接创建，ChannelGroupID 和 ChannelID 设为 -1
+	if !rtuHasChannel(rtu.Type) {
+		rtu.ChannelGroupID = -1
+		rtu.ChannelID = -1
+		err = dbcfg.AddRTU(&rtu)
+		if err != nil {
+			log.Errorf("AddRTU: AddRTU failed: %w", err)
+			c.JSON(http.StatusInternalServerError, models.CommonResp{Code: http.StatusInternalServerError, Message: err.Error()})
+			return
+		}
+		c.JSON(http.StatusOK, models.CommonResp{Code: http.StatusOK, Message: "AddRTU success"})
+		return
+	}
+
+	// 有通道的 RTU 类型：先预生成 ID，再创建通道组+通道，最后创建 RTU 并绑定
+	fecfg, err := emsxmldb.GetFeConfigXMLManager()
 	if err != nil {
-		log.Errorf("AddRTU: AddRTU failed: %w", err)
+		log.Errorf("AddRTU: GetFeConfigXMLManager failed: %w", err)
 		c.JSON(http.StatusInternalServerError, models.CommonResp{Code: http.StatusInternalServerError, Message: err.Error()})
 		return
 	}
-	c.JSON(http.StatusOK, models.CommonResp{Code: http.StatusOK, Message: "AddRTU success"})
+
+	// 1. 预生成 RTU ID（加锁，确保 ID 唯一）
+	rtuID, err := dbcfg.GenerateRTUID(rtu.Type)
+	if err != nil {
+		log.Errorf("AddRTU: GenerateRTUID failed: %w", err)
+		c.JSON(http.StatusInternalServerError, models.CommonResp{Code: http.StatusInternalServerError, Message: err.Error()})
+		return
+	}
+	rtu.ID = rtuID
+
+	// 2. 创建通道组+通道（STATION_BASE_ID 和 PossibleOwner.ID 使用已知的 rtuID）
+	cgName := channelGroupName(rtu)
+	chName := rtu.Name + "_CG"
+	rtuIDInt := rtuIDToInt(rtuID)
+
+	forTransfer := "0"
+	if rtuIDInt >= 500 && rtuIDInt < 700 {
+		forTransfer = "1"
+	}
+
+	cgParam := emsxmldb.ChannelGroupParam{
+		Name:          cgName,
+		ForTransfer:   forTransfer,
+		StationBaseID: rtuID,
+	}
+	chParam := emsxmldb.ChannelParam{
+		Name:            chName,
+		PossibleOwnerID: rtuIDInt,
+	}
+
+	cgID, chID, err := fecfg.CreateChannelGroupWithChannel(cgParam, chParam)
+	if err != nil {
+		log.Errorf("AddRTU: CreateChannelGroupWithChannel failed: %w", err)
+		c.JSON(http.StatusInternalServerError, models.CommonResp{Code: http.StatusInternalServerError, Message: err.Error()})
+		return
+	}
+
+	// 填充内存字段，使新增后立即查询能拿到值
+	cg, err := fecfg.GetChannelGroupByID(cgID)
+	if err != nil {
+		log.Errorf("AddRTU: GetChannelGroupByID failed: %w", err)
+	} else {
+		rtu.ChannelGroupName = cg.Name
+		if len(cg.Channels) > 0 {
+			rtu.Channel = &cg.Channels[0]
+		}
+		for _, p := range cg.Model.Parameters {
+			if p.Name == "FOR_TRANSFER" {
+				rtu.ForTransfer = p.Value
+				break
+			}
+		}
+	}
+
+	// 3. 创建 RTU 并绑定通道，统一加锁，一次 save
+	err = dbcfg.AddRTUWithChannel(&rtu, cgID, chID)
+	if err != nil {
+		// 回滚：删除刚创建的通道组
+		fecfg.DeleteChannelGroup(cgID)
+		log.Errorf("AddRTU: AddRTUWithChannel failed: %w", err)
+		c.JSON(http.StatusInternalServerError, models.CommonResp{Code: http.StatusInternalServerError, Message: err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"code":    http.StatusOK,
+		"message": "AddRTU success",
+		"data": gin.H{
+			"rtuid":          rtu.ID,
+			"channelgroupid": cgID,
+			"channelid":      chID,
+		},
+	})
+}
+
+// rtuHasChannel 判断 RTU 类型是否有通道
+func rtuHasChannel(rtuType int) bool {
+	return rtuType == emsxmldb.RtuTypeAcqu ||
+		rtuType == emsxmldb.RtuTypeTrans ||
+		rtuType == emsxmldb.RtuTypeAgc
+}
+
+// channelGroupName 根据 RTU 类型生成通道组名称
+func channelGroupName(rtu emsxmldb.RTU) string {
+	//if rtu.Type == emsxmldb.RtuTypeTrans {
+	//	return rtu.Name + "的转发通道"
+	//}
+	return rtu.Name + "_CG"
+}
+
+// rtuIDToInt 将 RTU ID 字符串转为 int，失败返回 0
+func rtuIDToInt(rtuID string) int {
+	id, err := strconv.Atoi(rtuID)
+	if err != nil {
+		return 0
+	}
+	return id
 }
 
 // @Summary		修改rtu信息
@@ -153,12 +310,61 @@ func UpdateRTU(c *gin.Context) {
 		c.JSON(http.StatusInternalServerError, models.CommonResp{Code: http.StatusInternalServerError, Message: err.Error()})
 		return
 	}
+
+	// 更新通道组+通道（仅有通道的 RTU 类型且请求中携带 channel 时执行）
+	if rtuHasChannel(rtu.Type) && rtu.Channel != nil {
+		fecfg, err := emsxmldb.GetFeConfigXMLManager()
+		if err != nil {
+			log.Errorf("UpdateRTU: GetFeConfigXMLManager failed: %w", err)
+			c.JSON(http.StatusInternalServerError, models.CommonResp{Code: http.StatusInternalServerError, Message: err.Error()})
+			return
+		}
+
+		// 从请求的 Channel.Plugins 中拆分 AppPlugin 和 LinkPlugin
+		var appPlugin *emsxmldb.Plugin
+		var linkPlugin *emsxmldb.Plugin
+		for _, p := range rtu.Channel.Plugins {
+			if p.Type == "APP" {
+				appPlugin = &p
+			} else if p.Type == "LINK" {
+				linkPlugin = &p
+			}
+		}
+
+		// 更新通道组名称 + FOR_TRANSFER
+		cgParam := emsxmldb.ChannelGroupParam{
+			Name:          rtu.ChannelGroupName,
+			ForTransfer:   rtu.ForTransfer,
+			StationBaseID: rtuID,
+		}
+		if err := fecfg.UpdateChannelGroup(rtu.ChannelGroupID, cgParam); err != nil {
+			log.Errorf("UpdateRTU: UpdateChannelGroup failed: %w", err)
+			c.JSON(http.StatusInternalServerError, models.CommonResp{Code: http.StatusInternalServerError, Message: err.Error()})
+			return
+		}
+
+		// 全量替换通道
+		chParam := emsxmldb.ChannelParam{
+			ChannelID:       rtu.ChannelID,
+			Name:            rtu.Channel.Name,
+			Comment:         rtu.Channel.Comment,
+			PossibleOwnerID: rtu.Channel.PossibleOwner.ID,
+			AppPlugin:       appPlugin,
+			LinkPlugin:      linkPlugin,
+		}
+		if err := fecfg.UpdateChannel(rtu.ChannelGroupID, chParam); err != nil {
+			log.Errorf("UpdateRTU: UpdateChannel failed: %w", err)
+			c.JSON(http.StatusInternalServerError, models.CommonResp{Code: http.StatusInternalServerError, Message: err.Error()})
+			return
+		}
+	}
+
 	c.JSON(http.StatusOK, models.CommonResp{Code: http.StatusOK, Message: "UpdateRTU success"})
 	return
 }
 
 // @Summary		删除rtu信息
-// @Description	删除rtu信息
+// @Description	删除rtu信息，同步删除关联的通道组+通道
 // @ID				delete-rtu
 // @Tags			dbcfg
 // @Param			Authorization	header		string				true	"JWT Token"	default(<token>)
@@ -170,15 +376,27 @@ func UpdateRTU(c *gin.Context) {
 func DeleteRTU(c *gin.Context) {
 	rtuID := c.Param("rid")
 	log.Info("DeleteRTU in ... rid:", rtuID)
+
 	dbcfg, err := emsxmldb.GetDbConfigManager()
 	if err != nil {
 		log.Errorf("DeleteRTU: GetDbConfigManager failed: %w", err)
 		c.JSON(http.StatusInternalServerError, models.CommonResp{Code: http.StatusInternalServerError, Message: err.Error()})
 		return
 	}
-	err = dbcfg.DeleteRTU(rtuID)
+
+	fecfg, err := emsxmldb.GetFeConfigXMLManager()
 	if err != nil {
-		log.Errorf("DeleteRTU: DeleteRTU failed: %w", err)
+		log.Errorf("DeleteRTU: GetFeConfigXMLManager failed: %w", err)
+		c.JSON(http.StatusInternalServerError, models.CommonResp{Code: http.StatusInternalServerError, Message: err.Error()})
+		return
+	}
+
+	// 删除 RTU + 通道组，统一加锁
+	err = dbcfg.DeleteRTUWithChannel(rtuID, func(id string) error {
+		return fecfg.DeleteChannelGroupByStationID(id)
+	})
+	if err != nil {
+		log.Errorf("DeleteRTU: DeleteRTUWithChannel failed: %w", err)
 		c.JSON(http.StatusInternalServerError, models.CommonResp{Code: http.StatusInternalServerError, Message: err.Error()})
 		return
 	}
@@ -886,4 +1104,67 @@ func ImportPointsFromExcel(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, models.CommonResp{Code: http.StatusOK, Message: "ImportPointsFromExcel success"})
+}
+
+// @Summary		查询全部通道信息
+// @Description	查询全部通道信息（扁平化，含所属 RTU 信息）
+// @ID				get-all-channels
+// @Tags			dbcfg
+// @Produce		json
+// @Param			Authorization	header		string				true	"JWT Token"	default(<token>)
+// @Success		200				{object}	[]ChannelVO	"查询成功"
+// @Failure		401				{object}	models.CommonResp	"认证失败 {\"code\": 401, \"msg\": \"\"}"
+// @Failure		500				{object}	models.CommonResp	"服务内部错误 {\"code\": 500, \"msg\": \"\"}"
+// @Router			/api/v1/log/dbcfg/channels [get]
+func GetAllChannels(c *gin.Context) {
+	log.Info("GetAllChannels in ...")
+
+	// 1. 获取 dbconfig，构建 ChannelGroupID → RTU 的映射
+	dbcfg, err := emsxmldb.GetDbConfigManager()
+	if err != nil {
+		log.Errorf("GetAllChannels: GetDbConfigManager failed: %v", err)
+		c.JSON(http.StatusInternalServerError, models.CommonResp{Code: http.StatusInternalServerError, Message: err.Error()})
+		return
+	}
+	rtus := dbcfg.GetAllRTUs()
+
+	cgToRTU := make(map[int]*emsxmldb.RTU)
+	for _, rtu := range rtus {
+		if rtu.ChannelGroupID >= 0 {
+			cgToRTU[rtu.ChannelGroupID] = rtu
+		}
+	}
+
+	// 2. 获取 feconfig，遍历所有通道组和通道
+	fecfg, err := emsxmldb.GetFeConfigXMLManager()
+	if err != nil {
+		log.Errorf("GetAllChannels: GetFeConfigXMLManager failed: %v", err)
+		c.JSON(http.StatusInternalServerError, models.CommonResp{Code: http.StatusInternalServerError, Message: err.Error()})
+		return
+	}
+	cgs := fecfg.ListAllChannelGroups()
+
+	// 3. 扁平化组装
+	result := make([]ChannelVO, 0) // 初始化为空数组，避免返回 null
+	for _, cg := range cgs {
+		rtu := cgToRTU[cg.ID]
+		rtuid, rtuname := "", ""
+		if rtu != nil {
+			rtuid = rtu.ID
+			rtuname = rtu.Name
+		}
+		for _, ch := range cg.Channels {
+			result = append(result, ChannelVO{
+				ID:               ch.ID,
+				Name:             ch.Name,
+				Plugins:          ch.Plugins,
+				RTUID:            rtuid,
+				RTUName:          rtuname,
+				ChannelGroupID:   cg.ID,
+				ChannelGroupName: cg.Name,
+			})
+		}
+	}
+
+	c.JSON(http.StatusOK, result)
 }

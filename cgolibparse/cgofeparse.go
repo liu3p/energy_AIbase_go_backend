@@ -80,7 +80,14 @@ type FeChannelStatus struct {
 
 type FeChannelLog struct {
 	FeChannelID uint32 `json:"channelid"`
+	PluginID    uint32 `json:"pluginid"`
 	LogInfo     string `json:"loginfo"`
+}
+
+// clientSubscription 记录每个客户端订阅的通道和插件信息
+type clientSubscription struct {
+	ch       chan<- FeChannelLog
+	pluginID uint32
 }
 
 var (
@@ -92,7 +99,7 @@ var (
 type FeParseManager struct {
 	allChannelStatus map[uint16]FeChannelStatus // 通道组id -> 通道状态
 	statusMapMutex   sync.RWMutex
-	allClientChannel map[uint32]map[string]chan<- FeChannelLog
+	allClientChannel map[uint32]map[string]clientSubscription
 	channelMapMutex  sync.RWMutex
 }
 
@@ -101,7 +108,7 @@ func GetFeParseManagerInstance() (*FeParseManager, error) {
 		m := &FeParseManager{
 			allChannelStatus: make(map[uint16]FeChannelStatus),
 			statusMapMutex:   sync.RWMutex{},
-			allClientChannel: make(map[uint32]map[string]chan<- FeChannelLog),
+			allClientChannel: make(map[uint32]map[string]clientSubscription),
 			channelMapMutex:  sync.RWMutex{},
 		}
 
@@ -206,12 +213,16 @@ func (m *FeParseManager) dispatchFeLogMsg(data string) {
 		return
 	}
 
-	for _, ch := range channels {
+	for _, sub := range channels {
+		// 按 pluginID 过滤，只发送给订阅了对应插件的客户端
+		if sub.pluginID != logMsg.PluginID {
+			continue
+		}
 		// 使用非阻塞发送或带超时的发送，避免阻塞
 		select {
-		case ch <- logMsg:
+		case sub.ch <- logMsg:
 		default:
-			log.Warnf("client channel full, drop message for feChannelID %d", logMsg.FeChannelID)
+			log.Warnf("client channel full, drop message for feChannelID %d, pluginID %d", logMsg.FeChannelID, logMsg.PluginID)
 		}
 	}
 }
@@ -243,11 +254,11 @@ func (m *FeParseManager) GetFeChannelLogs(groupID, channelID uint16, pluginID ui
 
 	feChannelID := getFeChannelID(groupID, channelID)
 	if _, has := m.allClientChannel[feChannelID]; !has {
-		m.allClientChannel[feChannelID] = make(map[string]chan<- FeChannelLog)
+		m.allClientChannel[feChannelID] = make(map[string]clientSubscription)
 	}
 	clientID := time.Now().Format("20060102_150405")
 	msgChan := make(chan FeChannelLog, 100)
-	m.allClientChannel[feChannelID][clientID] = msgChan
+	m.allClientChannel[feChannelID][clientID] = clientSubscription{ch: msgChan, pluginID: pluginID}
 
 	// 初次订阅
 	cRet := C.subscribeFeChannelLogs(C.uint32_t(feChannelID), C.uint32_t(pluginID))
@@ -299,7 +310,8 @@ func (m *FeParseManager) GetFeChannelLogs(groupID, channelID uint16, pluginID ui
 }
 
 func NotifyFeServerReload() error {
-	cRet := C.notifyFeChannelReload()
+	//cRet := C.notifyFeChannelReload()
+	cRet := C.notifyFeServerReload(nil, C.int(0), C.int(1))
 	if cRet != 0 {
 		return fmt.Errorf("call C notifyFeChannelReload failed: %d", cRet)
 	}

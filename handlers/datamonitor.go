@@ -359,6 +359,21 @@ type CMD struct {
 	Total    int    `json:"total"`
 }
 
+// lastOIDSegment 提取 OID 字符串最后一段的数字值
+// OID 格式: "rtuID-deviceID-tableNo-gin"，如 "0-0-0-1"
+// 返回 gin 的数值，用于排序；解析失败返回 0
+func lastOIDSegment(oid string) uint64 {
+	idx := strings.LastIndex(oid, "-")
+	if idx == -1 || idx == len(oid)-1 {
+		return 0
+	}
+	val, err := strconv.ParseUint(oid[idx+1:], 10, 64)
+	if err != nil {
+		return 0
+	}
+	return val
+}
+
 // getPointsAndDBMsg 获取所有测点
 func getPointsAndDBMsg(rid, did, ptype string) (map[string]string, []string, *cgolibparse.DBMsgManager, error) {
 	// 获取所有测点id和name
@@ -374,7 +389,10 @@ func getPointsAndDBMsg(rid, did, ptype string) (map[string]string, []string, *cg
 	for id := range idNameMap {
 		ids = append(ids, id)
 	}
-	sort.Strings(ids)
+	// 按 OID 最后一段数字（gin）排序
+	sort.Slice(ids, func(i, j int) bool {
+		return lastOIDSegment(ids[i]) < lastOIDSegment(ids[j])
+	})
 
 	// 获取前置数据管理类
 	dbMsg, err := cgolibparse.GetDBMsgManagerInstance()

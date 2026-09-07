@@ -76,6 +76,19 @@ func UpdateHomepageBasicInfo(c *gin.Context) {
 	updateHomepageSection(c, "basic_info")
 }
 
+// UpdateHomepagePowerLevel 修改电力等级配置
+// @Summary     修改电力等级配置
+// @Tags        homepage
+// @Accept      json
+// @Produce     json
+// @Param       Authorization header string true "JWT Token"
+// @Param       items body []homepage.ConfigItem true "power_level 配置数组"
+// @Success     200 {object} models.CommonResp
+// @Router      /api/v1/log/homepage/config/power_level [post]
+func UpdateHomepagePowerLevel(c *gin.Context) {
+	updateHomepageSection(c, "power_level")
+}
+
 // updateHomepageSection 通用的 section 更新逻辑
 func updateHomepageSection(c *gin.Context, section string) {
 	log.Info("UpdateHomepageSection", section, "in...")

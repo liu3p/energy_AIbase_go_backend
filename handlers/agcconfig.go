@@ -1,7 +1,10 @@
 package handlers
 
 import (
+	"encoding/json"
+	"io"
 	"net/http"
+	"time"
 	"webserver-arm/agcconfig"
 	"webserver-arm/cgolibparse"
 	"webserver-arm/emsxmldb"
@@ -384,7 +387,7 @@ func PutAgcDevice(c *gin.Context) {
 	// 获取前端参数
 	stationData, err := c.GetRawData()
 	if err != nil {
-		log.Errorf("PutAgcDevice: GetRawData failed: '%w'", err)
+		log.Errorf("PutAgcDevice: GetRawData failed: '%v'", err)
 		c.JSON(http.StatusInternalServerError, models.CommonResp{Code: http.StatusInternalServerError, Message: err.Error()})
 		return
 	}
@@ -392,7 +395,7 @@ func PutAgcDevice(c *gin.Context) {
 	// 获取模型管理单例
 	ins, err := agcconfig.GetModelInstance()
 	if err != nil {
-		log.Errorf("PutAgcDevice: GetModelInstance failed: '%w'", err)
+		log.Errorf("PutAgcDevice: GetModelInstance failed: '%v'", err)
 		c.JSON(http.StatusInternalServerError, models.CommonResp{Code: http.StatusInternalServerError, Message: err.Error()})
 		return
 	}
@@ -400,7 +403,7 @@ func PutAgcDevice(c *gin.Context) {
 	// 调用单例更新设备信息
 	device, err := ins.UpdateAgcDevice(c.Param("device_name"), string(stationData))
 	if err != nil {
-		log.Errorf("PutAgcDevice: UpdateAgcDevice failed: '%w'", err)
+		log.Errorf("PutAgcDevice: UpdateAgcDevice failed: '%v'", err)
 		c.JSON(http.StatusInternalServerError, models.CommonResp{Code: http.StatusInternalServerError, Message: err.Error()})
 		return
 	}
@@ -597,5 +600,51 @@ func GetAgcRtuPoints(c *gin.Context) {
 		c.JSON(http.StatusOK, agcStrategyPoints)
 	} else {
 		c.JSON(http.StatusInternalServerError, "selectType参数错误")
+	}
+}
+func GetAgcData(t int) gin.HandlerFunc {
+	return func(c *gin.Context) {
+		log.Info("GetAgcData in ...")
+
+		client := &http.Client{Timeout: 5 * time.Second}
+
+		fetchModel := func(model string) interface{} {
+			resp, err := client.Get("http://127.0.0.1:8500/?model=" + model)
+			if err != nil {
+				log.Errorf("GetAgcData: fetch %s failed: %v", model, err)
+				return nil
+			}
+			defer resp.Body.Close()
+
+			body, err := io.ReadAll(resp.Body)
+			if err != nil {
+				log.Errorf("GetAgcData: read %s body failed: %v", model, err)
+				return nil
+			}
+
+			var result interface{}
+			if err := json.Unmarshal(body, &result); err != nil {
+				log.Errorf("GetAgcData: unmarshal %s failed: %v", model, err)
+				return nil
+			}
+			return result
+		}
+
+		result := gin.H{}
+
+		switch t {
+		case 1:
+			result["station_model"] = fetchModel("station_model")
+		case 2:
+			result["strategy_model"] = fetchModel("strategy_model")
+		case 3:
+			result["station_model"] = fetchModel("station_model")
+			result["strategy_model"] = fetchModel("strategy_model")
+		default:
+			c.JSON(http.StatusBadRequest, gin.H{"error": "invalid type, expected 1, 2 or 3"})
+			return
+		}
+
+		c.JSON(http.StatusOK, result)
 	}
 }
