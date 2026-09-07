@@ -201,6 +201,14 @@ func main() {
 		handlers.ClientMgr.PushMsg(&emsclient.PushResp{Topic: topic, Content: data})
 	})
 
+	// 建立 RTU ↔ Channel 内存关联
+	dbcfg, err := emsxmldb.GetDbConfigManager()
+	if err != nil {
+		log.Error("GetDbConfigManager failed:", err)
+	} else if err := dbcfg.LoadRTUChannelRelation(); err != nil {
+		log.Error("LoadRTUChannelRelation failed:", err)
+	}
+
 	r := gin.Default()
 	//pprof.Register(r)
 	loadResources(r)

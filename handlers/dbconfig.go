@@ -178,7 +178,11 @@ func AddRTU(c *gin.Context) {
 
 	// 2. 创建通道组+通道（STATION_BASE_ID 和 PossibleOwner.ID 使用已知的 rtuID）
 	cgName := channelGroupName(rtu)
+<<<<<<< HEAD
 	chName := rtu.Name + "_CG"
+=======
+	chName := rtu.Name + "的通道"
+>>>>>>> 7430b4bf8595c97ad7df40658150a1a618d17bc8
 	rtuIDInt := rtuIDToInt(rtuID)
 
 	forTransfer := "0"
@@ -250,10 +254,17 @@ func rtuHasChannel(rtuType int) bool {
 
 // channelGroupName 根据 RTU 类型生成通道组名称
 func channelGroupName(rtu emsxmldb.RTU) string {
+<<<<<<< HEAD
 	//if rtu.Type == emsxmldb.RtuTypeTrans {
 	//	return rtu.Name + "的转发通道"
 	//}
 	return rtu.Name + "_CG"
+=======
+	if rtu.Type == emsxmldb.RtuTypeTrans {
+		return rtu.Name + "的转发通道"
+	}
+	return rtu.Name + "的通道组"
+>>>>>>> 7430b4bf8595c97ad7df40658150a1a618d17bc8
 }
 
 // rtuIDToInt 将 RTU ID 字符串转为 int，失败返回 0
@@ -320,6 +331,7 @@ func UpdateRTU(c *gin.Context) {
 			return
 		}
 
+<<<<<<< HEAD
 		// 从请求的 Channel.Plugins 中拆分 AppPlugin 和 LinkPlugin
 		var appPlugin *emsxmldb.Plugin
 		var linkPlugin *emsxmldb.Plugin
@@ -328,6 +340,14 @@ func UpdateRTU(c *gin.Context) {
 				appPlugin = &p
 			} else if p.Type == "LINK" {
 				linkPlugin = &p
+=======
+		// 从请求的 Channel.Plugins 中拆分 AppPlugin
+		var appPlugin *emsxmldb.Plugin
+		for _, p := range rtu.Channel.Plugins {
+			if p.Type == "APP" {
+				appPlugin = &p
+				break
+>>>>>>> 7430b4bf8595c97ad7df40658150a1a618d17bc8
 			}
 		}
 
@@ -350,7 +370,10 @@ func UpdateRTU(c *gin.Context) {
 			Comment:         rtu.Channel.Comment,
 			PossibleOwnerID: rtu.Channel.PossibleOwner.ID,
 			AppPlugin:       appPlugin,
+<<<<<<< HEAD
 			LinkPlugin:      linkPlugin,
+=======
+>>>>>>> 7430b4bf8595c97ad7df40658150a1a618d17bc8
 		}
 		if err := fecfg.UpdateChannel(rtu.ChannelGroupID, chParam); err != nil {
 			log.Errorf("UpdateRTU: UpdateChannel failed: %w", err)
