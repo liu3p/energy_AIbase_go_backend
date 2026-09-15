@@ -1,0 +1,113 @@
+{
+  "topology": [
+    {
+      "no": 1,
+      "show_name": "储能",
+      "used": 1,
+      "oid": "1-1-102-1",
+      "type": 1,
+      "show_unit": ""
+    },
+    {
+      "no": 2,
+      "show_name": "电网",
+      "used": 1,
+      "oid": "1-1-102-1",
+      "type": 1,
+      "show_unit": ""
+    },
+    {
+      "no": 3,
+      "show_name": "负载",
+      "used": 1,
+      "oid": "1-1-102-1",
+      "type": 1,
+      "show_unit": ""
+    },
+    {
+      "no": 4,
+      "show_name": "光伏",
+      "used": 1,
+      "oid": "1-1-102-1",
+      "type": 1,
+      "show_unit": ""
+    },
+    {
+      "no": 5,
+      "show_name": "柴发",
+      "used": 1,
+      "oid": "1-1-102-1",
+      "type": 1,
+      "show_unit": ""
+    },
+    {
+      "no": 6,
+      "show_name": "充电桩",
+      "used": 1,
+      "oid": "1-1-102-1",
+      "type": 1,
+      "show_unit": ""
+    }
+  ],
+  "realtime": [
+    {
+      "no": 1,
+      "show_name": "",
+      "oid": "1-1-102-1",
+      "type": 2,
+      "table": {
+        "0": "未发生",
+        "1": "发生"
+      }
+    },
+    {
+      "no": 2,
+      "show_name": "",
+      "oid": "1-1-102-2",
+      "type": 1
+    }
+  ],
+  "basic_info": [
+    {
+      "no": 1,
+      "show_name": "电站名称",
+      "type": 3,
+      "show_value": "xxx电站",
+      "unit": ""
+    },
+    {
+      "no": 2,
+      "show_name": "SOC",
+      "type": 1,
+      "oid": "1-1-102-2"
+    },
+    {
+      "no": 3,
+      "show_name": "",
+      "type": 2,
+      "oid": "1-1-102-2",
+      "table": {
+        "0": "未发生",
+        "1": "发生"
+      }
+    }
+  ],
+  "power_level": [
+    {
+    "no": 1,
+    "show_name": "充电电量(正向有功电能)",
+    "used": 1,
+    "oid": "1-1-102-1000",
+    "type": 1,
+    "show_unit": ""
+  },
+    {
+      "no": 2,
+      "show_name": "放电电量(负向有功电能)",
+      "used": 1,
+      "oid": "1-1-102-1000",
+      "type": 1,
+      "show_unit": ""
+    }
+  ]
+}
