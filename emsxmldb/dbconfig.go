@@ -1231,12 +1231,11 @@ func (m *DbConfigXMLManager) load() error {
 			if err := initDB(); err != nil {
 				return err
 			}
-			// 默认添加系统监视RTU和监视RTU下的特殊设备
+			// 默认添加系统监视RTU，其下的固定特殊设备由 addRTU 同步创建
 			monitorRTU := &RTU{BaseInfo: BaseInfo{ID: "800", Name: "系统监视"}, Type: RtuTypeMonit, RtuAddr: "800", ChannelGroupID: -1, ChannelID: -1}
-			m.addRTU(monitorRTU, false)
-			m.addDeviceToRTU("800", &Device{BaseInfo: BaseInfo{ID: "60001", Name: "RTU状态"}, DeviceAddr: "1"})
-			m.addDeviceToRTU("800", &Device{BaseInfo: BaseInfo{ID: "60002", Name: "通道状态"}, DeviceAddr: "2"})
-			m.addDeviceToRTU("800", &Device{BaseInfo: BaseInfo{ID: "60003", Name: "程序状态"}, DeviceAddr: "3"})
+			if err := m.addRTU(monitorRTU, false); err != nil {
+				return err
+			}
 			return m.save()
 		}
 		return err
@@ -1413,8 +1412,30 @@ func (m *DbConfigXMLManager) addRTU(rtu *RTU, autoSave bool) error {
 	copyRtu := *rtu
 	rtus.RTUs = append(rtus.RTUs, &copyRtu)
 
+	// 系统监视RTU(800)同步创建固定特殊设备
+	if rtu.ID == "800" {
+		if err := m.addMonitorRTUDevices(rtu.ID); err != nil {
+			return err
+		}
+	}
+
 	if autoSave {
 		return m.save()
+	}
+	return nil
+}
+
+// addMonitorRTUDevices 为系统监视RTU(800)添加固定特殊设备
+func (m *DbConfigXMLManager) addMonitorRTUDevices(rtuID string) error {
+	devices := []*Device{
+		{BaseInfo: BaseInfo{ID: "60001", Name: "RTU状态"}, DeviceAddr: "1"},
+		{BaseInfo: BaseInfo{ID: "60002", Name: "通道状态"}, DeviceAddr: "2"},
+		{BaseInfo: BaseInfo{ID: "60003", Name: "程序状态"}, DeviceAddr: "3"},
+	}
+	for _, dev := range devices {
+		if err := m.addDeviceToRTU(rtuID, dev); err != nil {
+			return err
+		}
 	}
 	return nil
 }

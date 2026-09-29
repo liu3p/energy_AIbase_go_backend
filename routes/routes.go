@@ -32,6 +32,12 @@ func LoadRoutes(r *gin.Engine) {
 	userGroup.GET("/info", handlers.UserInfo)
 	userGroup.GET("/all", handlers.AllUsers) // admin
 
+	// 许可证 license
+	licenseGroup := loginedGroup.Group("/license")
+	licenseGroup.GET("/machine_serial", handlers.GetMachineSerial) // 查询机器码
+	licenseGroup.POST("/register", handlers.RegisterLicense)       // 提交注册码
+	licenseGroup.GET("/status", handlers.GetLicenseStatus)         // 校验有效/过期
+
 	// 推送
 	loginedGroup.GET("/ws/push", handlers.WebSocketHandler)
 
@@ -181,6 +187,7 @@ func LoadRoutes(r *gin.Engine) {
 	influxDBGroup.POST("/his", handlers.ExportInfluxDBData)
 	influxDBGroup.POST("/his/query", handlers.QueryInfluxDBData)
 	influxDBGroup.POST("/his/home", handlers.QueryHomeHistory)
+	influxDBGroup.GET("/his/export", handlers.ExportRawHistory)
 
 	// homepage config
 	homepageGroup := loginedGroup.Group("/homepage")

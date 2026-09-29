@@ -4,10 +4,12 @@ import (
 	"context"
 	"encoding/csv"
 	"fmt"
+	"io"
 	"math"
 	"net/http"
 	"os"
 	"sort"
+	"strconv"
 	"strings"
 	"sync"
 	"time"
@@ -206,13 +208,16 @@ type ExportHistoryReq struct {
 	EndTime   time.Time `json:"end_time"`
 }
 
+// IntervalAll 特殊的 interval 取值：不做时间插值，返回时间区间内的全部原始数据
+const IntervalAll = -1
+
 // QueryHistoryReq 查询历史数据请求参数
 type QueryHistoryReq struct {
 	Type      string    `json:"type"`       // 测点类型：digital遥信、analog遥测、pulse遥脉
 	IDs       []string  `json:"ids"`        // 测点ID数组
 	StartTime time.Time `json:"start_time"` // 开始时间
 	EndTime   time.Time `json:"end_time"`   // 结束时间
-	Interval  int       `json:"interval"`   // 时间间隔（秒），默认300秒，最小300秒
+	Interval  int       `json:"interval"`   // 时间间隔（秒），最小300秒；传 -1(IntervalAll) 表示不插值，返回区间内全部原始数据
 }
 
 // parsePointType 将字符串类型映射为整数类型
@@ -311,8 +316,8 @@ func QueryHistoryData(req *QueryHistoryReq) (QueryHistoryResp, error) {
 		return nil, fmt.Errorf("参数 StartTime 必须早于 EndTime")
 	}
 
-	// 参数校验
-	if req.Interval < 300 {
+	// 参数校验：-1 表示"全部原始数据"，不参与最小 300 秒的归一
+	if req.Interval != IntervalAll && req.Interval < 300 {
 		req.Interval = 300 // 默认5分钟
 	}
 
@@ -326,7 +331,13 @@ func QueryHistoryData(req *QueryHistoryReq) (QueryHistoryResp, error) {
 		return nil, err
 	}
 
-	fluxQuery := buildFluxQueryWithInterpolation(req.IDs, req.Type, req.StartTime, req.EndTime, req.Interval)
+	var fluxQuery string
+	if req.Interval == IntervalAll {
+		// 不插值：直接返回区间内的原始记录（无窗口聚合、无补点）
+		fluxQuery = buildFluxQueryRaw(req.IDs, req.Type, req.StartTime, req.EndTime)
+	} else {
+		fluxQuery = buildFluxQueryWithInterpolation(req.IDs, req.Type, req.StartTime, req.EndTime, req.Interval)
+	}
 	result, err := qAPI.Query(context.Background(), fluxQuery)
 	if err != nil {
 		return nil, fmt.Errorf("查询执行失败: %v", err)
@@ -387,4 +398,96 @@ func QueryHistoryData(req *QueryHistoryReq) (QueryHistoryResp, error) {
 	}
 
 	return resp, nil
+}
+
+// RawHistoryItem 一条原始历史数据记录
+type RawHistoryItem struct {
+	Time  time.Time
+	ID    string
+	Value interface{}
+}
+
+// buildFluxQueryRaw 构建不插值的 Flux 查询语句：直接返回原始记录，不做窗口聚合与补点
+// 与 buildFluxQueryWithInterpolation 的唯一区别是省掉了 aggregateWindow / fill / yield
+// （省掉显式 yield 是安全的：Flux 会补一个隐式 yield，客户端按顺序读表、不依赖名字）
+// start/stop 原样格式化，不做时区转换（与 /his/query 一致）
+func buildFluxQueryRaw(ids []string, measurement string, start, stop time.Time) string {
+	return fmt.Sprintf(`
+		from(bucket: "history_data")
+			|> range(start: %s, stop: %s)
+			|> filter(fn: (r) => r._measurement == "%s")
+			|> filter(fn: (r) => r._field == "value")
+			|> filter(fn: (r) => %s)
+	`, start.Format(time.RFC3339), stop.Format(time.RFC3339), measurement, buildIDFilter(ids))
+}
+
+// QueryRawHistoryData 查询单个测点某段时间的原始数据，不做插值、不做取整
+func QueryRawHistoryData(measurement, id string, start, stop time.Time) ([]RawHistoryItem, error) {
+	qAPI, err := GetQueryAPI()
+	if err != nil {
+		return nil, err
+	}
+
+	fluxQuery := buildFluxQueryRaw([]string{id}, measurement, start, stop)
+	result, err := qAPI.Query(context.Background(), fluxQuery)
+	if err != nil {
+		return nil, fmt.Errorf("查询执行失败: %v", err)
+	}
+	defer result.Close()
+
+	items := make([]RawHistoryItem, 0, 1024)
+	for result.Next() {
+		record := result.Record()
+		items = append(items, RawHistoryItem{
+			Time:  record.Time(),
+			ID:    id,
+			Value: record.Value(),
+		})
+	}
+	if result.Err() != nil {
+		return nil, fmt.Errorf("查询结果遍历出错: %v", result.Err())
+	}
+
+	sort.Slice(items, func(i, j int) bool { return items[i].Time.Before(items[j].Time) })
+	return items, nil
+}
+
+// WriteRawHistoryCSV 将原始数据以长表格式(time,id,value)写入 w
+// 时间列原样输出 UTC（record.Time() 即 UTC），不做时区转换
+func WriteRawHistoryCSV(w io.Writer, items []RawHistoryItem) error {
+	// 写入 UTF-8 BOM，解决 Excel 中文乱码
+	if _, err := w.Write([]byte{0xEF, 0xBB, 0xBF}); err != nil {
+		return fmt.Errorf("写入 BOM 失败: %v", err)
+	}
+
+	writer := csv.NewWriter(w)
+
+	if err := writer.Write([]string{"时间", "测点ID", "值"}); err != nil {
+		return fmt.Errorf("写入表头失败: %v", err)
+	}
+
+	for _, it := range items {
+		// 用 RFC3339Nano 保留亚秒精度，不用 RFC3339（那会截断到秒）；
+		// it.Time 已是 UTC，直接格式化即 Z 形式
+		row := []string{it.Time.Format(time.RFC3339Nano), it.ID, formatRawValue(it.Value)}
+		if err := writer.Write(row); err != nil {
+			return fmt.Errorf("写入数据行失败: %v", err)
+		}
+	}
+
+	// 显式 Flush 并检查错误：csv.Writer 是带缓冲的，
+	// 若用 defer writer.Flush()，底层 writer 的写失败会被吞掉，函数照样 return nil
+	writer.Flush()
+	if err := writer.Error(); err != nil {
+		return fmt.Errorf("刷新 CSV 缓冲失败: %v", err)
+	}
+	return nil
+}
+
+// formatRawValue 原样输出值：float64 用最短精确表示，避免 %f 的补零/截断
+func formatRawValue(v interface{}) string {
+	if f, ok := v.(float64); ok {
+		return strconv.FormatFloat(f, 'f', -1, 64)
+	}
+	return fmt.Sprintf("%v", v)
 }

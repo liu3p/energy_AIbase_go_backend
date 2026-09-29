@@ -174,7 +174,7 @@ func transformToHomepageData(values []cgolibparse.PointValue) []HomepagePointDat
 	for i, v := range values {
 		result[i] = HomepagePointData{
 			OID:      v.PointID,
-			Value:    v.CurrentValue,
+			Value:    roundToAtMost3Decimal(v.CurrentValue),
 			Quality:  v.Quality,
 			SendTime: v.SendTime,
 			Dead:     v.Dead,

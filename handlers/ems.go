@@ -1,9 +1,11 @@
 package handlers
 
 import (
+	"bytes"
 	"fmt"
 	"net/http"
 	"sort"
+	"strconv"
 	"strings"
 	"time"
 	"webserver-arm/emsdb"
@@ -20,6 +22,13 @@ const (
 
 	LOCALWEB2AGVC = "localweb2agvc"
 	AGVC2LOCALWEB = "agvc2localweb"
+)
+
+const (
+	// pointIDMinParts 测点ID格式 xxx-xxxxx-xxx-xxx，至少 4 段（与 /his/query 的 validatePointIDs 口径一致）
+	pointIDMinParts = 4
+	// maxExportSpan 单次导出的最大时间跨度，防止无聚合查询把内存打满
+	maxExportSpan = 48 * time.Hour
 )
 
 //nolint:govet
@@ -585,11 +594,124 @@ func QueryInfluxDBData(c *gin.Context) {
 	})
 }
 
+// makeDownloadFileName 生成安全的下载文件名
+// pointID 来自请求参数，需过滤掉可能污染 Content-Disposition 的字符（引号、分号、路径分隔符、换行等）
+func makeDownloadFileName(pointID string, start, stop time.Time) string {
+	safe := strings.Map(func(r rune) rune {
+		switch {
+		case r >= 'a' && r <= 'z', r >= 'A' && r <= 'Z', r >= '0' && r <= '9':
+			return r
+		case r == '-', r == '_', r == '.':
+			return r
+		default:
+			return '_'
+		}
+	}, pointID)
+	return fmt.Sprintf("history_%s_%s_%s.csv",
+		safe,
+		start.UTC().Format("20060102T150405Z"),
+		stop.UTC().Format("20060102T150405Z"))
+}
+
+// @Summary     导出单测点历史原始数据
+// @Description 导出指定测点在指定时间范围内的 InfluxDB 原始历史数据（不做插值与取整），以 CSV 文件返回
+// @ID          influxdb-export-raw-history
+// @Tags        influxdb
+// @Param       Authorization header string true "JWT Token"
+// @Param       start_time query string true "开始时刻，RFC3339"
+// @Param       end_time   query string true "结束时刻，RFC3339"
+// @Param       id         query string true "测点ID，格式 xxx-xxxxx-xxx-xxx"
+// @Success     200 {file} file "CSV 文件"
+// @Failure     401 {object} models.CommonResp "认证失败"
+// @Failure     400 {object} models.CommonResp "参数错误"
+// @Failure     500 {object} models.CommonResp "服务内部错误"
+// @Router      /api/v1/log/influxdb/his/export [get]
+func ExportRawHistory(c *gin.Context) {
+	log.Info("ExportRawHistory in...")
+
+	startStr := c.Query("start_time")
+	endStr := c.Query("end_time")
+	pointID := c.Query("id")
+	if startStr == "" || endStr == "" || pointID == "" {
+		c.JSON(http.StatusBadRequest, models.CommonResp{
+			Code:    http.StatusBadRequest,
+			Message: "参数 start_time、end_time 和 id 必填",
+		})
+		return
+	}
+
+	// 1. 解析时间：与 /his/query 一致，RFC3339 原样接入，不做任何时区解释
+	start, err := time.Parse(time.RFC3339, startStr)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, models.CommonResp{Code: http.StatusBadRequest, Message: "参数 start_time 格式错误，应为 RFC3339"})
+		return
+	}
+	stop, err := time.Parse(time.RFC3339, endStr)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, models.CommonResp{Code: http.StatusBadRequest, Message: "参数 end_time 格式错误，应为 RFC3339"})
+		return
+	}
+	if !start.Before(stop) {
+		c.JSON(http.StatusBadRequest, models.CommonResp{Code: http.StatusBadRequest, Message: "参数 start_time 必须早于 end_time"})
+		return
+	}
+	// 本接口无聚合，返回量正比于原始记录数且全部堆在内存，需要限制跨度
+	if stop.Sub(start) > maxExportSpan {
+		c.JSON(http.StatusBadRequest, models.CommonResp{Code: http.StatusBadRequest, Message: "导出时间跨度不能超过 48 小时"})
+		return
+	}
+
+	// 2. 校验 id 基本格式：与 /his/query 一致要求至少 4 段
+	//    （oidTypeFromThirdSegment 只判 >=3 段，单独用它会让 "1-1-102" 这种漏过去）
+	if len(strings.Split(pointID, "-")) < pointIDMinParts {
+		c.JSON(http.StatusBadRequest, models.CommonResp{
+			Code:    http.StatusBadRequest,
+			Message: "参数 id 格式错误，应为 xxx-xxxxx-xxx-xxx",
+		})
+		return
+	}
+
+	// 3. 由 OID 第三段识别测点类型（即 InfluxDB measurement）
+	measurement, ok := oidTypeFromThirdSegment(pointID)
+	if !ok {
+		c.JSON(http.StatusBadRequest, models.CommonResp{
+			Code:    http.StatusBadRequest,
+			Message: "参数 id 第三段必须为 101(digital) / 102(analog) / 105(pulse)",
+		})
+		return
+	}
+
+	// 4. 查询原始数据
+	items, err := emsdb.QueryRawHistoryData(measurement, pointID, start, stop)
+	if err != nil {
+		log.Errorf("ExportRawHistory QueryRawHistoryData failed: %v", err)
+		c.JSON(http.StatusInternalServerError, models.CommonResp{Code: http.StatusInternalServerError, Message: err.Error()})
+		return
+	}
+
+	// 5. 在内存中组装 CSV（先组装再发响应，避免半截响应）
+	var buf bytes.Buffer
+	if err := emsdb.WriteRawHistoryCSV(&buf, items); err != nil {
+		log.Errorf("ExportRawHistory WriteRawHistoryCSV failed: %v", err)
+		c.JSON(http.StatusInternalServerError, models.CommonResp{Code: http.StatusInternalServerError, Message: err.Error()})
+		return
+	}
+
+	// 6. 直接返回文件流
+	fileName := makeDownloadFileName(pointID, start, stop)
+	c.Header("Content-Type", "text/csv; charset=utf-8")
+	c.Header("Content-Disposition", `attachment; filename="`+fileName+`"`)
+	c.Header("Content-Length", strconv.Itoa(buf.Len()))
+	if _, err := c.Writer.Write(buf.Bytes()); err != nil {
+		log.Error("ExportRawHistory 写入响应失败:", err)
+	}
+}
+
 // HomeHistoryReq 首页历史数据查询请求
 type HomeHistoryReq struct {
 	StartTime time.Time `json:"start_time"`
 	EndTime   time.Time `json:"end_time"`
-	Interval  int       `json:"interval"`
+	Interval  int       `json:"interval"` // 时间间隔（秒），最小300秒；传 -1(emsdb.IntervalAll) 表示不插值，返回区间内全部原始数据
 }
 
 // HomeHistoryResp 首页历史数据查询响应
@@ -741,7 +863,8 @@ func QueryHomeHistory(c *gin.Context) {
 		})
 		return
 	}
-	if req.Interval < 300 {
+	// 参数校验：-1 表示"全部原始数据"，不参与最小 300 秒的归一
+	if req.Interval != emsdb.IntervalAll && req.Interval < 300 {
 		req.Interval = 300
 	}
 

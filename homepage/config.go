@@ -21,6 +21,7 @@ type ConfigItem struct {
 	Type       int               `json:"type"`
 	ShowUnit   string            `json:"show_unit"`
 	Table      map[string]string `json:"table"`
+	BgColor    map[string]string `json:"bg_color"`
 	ShowValue  string            `json:"show_value"`
 	Name       string            `json:"name"`
 	Unit       string            `json:"unit"`

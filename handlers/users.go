@@ -58,10 +58,11 @@ type LoginReq struct {
 type LoginResp struct {
 	// Uname        string `json:"username"`
 	// Utype        string `json:"usertype"`
-	AccessToken  string `json:"access_token"`
-	Expires      int64  `json:"expires_in"`
-	RefreshToken string `json:"refresh_token"`
-	TokenType    string `json:"token_type"`
+	AccessToken  string             `json:"access_token"`
+	Expires      int64              `json:"expires_in"`
+	RefreshToken string             `json:"refresh_token"`
+	TokenType    string             `json:"token_type"`
+	License      *LicenseStatusResp `json:"license"` // 追加：登录时合并的许可证状态
 }
 
 func removeUserInfo(uName string) {
@@ -160,6 +161,9 @@ func LoginUser(c *gin.Context) {
 			RefreshTokenExp: refreshExpTime})
 
 		loginResp := &LoginResp{AccessToken: token, Expires: expTime, RefreshToken: refreshToken, TokenType: "Bearer"}
+		// 合并许可证状态：仅在登录成功后执行；函数内部已兜底，失败不影响登录结果
+		licenseInfo := GetLicenseStatusData()
+		loginResp.License = &licenseInfo
 		c.JSON(http.StatusOK, loginResp)
 		recordLastLogin(uName)
 		return
