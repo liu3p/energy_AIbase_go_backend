@@ -614,7 +614,7 @@ func makeDownloadFileName(pointID string, start, stop time.Time) string {
 }
 
 // @Summary     导出单测点历史原始数据
-// @Description 导出指定测点在指定时间范围内的 InfluxDB 原始历史数据（不做插值与取整），以 CSV 文件返回
+// @Description 导出指定测点在指定时间范围内的 InfluxDB 原始历史数据（不做插值与取整），以 CSV 文件返回；时间列时区跟随 start_time 的偏移
 // @ID          influxdb-export-raw-history
 // @Tags        influxdb
 // @Param       Authorization header string true "JWT Token"
@@ -690,8 +690,19 @@ func ExportRawHistory(c *gin.Context) {
 	}
 
 	// 5. 在内存中组装 CSV（先组装再发响应，避免半截响应）
+	// 时间列按请求方时区输出：与 /his/query 的规则一致——取 start_time 的固定偏移重新表示时间
+	// （start_time 给 +08:00 则输出 2026-09-17T00:00:01+08:00，而不是 UTC 的 ...Z）。
+	// 用 FixedZone(偏移) 而不是 start 解析出的 Location：time.Parse 在偏移恰等于服务器本地时区
+	// 时会返回 Local，跨夏令时会让输出偏移与请求漂移；固定成请求当时的偏移可保证逐字一致。
+	// 偏移为 0（请求给 Z）时传 nil，时间列保持 UTC 的 Z 形式，与旧行为一致。
+	// 查询本身不受影响：Flux 用的是时间瞬时，start/stop 带不带偏移拼出来等价。
+	var loc *time.Location
+	if _, offset := start.Zone(); offset != 0 {
+		loc = time.FixedZone("", offset)
+	}
+
 	var buf bytes.Buffer
-	if err := emsdb.WriteRawHistoryCSV(&buf, items); err != nil {
+	if err := emsdb.WriteRawHistoryCSV(&buf, items, loc); err != nil {
 		log.Errorf("ExportRawHistory WriteRawHistoryCSV failed: %v", err)
 		c.JSON(http.StatusInternalServerError, models.CommonResp{Code: http.StatusInternalServerError, Message: err.Error()})
 		return
@@ -709,9 +720,10 @@ func ExportRawHistory(c *gin.Context) {
 
 // HomeHistoryReq 首页历史数据查询请求
 type HomeHistoryReq struct {
-	StartTime time.Time `json:"start_time"`
-	EndTime   time.Time `json:"end_time"`
-	Interval  int       `json:"interval"` // 时间间隔（秒），最小300秒；传 -1(emsdb.IntervalAll) 表示不插值，返回区间内全部原始数据
+	StartTime  time.Time `json:"start_time"`
+	EndTime    time.Time `json:"end_time"`
+	Interval   int       `json:"interval"`    // 时间间隔（秒），最小300秒；传 -1(emsdb.IntervalAll) 表示不插值，返回区间内全部原始数据
+	IncludeEnd *bool     `json:"include_end"` // 同 emsdb.QueryHistoryReq.IncludeEnd；仅插值模式生效，默认 true
 }
 
 // HomeHistoryResp 首页历史数据查询响应
@@ -903,11 +915,12 @@ func QueryHomeHistory(c *gin.Context) {
 		ids = dedupOIDs(ids)
 		log.Infof("QueryHomeHistory: query type=%s, ids=%v", typ, ids)
 		queryReq := &emsdb.QueryHistoryReq{
-			Type:      typ,
-			IDs:       ids,
-			StartTime: req.StartTime,
-			EndTime:   req.EndTime,
-			Interval:  req.Interval,
+			Type:       typ,
+			IDs:        ids,
+			StartTime:  req.StartTime,
+			EndTime:    req.EndTime,
+			Interval:   req.Interval,
+			IncludeEnd: req.IncludeEnd, // 指针直接透传，nil 语义一致
 		}
 		resp, err := emsdb.QueryHistoryData(queryReq)
 		if err != nil {

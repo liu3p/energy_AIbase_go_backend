@@ -2,7 +2,7 @@ package cgolibparse
 
 /*
 #cgo CFLAGS: -I/root/arm/src/agc/include -I/usr/local/include/Poco
-#cgo LDFLAGS: -L/root/arm/lib -lagc_base
+#cgo LDFLAGS: -L/root/arm/lib -lagc_base -ltranslation
 #include <stdlib.h>       // for C.free
 #include "agc_c_api.h"
 */

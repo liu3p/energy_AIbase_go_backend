@@ -105,7 +105,7 @@ func LoginUser(c *gin.Context) {
 	uName := loginreq.Uname
 	pwd := loginreq.Pwd
 
-	log.Info("LoginUser in... uname:", uName, ",pwd:", pwd, ",c:", c.Request.Form, ",userinfo:", loginreq)
+	log.Info("LoginUser in... uname:", uName, ",c:", c.Request.Form)
 
 	logResp := &emsxmldb.LoginRet{}
 	if uName != UserTypeAdmin {
@@ -213,8 +213,19 @@ func RefreshToken(c *gin.Context) {
 		return
 	}
 
-	// 更新用户token
-	uName := c.GetString(middleware.UNameKey)
+	// 更新用户token。该接口不经过 Auth 中间件，用户名需要从新 token 中恢复。
+	valid, claims := middleware.VerifyToken(newToken)
+	if !valid {
+		log.Error("RefreshToken generated token verification failed")
+		c.JSON(http.StatusInternalServerError, models.CommonResp{Code: http.StatusInternalServerError, Message: "Internal Service Error"})
+		return
+	}
+	uName, ok := claims[middleware.UNameKey].(string)
+	if !ok || uName == "" {
+		log.Error("RefreshToken claims missing username")
+		c.JSON(http.StatusInternalServerError, models.CommonResp{Code: http.StatusInternalServerError, Message: "Internal Service Error"})
+		return
+	}
 	if data, ok := OnlineUsers.Load(uName); ok {
 		onlines, match := data.(*OnlineUser)
 		if match {

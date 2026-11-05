@@ -8,6 +8,7 @@ import (
 	"math"
 	"os"
 	"path/filepath"
+	"sort"
 	"strconv"
 	"sync"
 	"time"
@@ -27,8 +28,75 @@ type Parameter struct {
 type Plugin struct {
 	ID         int         `xml:"ID,attr" json:"id"`
 	Name       string      `xml:"NAME,attr" json:"name"`
-	Type       string      `xml:"TYPE,attr" json:"type"`
+	Type       string      `xml:"TYPE,attr" json:"type"` // 层号字符串 "1"/"2"/...，由 ID 推导，写入 XML
 	Parameters []Parameter `xml:"PARAMETER" json:"parameters"`
+}
+
+// PluginLayer 某一层的可选协议集合（用于 /fecfg/plugins 按层返回）
+type PluginLayer struct {
+	Type    string   `json:"type"`    // 层号字符串 "1"/"2"/...
+	Plugins []Plugin `json:"plugins"` // 该层可选协议
+}
+
+// pluginLayer 由插件 ID 推导层号：0-999→1, 1000-1999→2, ...
+func pluginLayer(id int) int {
+	if id < 0 {
+		return 0 // 非法
+	}
+	return id/1000 + 1
+}
+
+// layerString 层号的字符串形式（写入 Plugin.Type / XML TYPE 属性）
+func layerString(id int) string {
+	return strconv.Itoa(pluginLayer(id))
+}
+
+// ErrPluginLayer 层协议选择非法（跳层、同层重复、ID 非法）
+var ErrPluginLayer = errors.New("plugin layer invalid")
+
+// ValidatePluginLayers 校验通道协议选择：
+//   - 允许为空
+//   - 插件 ID 合法（>=0）
+//   - 每层至多一个
+//   - 层号从第 1 层起连续，无跳层
+func ValidatePluginLayers(plugins []Plugin) error {
+	if len(plugins) == 0 {
+		return nil
+	}
+	seen := make(map[int]struct{}, len(plugins))
+	layers := make([]int, 0, len(plugins))
+	for _, p := range plugins {
+		if p.ID < 0 {
+			return fmt.Errorf("%w: 插件 ID %d 无效", ErrPluginLayer, p.ID)
+		}
+		l := pluginLayer(p.ID)
+		if _, dup := seen[l]; dup {
+			return fmt.Errorf("%w: 第 %d 层只能选择一个协议", ErrPluginLayer, l)
+		}
+		seen[l] = struct{}{}
+		layers = append(layers, l)
+	}
+	sort.Ints(layers)
+	for i, l := range layers {
+		if l != i+1 {
+			return fmt.Errorf("%w: 协议必须从第 1 层起连续选择，缺少第 %d 层", ErrPluginLayer, i+1)
+		}
+	}
+	return nil
+}
+
+// sortPluginsByLayer 设置 Type 并返回按层升序排列的副本。
+// 按数值层号排序（非字符串字典序），否则 "10" 会排在 "2" 前。
+func sortPluginsByLayer(plugins []Plugin) []Plugin {
+	cp := make([]Plugin, len(plugins))
+	copy(cp, plugins)
+	for i := range cp {
+		cp[i].Type = layerString(cp[i].ID)
+	}
+	sort.SliceStable(cp, func(i, j int) bool {
+		return pluginLayer(cp[i].ID) < pluginLayer(cp[j].ID)
+	})
+	return cp
 }
 
 // PossibleOwner XML节点：CHANNEL下的POSSIBLE_OWNER
@@ -163,7 +231,34 @@ func (m *FeConfigXMLManager) loadXML() error {
 	}
 
 	m.feDefine = feDefine
+
+	// 修复存量数据中 Plugin.Type：一律以 ID 推断的层号为准（非数字 / 矛盾均不报错）
+	m.repairPluginLayers()
 	return nil
+}
+
+// repairPluginLayers 用 ID 推断的层号修正每个 Plugin.Type。
+// 存量数据中 TYPE 可能缺失、非数字（"APP"/"LINK"）或与 ID 矛盾——一律以 ID 为准。
+func (m *FeConfigXMLManager) repairPluginLayers() {
+	for i := range m.feDefine.ChannelGroups {
+		channels := m.feDefine.ChannelGroups[i].Channels
+		for j := range channels {
+			for k := range channels[j].Plugins {
+				p := &channels[j].Plugins[k]
+				if p.ID < 0 { // 无法推导层号
+					log.Warnf("repairPluginLayers: CHANNEL_GROUP %d CHANNEL %d PLUGIN 非法 ID=%d，跳过",
+						m.feDefine.ChannelGroups[i].ID, channels[j].ID, p.ID)
+					continue
+				}
+				expected := layerString(p.ID)
+				if p.Type != expected { // 非数字 / 与 ID 矛盾 / 缺失 → 以 ID 为准
+					log.Warnf("repairPluginLayers: CHANNEL_GROUP %d CHANNEL %d PLUGIN ID=%d TYPE=%q 与推断层号 %q 不一致，修正为 %q",
+						m.feDefine.ChannelGroups[i].ID, channels[j].ID, p.ID, p.Type, expected, expected)
+					p.Type = expected
+				}
+			}
+		}
+	}
 }
 
 // SaveXML 将feDefine写入XML文件（新增自动备份旧文件逻辑）
@@ -473,14 +568,18 @@ type ChannelParam struct {
 	Name            string `json:"name"`
 	PossibleOwnerID int    `json:"possibleownerid"`
 
-	AppPlugin  *Plugin `json:"appplugin"`
-	LinkPlugin *Plugin `json:"linkplugin"`
+	Plugins []Plugin `json:"plugins"` // 多层协议选择；每层至多一个、从第1层起连续，可为空
 }
 
 // CreateChannel 新增CHANNEL到指定CHANNEL_GROUP（自动创建PLUGIN结构）
 func (m *FeConfigXMLManager) CreateChannel(chGroupID int, param ChannelParam) error {
 	m.mutex.Lock()
 	defer m.mutex.Unlock()
+
+	// 协议层校验（先于任何修改）
+	if err := ValidatePluginLayers(param.Plugins); err != nil {
+		return err
+	}
 
 	// get channelgroup
 	var cgIndex int
@@ -507,14 +606,8 @@ func (m *FeConfigXMLManager) CreateChannel(chGroupID int, param ChannelParam) er
 	}
 	param.ChannelID = newID
 
-	// create plugin
-	plugins := make([]Plugin, 0)
-	if param.AppPlugin != nil {
-		plugins = append(plugins, *param.AppPlugin)
-	}
-	if param.LinkPlugin != nil {
-		plugins = append(plugins, *param.LinkPlugin)
-	}
+	// create plugin（按层升序，Type 由 ID 推导）
+	plugins := sortPluginsByLayer(param.Plugins)
 
 	if param.PossibleOwnerID == 0 {
 		param.PossibleOwnerID = m.feDefine.Host.ID
@@ -584,6 +677,11 @@ func (m *FeConfigXMLManager) UpdateChannel(chGroupID int, param ChannelParam) er
 	m.mutex.Lock()
 	defer m.mutex.Unlock()
 
+	// 协议层校验（先于任何修改）
+	if err := ValidatePluginLayers(param.Plugins); err != nil {
+		return err
+	}
+
 	// 1. 查找归属的CHANNEL_GROUP
 	for i, cg := range m.feDefine.ChannelGroups {
 		if cg.ID == chGroupID {
@@ -600,14 +698,8 @@ func (m *FeConfigXMLManager) UpdateChannel(chGroupID int, param ChannelParam) er
 					m.feDefine.ChannelGroups[i].Channels[j].ServerGroupID = chGroupID + 1
 					m.feDefine.ChannelGroups[i].Channels[j].PossibleOwner = PossibleOwner{ID: param.PossibleOwnerID}
 
-					plugins := make([]Plugin, 0)
-					if param.AppPlugin != nil {
-						plugins = append(plugins, *param.AppPlugin)
-					}
-					if param.LinkPlugin != nil {
-						plugins = append(plugins, *param.LinkPlugin)
-					}
-					m.feDefine.ChannelGroups[i].Channels[j].Plugins = plugins
+					// 按层升序替换，Type 由 ID 推导
+					m.feDefine.ChannelGroups[i].Channels[j].Plugins = sortPluginsByLayer(param.Plugins)
 
 					return m.saveXML()
 				}
@@ -822,20 +914,19 @@ func ReadPluginTypeXMLToMap(xmlPath string) (map[string]string, error) {
 	return dllTypeMap, nil
 }
 
-func GetChannelPlugins() ([]Plugin, []Plugin, error) {
-	dllTypeMap := map[string]string{"tcp_server": "LINK", "tcp_client": "LINK", "serial_commu": "LINK", "commport": "LINK", "com_port": "LINK"}
-
+// GetChannelPlugins 获取可选协议，按层（ID 区间）分组返回；只返回非空层。
+func GetChannelPlugins() ([]PluginLayer, error) {
 	cgoPlugins, err := cgolibparse.GetPluginLibInfo()
 	if err != nil {
-		return nil, nil, fmt.Errorf("GetPluginLibInfo failed: %w", err)
+		return nil, fmt.Errorf("GetPluginLibInfo failed: %w", err)
 	}
 
-	log.Info("GetChannelPlugins get dllTypeMap:", dllTypeMap, ", cgoPlugins:", cgoPlugins)
+	log.Info("GetChannelPlugins cgoPlugins:", cgoPlugins)
 
-	appPlugin := make([]Plugin, 0, len(cgoPlugins))
-	linkPlugin := make([]Plugin, 0, len(cgoPlugins))
+	layerMap := make(map[int][]Plugin)
+	maxLayer := 0
 	for _, plugin := range cgoPlugins {
-		item := Plugin{Name: plugin.Name, ID: plugin.ID}
+		item := Plugin{ID: plugin.ID, Name: plugin.Name, Type: layerString(plugin.ID)}
 		for name, value := range plugin.Params {
 			item.Parameters = append(item.Parameters, Parameter{
 				Name:      name,
@@ -843,16 +934,18 @@ func GetChannelPlugins() ([]Plugin, []Plugin, error) {
 				ValueList: value.ValueList,
 			})
 		}
-
-		if _, ok := dllTypeMap[plugin.Name]; ok {
-			log.Info("get LINK lib plugin:", plugin.Name)
-			item.Type = "LINK"
-			linkPlugin = append(linkPlugin, item)
-		} else {
-			log.Info("get APP lib plugin:", plugin.Name)
-			item.Type = "APP"
-			appPlugin = append(appPlugin, item)
+		layer := pluginLayer(plugin.ID)
+		layerMap[layer] = append(layerMap[layer], item)
+		if layer > maxLayer {
+			maxLayer = layer
 		}
 	}
-	return appPlugin, linkPlugin, nil
+
+	result := make([]PluginLayer, 0, maxLayer)
+	for layer := 1; layer <= maxLayer; layer++ {
+		if plugins := layerMap[layer]; len(plugins) > 0 {
+			result = append(result, PluginLayer{Type: strconv.Itoa(layer), Plugins: plugins})
+		}
+	}
+	return result, nil
 }

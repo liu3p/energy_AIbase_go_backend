@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"errors"
 	"fmt"
 	"net/http"
 	"os/exec"
@@ -221,6 +222,11 @@ func AddCGChannel(c *gin.Context) {
 	}
 	err = fecfg.CreateChannel(chGroupID, channel)
 	if err != nil {
+		if errors.Is(err, emsxmldb.ErrPluginLayer) {
+			log.Error("AddCGChannel plugin layer invalid: %v", err)
+			c.JSON(http.StatusBadRequest, models.CommonResp{Code: http.StatusBadRequest, Message: err.Error()})
+			return
+		}
 		log.Error("AddCGChannel error: %v", err)
 		c.JSON(http.StatusInternalServerError, models.CommonResp{Code: http.StatusInternalServerError, Message: "AddChannelGroup failed"})
 		return
@@ -267,6 +273,11 @@ func UpdateCGChannel(c *gin.Context) {
 
 	err = fecfg.UpdateChannel(chGroupID, channel)
 	if err != nil {
+		if errors.Is(err, emsxmldb.ErrPluginLayer) {
+			log.Error("UpdateCGChannel plugin layer invalid: %v", err)
+			c.JSON(http.StatusBadRequest, models.CommonResp{Code: http.StatusBadRequest, Message: err.Error()})
+			return
+		}
 		log.Error("UpdateCGChannel error: %v", err)
 		c.JSON(http.StatusInternalServerError, models.CommonResp{Code: http.StatusInternalServerError, Message: "UpdateChannelGroup failed"})
 		return
@@ -319,31 +330,29 @@ func DeleteCGChannel(c *gin.Context) {
 	c.JSON(http.StatusOK, models.CommonResp{Code: http.StatusOK, Message: "DeleteChannelGroup success"})
 }
 
-type ChannelPlugin struct {
-	AppPlugins  []emsxmldb.Plugin `json:"appplugin"`
-	LinkPlugins []emsxmldb.Plugin `json:"linkplugin"`
-}
-
-// @Summary		获取通道组下的通道插件
-// @Description	获取通道组下的通道插件
+// @Summary		获取通道协议插件（按层分组）
+// @Description	获取通道协议插件（按层分组）
 // @ID				get-channel-plugins
 // @Tags			fecfg
 // @Param			Authorization	header		string	true	"JWT Token"	default(<token>)
-// @Success		200				{object}	ChannelPlugin	 "获取成功"
+// @Success		200				{object}	[]emsxmldb.PluginLayer	 "获取成功"
 // @Failure		401				{object}	models.CommonResp	"认证失败 {\"code\": 401
 // @Failure		500				{object}	models.CommonResp	"服务内部错误 {\"code\": 500, \"msg\": \"\"}"
 // @Router			/api/v1/log/fecfg/plugins [get]
 func GetChannelPlugins(c *gin.Context) {
 	log.Info("GetChannelPlugins in ...")
-	appPlugins, linkPlugins, err := emsxmldb.GetChannelPlugins()
+	layers, err := emsxmldb.GetChannelPlugins()
 	if err != nil {
 		log.Error("GetChannelPlugins error: %v", err)
 		c.JSON(http.StatusInternalServerError, models.CommonResp{Code: http.StatusInternalServerError, Message: "GetChannelPlugins failed"})
 		return
 	}
-	log.Info("GetChannelPlugins success:", appPlugins, linkPlugins)
-	result := ChannelPlugin{AppPlugins: sortChannelPlugins(appPlugins), LinkPlugins: sortChannelPlugins(linkPlugins)}
-	c.JSON(http.StatusOK, result)
+	// 每层的协议按 parameters 排序（拷贝，不修改原始数据）
+	for i := range layers {
+		layers[i].Plugins = sortChannelPlugins(layers[i].Plugins)
+	}
+	log.Info("GetChannelPlugins success:", layers)
+	c.JSON(http.StatusOK, layers)
 }
 
 // @Summary 通知前置重新加载配置

@@ -71,7 +71,12 @@ func GetMachineSerial(c *gin.Context) {
 		}
 	}
 
-	// 2. 首次查询：调用 C 库生成
+	// 2. 调用 C 库前先删除旧文件（含内容为空的残留文件），避免影响本次生成
+	if err := os.Remove(machineSerialFile); err != nil && !os.IsNotExist(err) {
+		log.Warn("remove machine serial before generate failed:", err)
+	}
+
+	// 3. 首次查询：调用 C 库生成
 	serial, err := cgolibparse.GenerateMachineSerial()
 	if err != nil {
 		c.JSON(http.StatusInternalServerError,
@@ -79,7 +84,7 @@ func GetMachineSerial(c *gin.Context) {
 		return
 	}
 
-	// 3. 落盘持久化（先确保目录存在），供后续查询直接复用；写盘失败仅记录日志，不影响本次返回。
+	// 4. 落盘持久化（先确保目录存在），供后续查询直接复用；写盘失败仅记录日志，不影响本次返回。
 	//    目录缺失只在全新部署首次出现，MkdirAll 兜底后即可正常落盘。
 	if err := ensureLicenseDir(machineSerialFile); err != nil {
 		log.Warn("ensure license dir failed:", err)
@@ -89,8 +94,19 @@ func GetMachineSerial(c *gin.Context) {
 	c.JSON(http.StatusOK, MachineSerialResp{SerialNumber: serial})
 }
 
+// refreshMachineSerial 删除并重建机器码文件。先生成后删除，生成失败时旧文件不受影响。
+func refreshMachineSerial(serial string) error {
+	if err := ensureLicenseDir(machineSerialFile); err != nil {
+		return err
+	}
+	if err := os.Remove(machineSerialFile); err != nil && !os.IsNotExist(err) {
+		return err
+	}
+	return os.WriteFile(machineSerialFile, []byte(serial), 0o644)
+}
+
 // @Summary		提交注册码
-// @Description	校验并保存注册码到本地文件
+// @Description	校验并保存注册码到本地文件；有效期按提交的注册码生效，同时重建机器码文件
 // @Tags			license
 // @Accept			json
 // @Produce		json
@@ -123,6 +139,15 @@ func RegisterLicense(c *gin.Context) {
 		c.JSON(http.StatusInternalServerError,
 			models.CommonResp{Code: http.StatusInternalServerError, Message: err.Error()})
 		return
+	}
+	// 有效期随新码落盘即生效；随后删除并重建机器码文件，使其与当前硬件一致。
+	// 重建失败不影响注册结果，仅记录日志（前端不感知）。
+	if serial, err := cgolibparse.GenerateMachineSerial(); err != nil {
+		log.Warn("refresh machine serial: generate failed:", err)
+	} else if serial == "" {
+		log.Warn("refresh machine serial: generated serial is empty")
+	} else if err := refreshMachineSerial(serial); err != nil {
+		log.Warn("refresh machine serial: persist failed:", err)
 	}
 	c.JSON(http.StatusOK, LicenseStatusResp{
 		IsValid:       true,

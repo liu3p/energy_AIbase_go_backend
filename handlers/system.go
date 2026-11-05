@@ -16,7 +16,6 @@ import (
 	"strconv"
 	"strings"
 	"time"
-	"webserver-arm/cgolibparse"
 	"webserver-arm/emsdb"
 	"webserver-arm/emsxmldb"
 	"webserver-arm/log"
@@ -1052,14 +1051,14 @@ func ParaEnable(c *gin.Context) {
 	}
 
 	// 2. 通知前端服务重载配置
-	if err := cgolibparse.NotifyFeServerReload(); err != nil {
-		log.Errorf("ParaEnable NotifyFeServerReload error: %v", err)
-		c.JSON(http.StatusInternalServerError, models.CommonResp{
-			Code: http.StatusInternalServerError, Message: "NotifyFeServerReload failed",
-		})
-		return
-	}
-	log.Info("ParaEnable NotifyFeServerReload success")
+	//if err := cgolibparse.NotifyFeServerReload(); err != nil {
+	//	log.Errorf("ParaEnable NotifyFeServerReload error: %v", err)
+	//	c.JSON(http.StatusInternalServerError, models.CommonResp{
+	//		Code: http.StatusInternalServerError, Message: "NotifyFeServerReload failed",
+	//	})
+	//	return
+	//}
+	//log.Info("ParaEnable NotifyFeServerReload success")
 
 	// 3. 获取 ARM_SF/bin 路径
 	armSF := os.Getenv("ARM_SF")
@@ -1077,8 +1076,8 @@ func ParaEnable(c *gin.Context) {
 		action string
 		id     string
 	}{
-		{"stop", "6"}, {"stop", "2"}, {"stop", "1"},
-		{"restart", "1"}, {"restart", "2"}, {"restart", "6"},
+		{"stop", "6"}, {"stop", "3"}, {"stop", "2"}, {"stop", "1"},
+		{"restart", "1"}, {"restart", "2"}, {"restart", "3"}, {"restart", "6"},
 	}
 
 	for _, cmd := range commands {

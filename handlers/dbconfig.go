@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"errors"
 	"net/http"
 	"regexp"
 	"strconv"
@@ -330,17 +331,6 @@ func UpdateRTU(c *gin.Context) {
 			return
 		}
 
-		// 从请求的 Channel.Plugins 中拆分 AppPlugin 和 LinkPlugin
-		var appPlugin *emsxmldb.Plugin
-		var linkPlugin *emsxmldb.Plugin
-		for _, p := range rtu.Channel.Plugins {
-			if p.Type == "APP" {
-				appPlugin = &p
-			} else if p.Type == "LINK" {
-				linkPlugin = &p
-			}
-		}
-
 		// 更新通道组名称 + FOR_TRANSFER
 		cgParam := emsxmldb.ChannelGroupParam{
 			Name:          rtu.ChannelGroupName,
@@ -353,16 +343,20 @@ func UpdateRTU(c *gin.Context) {
 			return
 		}
 
-		// 全量替换通道
+		// 全量替换通道（协议按层透传，层校验在 UpdateChannel 内）
 		chParam := emsxmldb.ChannelParam{
 			ChannelID:       rtu.ChannelID,
 			Name:            rtu.Channel.Name,
 			Comment:         rtu.Channel.Comment,
 			PossibleOwnerID: rtu.Channel.PossibleOwner.ID,
-			AppPlugin:       appPlugin,
-			LinkPlugin:      linkPlugin,
+			Plugins:         rtu.Channel.Plugins,
 		}
 		if err := fecfg.UpdateChannel(rtu.ChannelGroupID, chParam); err != nil {
+			if errors.Is(err, emsxmldb.ErrPluginLayer) {
+				log.Errorf("UpdateRTU: plugin layer invalid: %v", err)
+				c.JSON(http.StatusBadRequest, models.CommonResp{Code: http.StatusBadRequest, Message: err.Error()})
+				return
+			}
 			log.Errorf("UpdateRTU: UpdateChannel failed: %w", err)
 			c.JSON(http.StatusInternalServerError, models.CommonResp{Code: http.StatusInternalServerError, Message: err.Error()})
 			return
