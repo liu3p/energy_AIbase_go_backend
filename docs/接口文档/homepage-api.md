@@ -49,6 +49,18 @@
         "name": "",
         "unit": ""
       }
+    ],
+    "real_power": [
+      {
+        "no": 1,
+        "show_name": "充电功率",
+        "used": 1,
+        "oid": "1-1-102-1000",
+        "type": 1,
+        "show_unit": "kW",
+        "name": "正向有功功率",
+        "unit": "kW"
+      }
     ]
   }
 }
@@ -60,7 +72,7 @@
 | ------------ | ------ | -------------------------------------------------------- |
 | `no`         | int    | 序号，唯一标识该条目，从 1 开始连续递增                                    |
 | `show_name`  | string | 展示名称（可为空，为空时前端可使用 `name`）                                |
-| `used`       | int    | 是否启用：1=启用，0=禁用（仅 `topology` 有）                           |
+| `used`       | int    | 是否启用：1=启用，0=禁用（仅 `topology`、`power_level`、`real_power` 有） |
 | `oid`        | string | 绑定的测点 ID，格式：`rtuID-deviceID-tableNo-gin`，如 `"1-1-102-1"` |
 | `type`       | int    | 值类型：1=实时值，2=查表值，3=固定值                                    |
 | `show_unit`  | string | 展示单位（可为空，为空时前端可使用 `unit`）                                |
@@ -165,11 +177,27 @@
 
 ---
 
-## 6. 查询首页历史数据
+## 6. 修改实时功率配置
+
+**`POST /homepage/config/real_power`**
+
+整体替换 real_power 数组，格式与接口 2 相同，`no` 去重规则一致。
+
+**请求体**：数组（同接口 2 的格式）
+
+**响应** `200 OK`
+
+```json
+{ "code": 200, "message": "success" }
+```
+
+---
+
+## 7. 查询首页历史数据
 
 **`POST /api/v1/log/influxdb/his/home`**
 
-自动从首页配置中读取 Topology 和 PowerLevel 的 OID，按类型分组后批量查询 InfluxDB 历史数据，一次性返回两个维度的历史数据。
+自动从首页配置中读取 Topology、PowerLevel 和 RealPower 的 OID，按类型分组后批量查询 InfluxDB 历史数据，一次性返回三个维度的历史数据。
 
 **请求体**
 
@@ -209,6 +237,14 @@
           "1-1-102-3": 10.5
         }
       }
+    ],
+    "real_power": [
+      {
+        "time": "2026-01-01T00:00:00Z",
+        "data": {
+          "1-1-102-1000": 21.7
+        }
+      }
     ]
   },
   "msg": "查询成功"
@@ -219,6 +255,7 @@
 |------|------|------|
 | `data.topology` | array | 拓扑维度的历史数据（来自配置中 `topology` 数组的 OID） |
 | `data.power_level` | array | 电力等级维度的历史数据（来自配置中 `power_level` 数组的 OID） |
+| `data.real_power` | array | 实时功率维度的历史数据（来自配置中 `real_power` 数组的 OID） |
 | `data.*[].time` | string | 时间点，RFC3339 格式 |
 | `data.*[].data` | object | 该时间点各测点的值，key 为测点 ID |
 
@@ -251,7 +288,7 @@
 | 1    | 实时值 | `oid`         | 根据 实时数据直接展示              |
 | 2    | 查表值 | `oid`、`table` | 根据 实时数据，通过 `table` 映射为文本 |
 | 3    | 固定值 | `show_value`  | 无需绑点，直接展示固定文本            |
-## 6. 首页实时数据推送（WebSocket）
+## 8. 首页实时数据推送（WebSocket）
 
 基于已有的 WebSocket 连接（`/api/v1/log/ws/push`，登录时建立），前端发送订阅消息，后端广播实时数据。
 

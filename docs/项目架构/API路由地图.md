@@ -8,7 +8,7 @@
 
 | 方法 | 路径 | 说明 |
 |---|---|---|
-| POST | `/api/v1/user/login` | 用户登录 |
+| POST | `/api/v1/user/login` | 用户登录（成功后响应 `license` 字段合并许可证状态） |
 | POST | `/api/v1/user/refresh_token` | 刷新 Token |
 
 ---
@@ -24,6 +24,16 @@
 | POST | `/logout` | `LogoutUser` | 登出 | 所有用户 |
 | GET | `/info` | `UserInfo` | 当前用户信息 | 所有用户 |
 | GET | `/all` | `AllUsers` | 所有用户列表 | admin |
+
+---
+
+## 注册码许可 `/api/v1/log/license`
+
+| 方法 | 路径 | Handler | 说明 |
+|---|---|---|---|
+| GET | `/machine_serial` | `GetMachineSerial` | 查询本机机器码（向厂商申请注册码用，持久化后跨请求一致） |
+| POST | `/register` | `RegisterLicense` | 提交注册码（校验并保存） |
+| GET | `/status` | `GetLicenseStatus` | 查询许可证状态（有效 / 无效（含过期）/ 未注册） |
 
 ---
 
@@ -107,6 +117,9 @@
 | PUT | `/device/:device_name` | `PutAgcDevice` | 修改设备 |
 | DELETE | `/device/:device_name` | `DeleteAgcDevice` | 删除设备 |
 | POST | `/rtu_points` | `GetAgcRtuPoints` | 获取 AGC RTU 测点 |
+| GET | `/station_model` | `GetAgcData(1)` | 厂站模型（para/dyn_para.value 数字保留三位小数） |
+| GET | `/strategy_model` | `GetAgcData(2)` | 策略模型 |
+| GET | `/agc_data` | `GetAgcData(3)` | 厂站+策略模型（station_model 同上格式化） |
 
 ---
 
@@ -114,11 +127,11 @@
 
 | 方法 | 路径 | Handler | 说明 |
 |---|---|---|---|
-| GET | `/rtus` | `GetRTUs` | 所有 RTU |
-| GET | `/rtus/except_points` | `GetRTUsExceptPoints` | RTU 列表（不含测点） |
-| GET | `/channels` | `GetAllChannels` | 所有通道（扁平列表，含 RTU 归属信息） |
+| GET | `/rtus` | `GetRTUs` | 所有 RTU（`channel.plugins.parameters` 按字母序，`STATION_ID ASDU_ADDR` 置顶） |
+| GET | `/rtus/except_points` | `GetRTUsExceptPoints` | RTU 列表（不含测点，parameters 排序同上） |
+| GET | `/channels` | `GetAllChannels` | 所有通道（扁平列表，含 RTU 归属信息，parameters 排序同上） |
 | POST | `/rtu` | `AddRTU` | 添加 RTU |
-| PUT | `/rtu/:rid` | `UpdateRTU` | 修改 RTU |
+| PUT | `/rtu/:rid` | `UpdateRTU` | 修改 RTU（含通道多层协议 `channel.plugins`） |
 | DELETE | `/rtu/:rid` | `DeleteRTU` | 删除 RTU |
 | GET | `/rtu/:rid/devices` | `GetRtuDevices` | RTU 下所有设备 |
 | GET | `/rtu/:rid/device/:did` | `GetRtuDevice` | 指定设备 |
@@ -153,7 +166,7 @@
 | POST | `/cgroup/:cgid/channel` | `AddCGChannel` | 新增通道 |
 | PUT | `/cgroup/:cgid/channel/:cid` | `UpdateCGChannel` | 修改通道 |
 | DELETE | `/cgroup/:cgid/channel/:cid` | `DeleteCGChannel` | 删除通道 |
-| GET | `/plugins` | `GetChannelPlugins` | 协议插件列表 |
+| GET | `/plugins` | `GetChannelPlugins` | 协议插件列表（按层分组，层号=`id/1000+1`，只返回非空层；parameters 排序同上） |
 | POST | `/notifyreload` | `NotifyFeConfigReload` | 通知 FE 重载配置 |
 | POST | `/channels/restart` | `RestartChannels` | 重启指定通道（kill -9 fe_channel 进程） |
 
@@ -163,13 +176,25 @@
 
 | 方法   | 路径                                                 | Handler                   | 说明       |
 | ---- | -------------------------------------------------- | ------------------------- | -------- |
-| GET  | `/rtu/:rid/channels`                               | `GetRtuChannels`          | 查询通道     |
+| GET  | `/rtu/:rid/channels`                               | `GetRtuChannels`          | 查询通道（parameters 排序同上）    |
 | GET  | `/cgroup/:cgid/channel/:cid/status`                | `GetRtuChannelStatus`     | 通道状态（WS） |
 | GET  | `/cgroup/:cgid/channel/:cid/plugin/:pluginid/logs` | `GetRtuChannelLogs`       | 通道日志（WS） |
-| GET  | `/rtu/:rid/device/:did/points/:ptype`              | `GetPointsData`           | 测点数据（WS） |
+| GET  | `/rtu/:rid/device/:did/points/:ptype`              | `GetPointsData`           | 测点数据（WS，analog 类型 rawvalue/currvalue 保留三位小数） |
 | POST | `/rtu/:rid/device/:did/point/:pid/control`         | `SetPointControl`         | 遥控       |
 | POST | `/rtu/:rid/device/:did/point/:pid/regulate`        | `SetPointRegulate`        | 遥调       |
 | GET  | `/channels/status`                                 | `GetAllRtuChannelsStatus` | 所有通道状态   |
+
+---
+
+## 首页配置 `/api/v1/log/homepage`
+
+| 方法 | 路径 | Handler | 说明 |
+|---|---|---|---|
+| GET | `/config` | `GetHomepageConfig` | 获取首页配置（type==1 的 show_value 保留三位小数） |
+| POST | `/config/topology` | `UpdateHomepageTopology` | 更新拓扑图配置 |
+| POST | `/config/realtime` | `UpdateHomepageRealtime` | 更新实时数据配置 |
+| POST | `/config/basic_info` | `UpdateHomepageBasicInfo` | 更新基本信息配置 |
+| POST | `/config/power_level` | `UpdateHomepagePowerLevel` | 更新功率等级配置 |
 
 ---
 
@@ -177,9 +202,10 @@
 
 | 方法 | 路径 | Handler | 说明 |
 |---|---|---|---|
-| POST | `/his` | `ExportInfluxDBData` | 导出历史数据到 CSV |
+| POST | `/his` | `ExportInfluxDBData` | 导出历史数据到服务端 CSV 文件（仅落盘，不返回文件内容） |
 | POST | `/his/query` | `QueryInfluxDBData` | 查询历史数据（支持时间插值） |
 | POST | `/his/home` | `QueryHomeHistory` | 首页历史数据查询（自动从配置读取 OID，返回 topology + power_level 两个维度） |
+| GET | `/his/export` | `ExportRawHistory` | 导出单测点原始历史数据为 CSV（不做插值/取整，文件流直接返回） |
 
 ---
 
@@ -202,3 +228,4 @@
 - [[项目架构总览]]
 - [[用户认证体系]]
 - [[handlers模块]]
+- [[功能设计/注册码license功能实现方案]]

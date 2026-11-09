@@ -99,6 +99,7 @@ func sortPluginsByLayer(plugins []Plugin) []Plugin {
 	return cp
 }
 
+
 // PossibleOwner XML节点：CHANNEL下的POSSIBLE_OWNER
 type PossibleOwner struct {
 	ID int `xml:"ID,attr" json:"id"`

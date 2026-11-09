@@ -592,7 +592,7 @@ func (m *AgcModelManager) saveModel() error {
 	respBody, err := HttpPost("http://127.0.0.1:8500/update_station_model", "", 0)
 	if err != nil {
 		log.Errorf("HttpPost failed: %v, resp: %s", err, string(respBody))
-		return nil
+		return fmt.Errorf("request AGC model reload failed: %w", err)
 	}
 	log.Info("update_station_model success!")
 	return nil
@@ -857,6 +857,7 @@ func (m *AgcModelManager) UpdateParaAndDynPara() error {
 func (m *AgcModelManager) AddAgcDevice(parentName string, device *Device) error {
 	m.mu.Lock()
 	defer m.mu.Unlock()
+	m.station.setSubDevicePaths()
 
 	// 1. 检查子设备名称是否重复（全局唯一）
 	if m.station.isNameExists(device.Name) {
@@ -929,8 +930,17 @@ func (m *AgcModelManager) GetAgcDevice(deviceName string) (Device, error) {
 // 返回值:
 // error  - 调用失败时返回错误
 func (m *AgcModelManager) UpdateAgcDevice(deviceName string, jsonStr string) (Device, error) {
+	return m.updateAgcDeviceWithPersist(deviceName, jsonStr, m.saveModel)
+}
+
+func (m *AgcModelManager) updateAgcDeviceWithPersist(
+	deviceName string,
+	jsonStr string,
+	persist func() error,
+) (Device, error) {
 	m.mu.Lock()
 	defer m.mu.Unlock()
+	m.station.setSubDevicePaths()
 
 	// 查找设备是否存在
 	device, ok := m.station.getSubDeviceByName(deviceName)
@@ -938,16 +948,43 @@ func (m *AgcModelManager) UpdateAgcDevice(deviceName string, jsonStr string) (De
 		return Device{}, fmt.Errorf("UpdateAgcStation : device '%s' not found", deviceName)
 	}
 
-	// 防御性检查：如果设备Path为空，重新设置Path
-	if device.Path == "" {
-		m.station.setSubDevicePaths()
-	}
-
 	// 把json字符串转成更新map
 	var updateMap map[string]interface{}
 	if err := json.Unmarshal([]byte(jsonStr), &updateMap); err != nil {
 		return Device{}, fmt.Errorf("UpdateAgcDevice: parse update data failed: %v", err)
 	}
+	if persist == nil {
+		return Device{}, fmt.Errorf("UpdateAgcDevice: persistence callback is nil")
+	}
+
+	newDeviceName := device.Name
+	renameRequested := false
+	if rawName, ok := updateMap["name"]; ok {
+		requestedName, ok := rawName.(string)
+		if !ok {
+			return Device{}, fmt.Errorf("UpdateAgcDevice: name must be a string")
+		}
+		requestedName = strings.TrimSpace(requestedName)
+		if requestedName == "" {
+			return Device{}, fmt.Errorf("UpdateAgcDevice: name cannot be empty")
+		}
+		if requestedName == "." || requestedName == ".." ||
+			strings.ContainsAny(requestedName, `/\`) ||
+			strings.IndexFunc(requestedName, func(r rune) bool {
+				return r < 0x20 || r == 0x7f
+			}) >= 0 {
+			return Device{}, fmt.Errorf("UpdateAgcDevice: invalid device name '%s'", requestedName)
+		}
+		if requestedName != device.Name {
+			if m.station.isNameExists(requestedName) {
+				return Device{}, fmt.Errorf("UpdateAgcDevice: device name '%s' already exists", requestedName)
+			}
+			newDeviceName = requestedName
+			renameRequested = true
+		}
+	}
+
+	changed := false
 
 	// 从前端参数中获取静态参数列表
 	{
@@ -969,12 +1006,13 @@ func (m *AgcModelManager) UpdateAgcDevice(deviceName string, jsonStr string) (De
 			// 判断值是否更新
 			if newVal, has := newPara[device.Para[i].Name+device.Para[i].Type]; has {
 				if device.Para[i].Value != newVal {
-					device.Para[i].Value = newVal
 					// 调用http接口更新配置参数
-					paraPath := device.Path[8:] + "/para/" + device.Para[i].Name //忽略path前面的"/station"
+					paraPath := buildAgcParamPath(device.Path, "para", device.Para[i].Name)
 					if err := SetStrategySettingParams("station_para", paraPath, newVal, device.Para[i].Type); err != nil {
-						log.Errorf("SetStrategyParams SetStrategySettingParams failed: %v", err)
+						return Device{}, fmt.Errorf("UpdateAgcDevice: update static parameter '%s' failed: %w", device.Para[i].Name, err)
 					}
+					device.Para[i].Value = newVal
+					changed = true
 				}
 			}
 		}
@@ -1001,25 +1039,54 @@ func (m *AgcModelManager) UpdateAgcDevice(deviceName string, jsonStr string) (De
 			// 判断值是否更新
 			if newVal, has := newDyPara[device.DynPara[i].Name+device.DynPara[i].Type]; has {
 				if device.DynPara[i].DatabaseID != newVal {
-					device.DynPara[i].DatabaseID = newVal
 					// 调用http接口更新配置参数
-					paraPath := device.Path[8:] + "/" + device.DynPara[i].Type + "/" + device.DynPara[i].Name //忽略path前面的"/station"
+					paraPath := buildAgcParamPath(device.Path, device.DynPara[i].Type, device.DynPara[i].Name)
 					if err := SetStrategySettingParams("station_dyn_para", paraPath, newVal, device.DynPara[i].Type); err != nil {
-						log.Errorf("SetStrategyParams SetStrategySettingParams failed: %v", err)
+						return Device{}, fmt.Errorf("UpdateAgcDevice: update dynamic parameter '%s' failed: %w", device.DynPara[i].Name, err)
 					}
+					device.DynPara[i].DatabaseID = newVal
+					changed = true
 				}
 			}
 		}
 	}
-	// // 对结构体进行增量更新
-	//if err := m.updateDevice(device, updateMap); err != nil {
-	//	return Device{}, fmt.Errorf("UpdateAgcDevice: update failed: %w", err)
-	//}
+
+	if renameRequested {
+		device.Name = newDeviceName
+		m.station.setSubDevicePaths()
+		changed = true
+	}
+
+	if changed {
+		if err := persist(); err != nil {
+			if renameRequested {
+				device.Name = deviceName
+				m.station.setSubDevicePaths()
+				if rollbackErr := persist(); rollbackErr != nil {
+					return Device{}, fmt.Errorf(
+						"UpdateAgcDevice: save model failed: %v; rollback failed: %w",
+						err,
+						rollbackErr,
+					)
+				}
+			}
+			return Device{}, fmt.Errorf("UpdateAgcDevice: save model failed: %w", err)
+		}
+	}
 
 	dev := *device
 	dev.SubDevices = nil
 
 	return dev, nil
+}
+
+// buildAgcParamPath converts the internal device path to the path expected by
+// the AGC HTTP service. Internal paths start with /station/ and include the
+// model name; AGC expects the station segment to remain as the first token.
+func buildAgcParamPath(devicePath, paramGroup, paramName string) string {
+	path := strings.TrimPrefix(devicePath, "/station/")
+	path = strings.TrimPrefix(path, "/")
+	return path + "/" + paramGroup + "/" + paramName
 }
 
 // RemoveAgcDevice 删除指定设备信息

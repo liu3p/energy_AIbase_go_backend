@@ -1,6 +1,7 @@
 # RTU 通道合并接口说明
 
 > 日期: 2026-08-09 | 状态: 已实现
+> 修订: 2026-10-09 协议多层化（`plugins` 按 ID 区间分层，`type` 改为层号字符串）
 
 ---
 
@@ -27,6 +28,16 @@
 | 公式 RTU | 5 | ❌ | `channelgroupid=-1, channelid=-1` |
 
 前端通过 `channelgroupid >= 0` 判断 RTU 是否有通道。
+
+### 协议多层化（2026-10-09 变更）
+
+通道的 `plugins` 由「APP / LINK 两层」改为「**按插件 ID 区间划分的多层**」：
+
+- **层号**由插件 `id` 推导：`id/1000 + 1`（`0~999`→第 1 层，`1000~1999`→第 2 层，……，无上限）。
+- 每个通道**每层至多一个协议**，且必须**从第 1 层起连续**（选了第 N 层则 1..N-1 层均已选）；允许不选任何层。
+- `plugin.type` 由 `"APP"`/`"LINK"` 改为**层号字符串** `"1"`/`"2"`/…（类型仍是字符串，仅取值变化）。
+- 协议的**选项来源**为接口 8 `GET /fecfg/plugins`（按层分组返回）。
+- 写入 `fe_config.xml` 时按层升序排列，`<PLUGIN ... TYPE="1">`。
 
 ---
 
@@ -183,6 +194,8 @@
 | channelid | int | 绑定的通道 ID，`-1` 表示无通道 |
 | channel | object \| null | 通道完整信息，无通道时为 `null`（JSON 中省略） |
 
+> **Parameters 排序**：`channel.plugins[].parameters` 数组按字母序排列，`STATION_ID ASDU_ADDR`（单个参数名）始终排在最前。排序在返回时动态执行，不修改 fe_config 原始数据。
+
 ---
 
 ### 4. 查询全部 RTU（不含测点，改造）
@@ -213,45 +226,63 @@ RTU 信息和通道配置在同一个接口修改，前端一次请求更新全�
 
 #### 请求体
 
+> 字段名以 Go 结构体 `emsxmldb.RTU` 的 JSON tag 为准：通道为嵌套对象 `channel`，**不是平铺字段**。
+
 ```json
 {
   "name": "储能RTU1",
+  "type": 1,
   "inservice": "1",
   "memofcabinet": "A01",
-  "channelname": "储能RTU1的通道",
-  "channlecomment": "修改后的注释",
-  "plugins": [
-    {
-      "id": 10001,
-      "parameters": [
-        { "name": "PORT_TYPE", "value": "TCP" },
-        { "name": "TCP_IP", "value": "192.168.1.100" },
-        { "name": "TCP_PORT", "value": "503" }
-      ]
-    }
-  ]
+  "channelgroupid": 0,
+  "channelid": 0,
+  "channelgroupname": "储能RTU1_CG",
+  "for_transfer": "0",
+  "channel": {
+    "id": 0,
+    "name": "储能RTU1的通道",
+    "comment": "修改后的注释",
+    "possibleowner": { "id": 1 },
+    "plugins": [
+      { "id": 100,  "name": "tcp_server",     "parameters": [ { "name": "TCP_PORT", "value": "503" } ] },
+      { "id": 1100, "name": "modbus_general", "parameters": [ { "name": "SLAVE_ID", "value": "1" } ] }
+    ]
+  }
 }
 ```
 
 | 字段 | 类型 | 必填 | 说明 |
 |---|---|---|---|
 | name | string | ✅ | RTU 名称 |
+| type | int | ✅ | RTU 类型（1 采集 / 2 转发 / 3 AGC / 4 监视 / 5 公式） |
 | inservice | string | ❌ | 是否在服务 |
 | memofcabinet | string | ❌ | 柜体信息 |
-| channelname | string | ❌ | 通道名称，不传则不修改 |
-| channlecomment | string | ❌ | 通道注释，不传则不修改 |
-| plugins | array | ❌ | 协议插件列表，不传则不修改 |
+| channelgroupname | string | ❌ | 通道组名称（写通道组 `NAME`） |
+| for_transfer | string | ❌ | 通道组 MODEL 的 `FOR_TRANSFER` |
+| channel | object | ❌ | 通道信息；仅「有通道的 RTU 类型」+ `channel != null` 时处理 |
+| channel.name | string | ❌ | 通道名称 |
+| channel.comment | string | ❌ | 通道注释 |
+| channel.possibleowner.id | int | ❌ | 归属 RTU ID，缺省用 Host.ID |
+| channel.plugins | array | ❌ | **多层协议选择**，可为空数组 |
+| channel.plugins[].id | int | ✅ | 所选协议插件 ID（层号由 `id/1000+1` 推导） |
+| channel.plugins[].parameters | array | ❌ | 该协议的参数键值对 |
+| channel.plugins[].name | string | ❌ | 协议名；不传则写出空 `NAME` |
+| channel.plugins[].type | string | ❌ | **服务端忽略，一律由 `id` 推导** |
+
+#### 多层协议规则（`channel.plugins`）
+
+- 层号 = `id/1000 + 1`（`0~999`→1，`1000~1999`→2，……）。
+- 每层至多选一个；必须从第 1 层起**连续**；允许 `[]`。
+- 服务端按**层升序**写入 `fe_config.xml`，`TYPE` 写为层号字符串。
 
 #### 处理流程
 
 ```
 PUT /rtu/:rid
     ↓
-查 RTU，获取 ChannelGroupID
-    ↓
-1. 更新 RTU 信息（name、inservice 等）→ save
-2. 若有通道字段 → UpdateChannelGroup(channelGroupID, {name}) → save
-                 → UpdateChannel(channelGroupID, {plugins}) → save
+1. 更新 RTU 信息（db_config.xml）→ save
+2. 若有 channel → UpdateChannelGroup(name, for_transfer) → save
+               → UpdateChannel(plugins) → 校验层连续性 → 按层升序 → save
 ```
 
 #### 响应
@@ -262,11 +293,15 @@ PUT /rtu/:rid
 
 #### 错误码
 
-| code | 说明 |
-|---|---|
-| 400 | RTU 无通道但传了通道字段 |
-| 404 | RTU ID 不存在 |
-| 500 | 更新失败 |
+| code | 说明 | 示例 message |
+|---|---|---|
+| 400 | RTU 名称为空 / `rtuaddr` 非法 | `rtu.Name is empty` |
+| 400 | 协议跳层（不连续） | `plugin layer invalid: 协议必须从第 1 层起连续选择，缺少第 1 层` |
+| 400 | 同层重复 | `plugin layer invalid: 第 1 层只能选择一个协议` |
+| 400 | 插件 ID 非法 | `plugin layer invalid: 插件 ID -1 无效` |
+| 500 | 更新失败 | — |
+
+> **原子性说明**：处理流程为多步落盘（RTU → 通道组 → 通道）。当通道协议校验失败返回 400 时，`db_config.xml` 与通道组的 `NAME`/`FOR_TRANSFER` 可能**已落盘**，仅通道协议未改。该「半写」属既有问题，本次未改动。
 
 ---
 
@@ -285,11 +320,19 @@ PUT /rtu/:rid
     "name": "储能RTU1_通道1",
     "plugins": [
       {
-        "id": 1,
-        "name": "modbus_tcp",
-        "type": "protocol",
+        "id": 100,
+        "name": "tcp_server",
+        "type": "1",
         "parameters": [
           { "name": "IP", "value": "192.168.1.100", "valuelist": "" }
+        ]
+      },
+      {
+        "id": 1100,
+        "name": "modbus_general",
+        "type": "2",
+        "parameters": [
+          { "name": "SLAVE_ID", "value": "1", "valuelist": "" }
         ]
       }
     ],
@@ -305,11 +348,15 @@ PUT /rtu/:rid
 |---|---|---|
 | id | int | 通道 ID |
 | name | string | 通道名称 |
-| plugins | array | 通道关联的协议插件列表 |
+| plugins | array | 通道关联的协议插件列表（≤ 每层一个，按层升序） |
+| plugins[].name | string | 协议名，来自 `fe_config.xml` 的 `PLUGIN@NAME`；**写入时未传 name 则为空串**（服务端不回填） |
+| plugins[].type | string | 层号字符串 `"1"`/`"2"`/…（由 `plugins[].id/1000+1` 推导） |
 | rtuid | string | 所属 RTU 的 ID，未绑定时为空字符串 |
 | rtuname | string | 所属 RTU 的名称，未绑定时为空字符串 |
 | channelgroupid | int | 所属通道组 ID |
 | channelgroupname | string | 所属通道组名称 |
+
+> **Parameters 排序**：`plugins[].parameters` 数组按字母序排列，`STATION_ID ASDU_ADDR`（单个参数名）始终排在最前。排序在返回时动态执行，不修改原始数据。
 
 #### 数据来源
 
@@ -334,9 +381,11 @@ PUT /rtu/:rid
 - **WebSocket 连接参数获取**：返回数据可直接用于建立 WS 订阅连接
 
 ```javascript
-// 建立 WebSocket 连接示例
+// 建立 WebSocket 连接示例（订阅某一层插件的报文日志）
 const channel = channels[0];
-const wsUrl = `/api/v1/log/datamonitor/cgroup/${channel.channelgroupid}/channel/${channel.id}/plugin/${channel.plugins[0].id}/logs`;
+// 多层协议时需指定订阅哪一层（例如 type === "1" 的第 1 层插件）
+const plugin = channel.plugins.find(p => p.type === "1");
+const wsUrl = `/api/v1/log/datamonitor/cgroup/${channel.channelgroupid}/channel/${channel.id}/plugin/${plugin.id}/logs`;
 ```
 
 ---
@@ -440,6 +489,47 @@ const wsUrl = `/api/v1/log/datamonitor/cgroup/${channel.channelgroupid}/channel/
 
 ---
 
+### 8. 获取协议选项（按层）
+
+**GET** `/api/v1/log/fecfg/plugins`
+
+返回全部可选协议，**按层（`id/1000+1`）分组**，供前端按层选择；只返回非空层。
+
+#### 响应
+
+```json
+[
+  {
+    "type": "1",
+    "plugins": [
+      { "id": 100, "name": "tcp_server", "type": "1",
+        "parameters": [ { "name": "TCP_PORT", "value": "503", "valuelist": "" } ] }
+    ]
+  },
+  {
+    "type": "2",
+    "plugins": [
+      { "id": 1100, "name": "modbus_general", "type": "2",
+        "parameters": [ { "name": "SLAVE_ID", "value": "1", "valuelist": "" } ] }
+    ]
+  }
+]
+```
+
+| 字段 | 类型 | 说明 |
+|---|---|---|
+| type | string | 层号字符串 `"1"`/`"2"`/… |
+| plugins | array | 该层可选协议 |
+| plugins[].id | int | 协议插件 ID |
+| plugins[].name | string | 协议名 |
+| plugins[].type | string | 层号字符串，与所属层一致 |
+| plugins[].parameters | array | 协议参数（含默认值与 `valuelist`） |
+
+> `parameters` 排序规则同接口 6。
+> ⚠️ **变更（2026-10-09）**：原响应为 `{ "appplugin": [...], "linkplugin": [...] }`，现改为**按层分组的数组**。
+
+---
+
 ## 内部数据流（供开发参考）
 
 ### 创建流程
@@ -498,9 +588,22 @@ main.go
 <RTU ID="800" Name="系统监视" Type="4" RtuAddr="800" ChannelGroupID="-1" ChannelID="-1" ...>
 ```
 
-### fe_config.xml（无格式变化）
+### fe_config.xml
 
-通道组和通道的创建复用现有 XML 格式，不引入新节点。
+通道组和通道的创建复用现有 XML 格式，不引入新节点。协议多层化后，`<PLUGIN>` 节点：
+
+- 按**层升序**排列；
+- `TYPE` 属性由 `"APP"`/`"LINK"` 变为**层号字符串** `"1"`/`"2"`/…（由 `ID` 推导）。
+
+```xml
+<CHANNEL ID="0" NAME="储能RTU1_CG" ...>
+  <PLUGIN ID="100"  NAME="tcp_server"     TYPE="1"> ... </PLUGIN>
+  <PLUGIN ID="1100" NAME="modbus_general" TYPE="2"> ... </PLUGIN>
+  <POSSIBLE_OWNER ID="1"/>
+</CHANNEL>
+```
+
+> 存量数据中 `TYPE` 若为非数字（`"APP"`）或与 `ID` 矛盾，服务启动时会以 `ID` 推断的层号覆盖并打印告警，不影响启动。
 
 ---
 
@@ -511,5 +614,6 @@ main.go
 | 现有 RTU | 不处理存量，项目无存量数据 |
 | 原有 AddRTU 接口 | 对外签名不变，内部行为增加通道创建 |
 | 原有 DeleteRTU 接口 | 对外签名不变，内部行为增加通道删除 |
-| 原有 fecfg 手动接口 | `/api/v1/log/fecfg/cgroup/:cgid/channel` 仍可独立使用 |
+| 原有 fecfg 手动接口 | `/api/v1/log/fecfg/cgroup/:cgid/channel[/:cid]` 仍可独立使用；但请求体由 `appplugin`/`linkplugin` 两个对象改为 `plugins` 数组（多层），并同样做层连续性校验 |
 | 原有 datamonitor 模块 | `GetRtuChannels` 仍通过 `STATION_BASE_ID` 反查，不受影响 |
+| 协议多层化（2026-10-09） | 通道 `plugins` 由两层（APP/LINK）改为按 ID 区间的多层；`plugins[].type` 取值由 `"APP"/"LINK"` 变为层号字符串。依赖 C 侧插件 `class_id` 已完成重编号 |

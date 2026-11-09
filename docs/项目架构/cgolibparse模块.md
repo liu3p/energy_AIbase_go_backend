@@ -11,6 +11,7 @@
 | `cgodbmsg.go` | **实时数据查询核心**（DBMsgManager 单例，OID 查询，遥控遥调） |
 | `cgoformula.go` | 公式解析接口（eq_validate / eq_eval） |
 | `cgoagcapi.go` | AGC 计算接口（Cgo 调用 C++） |
+| `license_c_api.go` | 注册码许可桥接（机器码/校验/保存，调 `liblicense_c_api`） |
 | `cgofeparse.go` | FE（前置）解析桥接 |
 | `libparsesrc/cgo_pluginparse.cpp` | C++ 实现：FES 通道消息处理 |
 
@@ -109,6 +110,22 @@ C.GetFieldsValues(               // 批量查询字段值
 | `EqValidateWithVars(expr, varNames)` | 带变量名验证 |
 | `EqEval(expr, varNames, varValues)` | 计算公式值 |
 
+### 注册码许可（`license_c_api.go`）
+
+> 桥接 C 端交付的 `liblicense_c_api.so`（ABI 契约见 `license_c_api.h`，LDFLAGS `-L/root/arm/lib -llicense_c_api`）。文件路径/状态语义详见 [[功能设计/注册码license功能实现方案]]。
+
+| 函数 | 说明 |
+|---|---|
+| `GenerateMachineSerial()` | 查询本机机器码（`lm_generate_machine_serial`），失败返回 error |
+| `ValidateLicense(key)` | 校验注册码（`lm_validate_license`），返回有效/无效、剩余天数、过期日期 |
+| `SaveLicenseToFile(key, path)` | 保存注册码到文件（`lm_save_license_to_file`），path 为空用库默认 `license.dat` |
+
+- `lmMutex`（`sync.Mutex`）串行化所有 C 调用：header 未声明线程安全，防御并发请求。
+- 内存约定：C 库返回的 `char*` 逐个 `lm_free` 释放（`LMLicenseInfo` 内每个字段单独释放）。
+- 只封装 machine_serial / validate / save；**不封装** `lm_start_license_check`（后台线程过期会 `exit(1)` 杀进程）、`lm_generate_license_key`（厂商侧能力）。
+
+---
+
 ### FES 通道消息（`cgo_pluginparse.cpp`）
 
 | 消息类型 | 常量 | 说明 |
@@ -141,3 +158,4 @@ CGO_LDFLAGS="-L${ARM_SF}/lib/scada -L${ARM_SF}/lib" go build -o arm-web-backend
 - [[项目架构总览]]
 - [[handlers模块]]
 - [[首页模块设计]]
+- [[功能设计/注册码license功能实现方案]]

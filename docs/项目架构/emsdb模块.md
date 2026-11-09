@@ -14,6 +14,16 @@
 | `systemhandler.go` | 系统数据处理 |
 | `oldgatewayhandler.go` | 旧版网关数据（兼容） |
 
+### influxdbhandler.go 关键函数
+
+| 函数 | 用途 |
+|---|---|
+| `QueryHistoryData` | 按类型批量查询历史数据，时间插值网格锚定 `start_time`（`aggregateWindow(every, offset, fn:last, createEmpty:false)`，首点由 `first()` 补入），遥信取整、遥测/遥脉保留 3 位小数（`/his/query`、`/his/home` 用） |
+| `QueryRawHistoryData` | 查询单测点原始数据，**不聚合、不插值、不取整**（`/his/export` 用） |
+| `WriteRawHistoryCSV` | 把原始数据写成 `时间,测点ID,值` 长表 CSV，带 UTF-8 BOM |
+| `ExportHistoryDataToCSV` | 导出为宽表 CSV 并落盘到服务端（`/his` 用） |
+| `GetQueryAPI` | 懒初始化并返回 InfluxDB `api.QueryAPI` |
+
 ---
 
 ## InfluxDB 集成
