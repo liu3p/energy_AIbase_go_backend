@@ -56,6 +56,59 @@ type LicenseStatusResp struct {
 	LicenseKey    string `json:"license_key"`
 }
 
+// readMachineSerial returns the persisted machine serial.
+// An empty file is treated as missing so the caller can regenerate it.
+func readMachineSerial() (string, error) {
+	data, err := os.ReadFile(machineSerialFile)
+	if err != nil {
+		return "", err
+	}
+	serial := strings.TrimSpace(string(data))
+	if serial == "" {
+		return "", os.ErrNotExist
+	}
+	return serial, nil
+}
+
+// resolveSystemSerial keeps the system information API aligned with the
+// machine serial used for license registration, while retaining the stored
+// value as a fallback for deployments without a machine serial file.
+func resolveSystemSerial(storedSerial string) string {
+	serial, err := readMachineSerial()
+	if err != nil || serial == "" {
+		return storedSerial
+	}
+	return serial
+}
+
+func persistMachineSerial(serial string) error {
+	if err := ensureLicenseDir(machineSerialFile); err != nil {
+		return err
+	}
+	return os.WriteFile(machineSerialFile, []byte(serial), 0o644)
+}
+
+func loadOrCreateMachineSerial() (string, error) {
+	if serial, err := readMachineSerial(); err == nil {
+		return serial, nil
+	}
+
+	// Remove empty or unreadable remnants before generating a replacement.
+	if err := os.Remove(machineSerialFile); err != nil && !os.IsNotExist(err) {
+		log.Warn("remove machine serial before generate failed:", err)
+	}
+
+	serial, err := cgolibparse.GenerateMachineSerial()
+	if err != nil {
+		return "", err
+	}
+
+	if err := persistMachineSerial(serial); err != nil {
+		log.Warn("persist machine serial failed:", err)
+	}
+	return serial, nil
+}
+
 // @Summary		查询机器码
 // @Description	返回本机序列号，用于向厂商申请注册码
 // @Tags			license
@@ -63,46 +116,21 @@ type LicenseStatusResp struct {
 // @Success		200	{object}	MachineSerialResp
 // @Router			/api/v1/log/license/machine_serial [get]
 func GetMachineSerial(c *gin.Context) {
-	// 1. 优先读持久化的机器码，保证每次查询结果一致
-	if data, err := os.ReadFile(machineSerialFile); err == nil {
-		if serial := strings.TrimSpace(string(data)); serial != "" {
-			c.JSON(http.StatusOK, MachineSerialResp{SerialNumber: serial})
-			return
-		}
-	}
-
-	// 2. 调用 C 库前先删除旧文件（含内容为空的残留文件），避免影响本次生成
-	if err := os.Remove(machineSerialFile); err != nil && !os.IsNotExist(err) {
-		log.Warn("remove machine serial before generate failed:", err)
-	}
-
-	// 3. 首次查询：调用 C 库生成
-	serial, err := cgolibparse.GenerateMachineSerial()
+	serial, err := loadOrCreateMachineSerial()
 	if err != nil {
 		c.JSON(http.StatusInternalServerError,
 			models.CommonResp{Code: http.StatusInternalServerError, Message: err.Error()})
 		return
-	}
-
-	// 4. 落盘持久化（先确保目录存在），供后续查询直接复用；写盘失败仅记录日志，不影响本次返回。
-	//    目录缺失只在全新部署首次出现，MkdirAll 兜底后即可正常落盘。
-	if err := ensureLicenseDir(machineSerialFile); err != nil {
-		log.Warn("ensure license dir failed:", err)
-	} else if err := os.WriteFile(machineSerialFile, []byte(serial), 0o644); err != nil {
-		log.Warn("persist machine serial failed:", err)
 	}
 	c.JSON(http.StatusOK, MachineSerialResp{SerialNumber: serial})
 }
 
 // refreshMachineSerial 删除并重建机器码文件。先生成后删除，生成失败时旧文件不受影响。
 func refreshMachineSerial(serial string) error {
-	if err := ensureLicenseDir(machineSerialFile); err != nil {
-		return err
-	}
 	if err := os.Remove(machineSerialFile); err != nil && !os.IsNotExist(err) {
 		return err
 	}
-	return os.WriteFile(machineSerialFile, []byte(serial), 0o644)
+	return persistMachineSerial(serial)
 }
 
 // @Summary		提交注册码

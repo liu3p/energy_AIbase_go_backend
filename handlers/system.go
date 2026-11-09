@@ -1488,6 +1488,7 @@ func GetSysBaseInfo(c *gin.Context) {
 	}
 	sysinfo := sysInfoMng.GetAll()
 	result := &SysBaseInfo{Sn: sysinfo.Sn, Name: sysinfo.Name, Addr: sysinfo.Addr, ModelNum: sysinfo.ModelNum}
+	result.Sn = resolveSystemSerial(result.Sn)
 
 	// 2. get hostname
 	hostname, err := getHostname()
@@ -1555,7 +1556,9 @@ func SetSysBaseInfo(c *gin.Context) {
 		c.JSON(http.StatusInternalServerError, models.CommonResp{Code: http.StatusInternalServerError, Message: err.Error()})
 		return
 	}
-	err = sysInfoMng.SetAll(req.Sn, req.Name, req.Addr, req.ModelNum)
+	// Sn is derived from the license machine serial on read. Preserve the
+	// stored XML value here so this endpoint cannot desynchronize it.
+	err = sysInfoMng.SetAll(sysInfoMng.GetSn(), req.Name, req.Addr, req.ModelNum)
 	if err != nil {
 		log.Error("SetSysBaseInfo SetAll err:", err.Error())
 		c.JSON(http.StatusInternalServerError, models.CommonResp{Code: http.StatusInternalServerError, Message: err.Error()})
